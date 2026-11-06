@@ -63,14 +63,16 @@
     border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa;
   }
   input:focus { outline: none; border-color: #4f46e5; background: #fff; }
+
   .form-grid {
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
     gap: 14px; align-items: end;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 800px) {
     .form-grid { grid-template-columns: 1fr 1fr; }
     .form-grid .full { grid-column: 1 / -1; }
   }
+
   button {
     padding: 16px; font-size: 17px; border: 0; border-radius: 10px;
     background: #4f46e5; color: #fff; cursor: pointer; font-weight: 500;
@@ -79,8 +81,42 @@
   button:active { transform: scale(.98); filter: brightness(.92); }
   button.sec { background: #16a34a; }
   button.imp { background: #0ea5e9; }
+  button.shr { background: #9333ea; }
   button.del { background: #dc2626; }
   .add-btn { margin-top: 18px; width: 100%; font-size: 18px; padding: 18px; }
+
+  /* ---- Панель поиска и сортировки ---- */
+  .table-toolbar {
+    display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;
+  }
+  .table-toolbar input[type="text"] {
+    flex: 1; min-width: 180px;
+    padding: 12px 14px; font-size: 16px;
+    border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa;
+  }
+  .table-toolbar select {
+    padding: 12px 14px; font-size: 15px;
+    border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa;
+    min-width: 170px; color: #222;
+  }
+  .table-toolbar input:focus, .table-toolbar select:focus {
+    outline: none; border-color: #4f46e5; background: #fff;
+  }
+
+  /* ---- Табы Детально/Сводка ---- */
+  .view-tabs {
+    display: flex; margin-bottom: 12px;
+    background: #f0f0f0; border-radius: 10px; padding: 4px; gap: 4px;
+  }
+  .view-tabs .tab {
+    flex: 1; padding: 10px; background: transparent; color: #555;
+    border-radius: 8px; font-size: 15px; font-weight: 500;
+    border: 0; margin: 0;
+  }
+  .view-tabs .tab.active {
+    background: #fff; color: #4f46e5;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+  }
 
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: collapse; font-size: 16px; }
@@ -89,17 +125,24 @@
        text-transform: uppercase; letter-spacing: .03em; color: #555; }
   td.num { text-align: right; font-variant-numeric: tabular-nums; }
   th.num { text-align: right; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover { background: #fafaff; }
   .x {
     background: #fee2e2; color: #dc2626; border: 0;
     width: 40px; height: 40px; border-radius: 8px;
     font-size: 20px; cursor: pointer; padding: 0;
+    position: relative; z-index: 1;
   }
   .empty { color: #999; text-align: center; padding: 40px 20px; font-size: 16px; }
   .sum { font-size: 15px; color: #444; margin: 14px 0 0; padding: 12px;
          background: #f0f4ff; border-radius: 8px; }
   .sum b { color: #4f46e5; }
-  .actions-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 16px; }
-  @media (max-width: 600px) { .actions-3 { grid-template-columns: 1fr; } }
+
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px; margin-top: 16px;
+  }
 
   /* ---- Автодополнение ---- */
   .ac-wrap { position: relative; }
@@ -118,6 +161,29 @@
   .ac-item:hover, .ac-item.active { background: #eef2ff; }
   .ac-item .ico { color: #4f46e5; font-size: 14px; flex-shrink: 0; }
   .ac-item mark { background: #fde68a; color: inherit; padding: 0 1px; border-radius: 2px; }
+
+  /* ---- Модальное окно редактирования ---- */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,.5);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100; padding: 16px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff; border-radius: 14px; padding: 24px;
+    max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+  }
+  .modal h2 { margin: 0 0 16px; font-size: 20px; }
+  .modal .row-3 {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px; margin-top: 4px;
+  }
+  .modal-actions {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-top: 20px;
+  }
+  .btn-cancel { background: #e5e7eb; color: #333; }
 
   @media (max-width: 500px) {
     .logo-bar img { height: 44px; }
@@ -161,35 +227,106 @@
       <label>Толщина, мм</label>
       <input id="thick" type="number" inputmode="numeric" placeholder="16">
     </div>
+    <div>
+      <label>Количество</label>
+      <input id="qty" type="number" inputmode="numeric" min="1" placeholder="1">
+    </div>
   </div>
   <button class="add-btn" onclick="addItem()">➕ Добавить панель</button>
 </div>
 
 <div class="card">
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Наименование</th>
-          <th class="num">Ш, мм</th>
-          <th class="num">Д, мм</th>
-          <th class="num">Т, мм</th>
-          <th class="num">Площадь, м²</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody id="tbody"></tbody>
-    </table>
+  <div class="table-toolbar">
+    <input type="text" id="searchBox" placeholder="🔍 Поиск по наименованию" autocomplete="off">
+    <select id="sortSelect">
+      <option value="default">Без сортировки</option>
+      <option value="name">Наименование ↑</option>
+      <option value="name-desc">Наименование ↓</option>
+      <option value="area">Площадь ↑</option>
+      <option value="area-desc">Площадь ↓</option>
+    </select>
   </div>
+
+  <div class="view-tabs">
+    <button class="tab active" id="tabDetail" onclick="setView('detail')">Детально</button>
+    <button class="tab" id="tabSummary" onclick="setView('summary')">Сводка</button>
+  </div>
+
   <div id="empty" class="empty">Пока пусто. Добавьте первую панель.</div>
+
+  <div id="viewDetail">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Наименование</th>
+            <th class="num">Ш, мм</th>
+            <th class="num">Д, мм</th>
+            <th class="num">Т, мм</th>
+            <th class="num">Кол-во</th>
+            <th class="num">Площадь, м²</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="viewSummary" style="display:none">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Наименование</th>
+            <th class="num">Позиций</th>
+            <th class="num">Панелей, шт</th>
+            <th class="num">Площадь, м²</th>
+          </tr>
+        </thead>
+        <tbody id="tbodySummary"></tbody>
+      </table>
+    </div>
+  </div>
+
   <div class="sum" id="sum" style="display:none"></div>
 
-  <div class="actions-3">
+  <div class="actions">
     <button class="sec" onclick="exportExcel()">📥 Скачать Excel</button>
+    <button class="shr" onclick="shareExcel()">📤 Поделиться</button>
     <button class="imp" onclick="document.getElementById('fileInput').click()">📂 Импорт Excel</button>
-    <button class="del" onclick="clearAll()">🗑 Очистить список</button>
+    <button class="del" onclick="clearAll()">🗑 Очистить</button>
   </div>
   <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none" onchange="handleFile(event)">
+</div>
+
+<!-- Модальное окно редактирования -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <h2>✏️ Редактировать панель</h2>
+    <label>Наименование</label>
+    <input type="text" id="editName" autocomplete="off">
+    <div class="row-3">
+      <div>
+        <label>Ширина, мм</label>
+        <input type="number" inputmode="numeric" id="editWidth">
+      </div>
+      <div>
+        <label>Длина, мм</label>
+        <input type="number" inputmode="numeric" id="editLength">
+      </div>
+      <div>
+        <label>Толщина, мм</label>
+        <input type="number" inputmode="numeric" id="editThick">
+      </div>
+    </div>
+    <label>Количество</label>
+    <input type="number" inputmode="numeric" id="editQty" min="1">
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeEdit()">Отмена</button>
+      <button onclick="saveEdit()">Сохранить</button>
+    </div>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -203,25 +340,43 @@ function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
+function migrateItems(arr) {
+  if (!Array.isArray(arr)) return [];
+  return arr.map(i => ({
+    id: i.id || uid(),
+    name: String(i.name || '').trim(),
+    width: Number(i.width) || 0,
+    length: Number(i.length) || 0,
+    thick: Number(i.thick) || 0,
+    qty: Number.isFinite(+i.qty) && +i.qty > 0 ? Math.floor(+i.qty) : 1
+  }));
+}
+
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const s = JSON.parse(raw);
-      if (s && Array.isArray(s.lists) && s.lists.length) return s;
+      if (s && Array.isArray(s.lists) && s.lists.length) {
+        s.lists.forEach(l => { l.items = migrateItems(l.items); });
+        return s;
+      }
     }
   } catch (e) { console.error(e); }
 
-  // Миграция из старого формата (одна таблица)
   let oldItems = [];
   try { oldItems = JSON.parse(localStorage.getItem(OLD_KEY) || '[]'); } catch {}
-  const list = { id: uid(), name: 'Список 1', items: Array.isArray(oldItems) ? oldItems : [] };
+  const list = { id: uid(), name: 'Список 1', items: migrateItems(oldItems) };
   const s = { lists: [list], currentListId: list.id };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
   return s;
 }
 
 let state = loadState();
+let searchQuery = '';
+let sortKey = 'default';
+let viewMode = 'detail';
+let editingId = null;
 
 function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 function currentList() { return state.lists.find(l => l.id === state.currentListId) || state.lists[0]; }
@@ -245,6 +400,8 @@ function switchList(id) {
   state.currentListId = id;
   saveState();
   closeAc();
+  searchQuery = '';
+  $('searchBox').value = '';
   render();
 }
 
@@ -257,7 +414,8 @@ function newList() {
   state.currentListId = list.id;
   saveState();
   closeAc();
-  renderListSelect();
+  searchQuery = '';
+  $('searchBox').value = '';
   render();
 }
 
@@ -282,7 +440,8 @@ function deleteList() {
   state.lists = state.lists.filter(x => x.id !== l.id);
   state.currentListId = state.lists[0].id;
   saveState();
-  renderListSelect();
+  searchQuery = '';
+  $('searchBox').value = '';
   render();
 }
 
@@ -310,23 +469,15 @@ function openAc(query) {
   const all = uniqueNames();
   const q = query.trim().toLowerCase();
   acMatches = (q ? all.filter(n => n.toLowerCase().includes(q)) : all).slice(0, 8);
-
   if (!acMatches.length) { acList.classList.remove('open'); return; }
   acActive = -1;
   acList.innerHTML = acMatches.map((n, i) =>
     `<div class="ac-item" data-idx="${i}"><span class="ico">▸</span><span>${highlight(n, q)}</span></div>`
   ).join('');
   acList.classList.add('open');
-
   acList.querySelectorAll('.ac-item').forEach(el => {
-    el.addEventListener('mousedown', e => {
-      e.preventDefault();
-      pickAc(parseInt(el.dataset.idx, 10));
-    });
-    el.addEventListener('touchstart', e => {
-      e.preventDefault();
-      pickAc(parseInt(el.dataset.idx, 10));
-    }, { passive: false });
+    el.addEventListener('mousedown', e => { e.preventDefault(); pickAc(parseInt(el.dataset.idx, 10)); });
+    el.addEventListener('touchstart', e => { e.preventDefault(); pickAc(parseInt(el.dataset.idx, 10)); }, { passive: false });
   });
 }
 
@@ -357,24 +508,30 @@ function updateActive(els) {
 }
 
 /* ==================== ОСНОВНЫЕ ОПЕРАЦИИ ==================== */
+function areaOf(i) {
+  return (i.width / 1000) * (i.length / 1000) * (i.qty || 1);
+}
+
 function addItem() {
   const name  = $('name').value.trim();
   const width = parseFloat($('width').value);
   const len   = parseFloat($('length').value);
   const thick = parseFloat($('thick').value);
+  const qtyStr = $('qty').value.trim();
+  const qty = qtyStr === '' ? 1 : parseInt(qtyStr, 10);
 
   if (!name) return alert('Введите наименование');
   if (!(width > 0) || !(len > 0) || !(thick > 0))
     return alert('Ширина, длина и толщина должны быть положительными');
+  if (!(qty >= 1)) return alert('Количество должно быть не меньше 1');
 
   const items = getItems();
-  items.push({ id: uid(), name, width, length: len, thick });
+  items.push({ id: uid(), name, width, length: len, thick, qty });
   setItems(items);
   render();
-  renderListSelect();
 
   $('name').value = ''; $('width').value = '';
-  $('length').value = ''; $('thick').value = '';
+  $('length').value = ''; $('thick').value = ''; $('qty').value = '';
   closeAc();
   $('name').focus();
 }
@@ -383,7 +540,6 @@ function removeItem(id) {
   if (!confirm('Удалить запись?')) return;
   setItems(getItems().filter(i => i.id !== id));
   render();
-  renderListSelect();
 }
 
 function clearAll() {
@@ -391,57 +547,248 @@ function clearAll() {
   if (!confirm(`Удалить все записи из списка "${currentList().name}"?`)) return;
   setItems([]);
   render();
-  renderListSelect();
 }
 
-function render() {
+/* ==================== РЕДАКТИРОВАНИЕ ==================== */
+function openEdit(id) {
+  const item = getItems().find(i => i.id === id);
+  if (!item) return;
+  editingId = id;
+  $('editName').value = item.name;
+  $('editWidth').value = item.width;
+  $('editLength').value = item.length;
+  $('editThick').value = item.thick;
+  $('editQty').value = item.qty || 1;
+  $('editModal').classList.add('open');
+  setTimeout(() => $('editName').focus(), 100);
+}
+
+function closeEdit() {
+  $('editModal').classList.remove('open');
+  editingId = null;
+}
+
+function saveEdit() {
+  if (!editingId) return;
+  const name = $('editName').value.trim();
+  const width = parseFloat($('editWidth').value);
+  const len = parseFloat($('editLength').value);
+  const thick = parseFloat($('editThick').value);
+  const qty = parseInt($('editQty').value, 10);
+
+  if (!name) return alert('Введите наименование');
+  if (!(width > 0) || !(len > 0) || !(thick > 0))
+    return alert('Ширина, длина и толщина должны быть положительными');
+  if (!(qty >= 1)) return alert('Количество должно быть не меньше 1');
+
   const items = getItems();
+  const idx = items.findIndex(i => i.id === editingId);
+  if (idx === -1) return closeEdit();
+  items[idx] = { ...items[idx], name, width, length: len, thick, qty };
+  setItems(items);
+  closeEdit();
+  render();
+}
+
+$('editModal').addEventListener('click', e => {
+  if (e.target === $('editModal')) closeEdit();
+});
+document.addEventListener('keydown', e => {
+  if ($('editModal').classList.contains('open') && e.key === 'Escape') closeEdit();
+});
+
+/* ==================== ОТРИСОВКА ТАБЛИЦЫ ==================== */
+function getViewItems() {
+  let view = getItems();
+  const q = searchQuery.trim().toLowerCase();
+  if (q) view = view.filter(i => i.name.toLowerCase().includes(q));
+  view = [...view];
+  if (sortKey === 'name') view.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+  else if (sortKey === 'name-desc') view.sort((a, b) => b.name.localeCompare(a.name, 'ru'));
+  else if (sortKey === 'area') view.sort((a, b) => areaOf(a) - areaOf(b));
+  else if (sortKey === 'area-desc') view.sort((a, b) => areaOf(b) - areaOf(a));
+  return view;
+}
+
+function groupItems(items) {
+  const map = new Map();
+  items.forEach(i => {
+    const key = i.name.trim().toLowerCase();
+    if (!map.has(key)) map.set(key, { name: i.name.trim(), count: 0, panels: 0, area: 0 });
+    const g = map.get(key);
+    g.count += 1;
+    g.panels += i.qty || 1;
+    g.area += areaOf(i);
+  });
+  return [...map.values()].sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+}
+
+function renderTable() {
+  const items = getViewItems();
+  const hasItems = items.length > 0;
+  const totalInList = getItems().length;
+
+  // Empty state
+  const emptyEl = $('empty');
+  if (!hasItems) {
+    emptyEl.style.display = 'block';
+    emptyEl.textContent = totalInList === 0
+      ? 'Пока пусто. Добавьте первую панель.'
+      : 'Ничего не найдено по запросу.';
+  } else {
+    emptyEl.style.display = 'none';
+  }
+
+  // Detail table
   const tbody = $('tbody');
   tbody.innerHTML = '';
-  $('empty').style.display = items.length ? 'none' : 'block';
-  const sumBox = $('sum');
-  sumBox.style.display = items.length ? 'block' : 'none';
-
-  let totalM2 = 0;
+  let totalArea = 0, totalPanels = 0;
   items.forEach(i => {
-    const m2 = (i.width / 1000) * (i.length / 1000);
-    totalM2 += m2;
+    const a = areaOf(i);
+    totalArea += a;
+    totalPanels += i.qty || 1;
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${escapeHtml(i.name)}</td>
       <td class="num">${i.width}</td>
       <td class="num">${i.length}</td>
       <td class="num">${i.thick}</td>
-      <td class="num">${m2.toFixed(3)}</td>
-      <td><button class="x" onclick="removeItem('${i.id}')" aria-label="Удалить">✕</button></td>`;
+      <td class="num">${i.qty || 1}</td>
+      <td class="num">${a.toFixed(3)}</td>
+      <td><button class="x" data-id="${i.id}" aria-label="Удалить">✕</button></td>`;
+    tr.addEventListener('click', e => {
+      if (e.target.closest('.x')) return;
+      openEdit(i.id);
+    });
     tbody.appendChild(tr);
   });
-  sumBox.innerHTML = `Панелей: <b>${items.length}</b> · Общая площадь: <b>${totalM2.toFixed(3)} м²</b>`;
+  tbody.querySelectorAll('.x').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      removeItem(btn.dataset.id);
+    });
+  });
+
+  // Summary table
+  if (viewMode === 'summary') {
+    const groups = groupItems(items);
+    $('tbodySummary').innerHTML = groups.map(g => `
+      <tr>
+        <td>${escapeHtml(g.name)}</td>
+        <td class="num">${g.count}</td>
+        <td class="num">${g.panels}</td>
+        <td class="num">${g.area.toFixed(3)}</td>
+      </tr>
+    `).join('');
+  }
+
+  // Sum
+  const sumBox = $('sum');
+  if (hasItems) {
+    sumBox.style.display = 'block';
+    sumBox.innerHTML = `Панелей: <b>${totalPanels}</b> (позиций: ${items.length}) · Площадь: <b>${totalArea.toFixed(3)} м²</b>`;
+  } else {
+    sumBox.style.display = 'none';
+  }
+
+  // Toggle views
+  $('viewDetail').style.display = (viewMode === 'detail' && hasItems) ? 'block' : 'none';
+  $('viewSummary').style.display = (viewMode === 'summary' && hasItems) ? 'block' : 'none';
+  $('tabDetail').classList.toggle('active', viewMode === 'detail');
+  $('tabSummary').classList.toggle('active', viewMode === 'summary');
 }
+
+function render() {
+  renderListSelect();
+  renderTable();
+}
+
+function setView(mode) {
+  viewMode = mode;
+  renderTable();
+}
+
+$('searchBox').addEventListener('input', e => {
+  searchQuery = e.target.value;
+  renderTable();
+});
+$('sortSelect').addEventListener('change', e => {
+  sortKey = e.target.value;
+  renderTable();
+});
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 }
 
 /* ==================== ЭКСПОРТ ==================== */
-function exportExcel() {
+function buildWorkbook() {
   const items = getItems();
-  if (!items.length) return alert('Список пуст');
   const rows = items.map((i, n) => ({
     '№': n + 1,
     'Наименование': i.name,
     'Ширина, мм': i.width,
     'Длина, мм': i.length,
     'Толщина, мм': i.thick,
-    'Площадь, м²': +((i.width / 1000) * (i.length / 1000)).toFixed(3)
+    'Кол-во': i.qty || 1,
+    'Площадь, м²': +areaOf(i).toFixed(3)
   }));
   const ws = XLSX.utils.json_to_sheet(rows);
-  ws['!cols'] = [{wch:5},{wch:28},{wch:12},{wch:12},{wch:12},{wch:12}];
+  ws['!cols'] = [{wch:5},{wch:28},{wch:12},{wch:12},{wch:12},{wch:8},{wch:12}];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'ЛДСП');
+  return wb;
+}
+
+function getFileName() {
   const safeName = currentList().name.replace(/[\\/:*?"<>|]/g, '_').trim() || 'ЛДСП';
   const date = new Date().toISOString().slice(0,10);
-  XLSX.writeFile(wb, `${safeName}_${date}.xlsx`);
+  return `${safeName}_${date}.xlsx`;
+}
+
+function exportExcel() {
+  if (!getItems().length) return alert('Список пуст');
+  XLSX.writeFile(buildWorkbook(), getFileName());
+}
+
+/* ==================== ПОДЕЛИТЬСЯ ==================== */
+async function shareExcel() {
+  if (!getItems().length) return alert('Список пуст');
+  try {
+    const wb = buildWorkbook();
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+    const mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    const blob = new Blob([wbout], { type: mime });
+    const fileName = getFileName();
+    const file = new File([blob], fileName, { type: mime });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({
+          files: [file],
+          title: currentList().name,
+          text: `Список ЛДСП: ${currentList().name}`
+        });
+        return;
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        console.error('Share failed:', err);
+      }
+    }
+
+    // Fallback — скачать
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+    alert('Отправка недоступна в этом браузере — файл сохранён в Загрузки.');
+  } catch (err) {
+    alert('Не удалось поделиться: ' + err.message);
+  }
 }
 
 /* ==================== ИМПОРТ ==================== */
@@ -459,7 +806,6 @@ function findCol(keys, keywords, exacts = []) {
 function handleFile(e) {
   const file = e.target.files[0];
   if (!file) return;
-
   const reader = new FileReader();
   reader.onload = ev => {
     try {
@@ -474,6 +820,7 @@ function handleFile(e) {
       const kW    = findCol(keys, ['ширин', 'width'], ['ш']);
       const kL    = findCol(keys, ['длин', 'length'], ['д']);
       const kT    = findCol(keys, ['толщин', 'thick', 'толщ'], ['т']);
+      const kQ    = findCol(keys, ['количеств', 'кол-во', 'кол', 'qty']);
 
       if (!kName || !kW || !kL || !kT)
         throw new Error('Не найдены нужные колонки.\nОжидаются: Наименование, Ширина, Длина, Толщина.');
@@ -485,11 +832,11 @@ function handleFile(e) {
         const w = toNum(r[kW]);
         const l = toNum(r[kL]);
         const t = toNum(r[kT]);
+        const q = kQ ? Math.max(1, Math.floor(toNum(r[kQ]) || 1)) : 1;
         if (name && w > 0 && l > 0 && t > 0)
-          items.push({ id: uid(), name, width: w, length: l, thick: t });
+          items.push({ id: uid(), name, width: w, length: l, thick: t, qty: q });
       }
       if (!items.length) throw new Error('Не найдено ни одной корректной строки');
-
       askImport(items);
     } catch (err) {
       alert('Ошибка импорта: ' + err.message);
@@ -505,7 +852,6 @@ function askImport(items) {
     setItems(items);
     saveState();
     render();
-    renderListSelect();
     return;
   }
   const replace = confirm(
@@ -517,11 +863,9 @@ function askImport(items) {
   setItems(replace ? items : cur.items.concat(items));
   saveState();
   render();
-  renderListSelect();
 }
 
 /* ==================== СТАРТ ==================== */
-renderListSelect();
 render();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 </script>

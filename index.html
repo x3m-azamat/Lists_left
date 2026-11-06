@@ -14,26 +14,45 @@
   body {
     font-family: system-ui, -apple-system, sans-serif;
     background: #f5f5f5; color: #222;
-    padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    padding: 16px; padding-bottom: calc(20px + env(safe-area-inset-bottom));
     max-width: 1100px; margin: 0 auto;
   }
-  h1 { font-size: 24px; margin: 0 0 16px; }
+  h1 { font-size: 22px; margin: 0 0 14px; }
+
+  /* ---- Списки (верхняя панель) ---- */
+  .list-bar {
+    display: flex; gap: 8px; align-items: center;
+    background: #fff; border-radius: 12px; padding: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    margin-bottom: 14px; flex-wrap: wrap;
+  }
+  .list-bar select {
+    flex: 1; min-width: 180px;
+    padding: 12px 14px; font-size: 16px; font-weight: 500;
+    border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa;
+    color: #222;
+  }
+  .list-bar select:focus { outline: none; border-color: #4f46e5; }
+  .icon-btn {
+    width: 46px; height: 46px; padding: 0; font-size: 18px;
+    background: #eef2ff; color: #4f46e5; border-radius: 10px;
+    flex-shrink: 0; border: 0; cursor: pointer;
+  }
+  .icon-btn.danger { background: #fee2e2; color: #dc2626; }
+
   .card {
     background: #fff; border-radius: 14px; padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.07); margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.07); margin-bottom: 16px;
   }
   label { display: block; font-size: 15px; margin: 0 0 6px; color: #555; font-weight: 500; }
-  input {
+  input[type="text"], input[type="number"], input:not([type]) {
     width: 100%; padding: 14px 16px; font-size: 17px;
-    border: 1.5px solid #d0d0d0; border-radius: 10px;
-    background: #fafafa;
+    border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa;
   }
   input:focus { outline: none; border-color: #4f46e5; background: #fff; }
   .form-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 14px;
-    align-items: end;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 14px; align-items: end;
   }
   @media (max-width: 700px) {
     .form-grid { grid-template-columns: 1fr 1fr; }
@@ -46,6 +65,7 @@
   }
   button:active { transform: scale(.98); filter: brightness(.92); }
   button.sec { background: #16a34a; }
+  button.imp { background: #0ea5e9; }
   button.del { background: #dc2626; }
   .add-btn { margin-top: 18px; width: 100%; font-size: 18px; padding: 18px; }
 
@@ -65,10 +85,10 @@
   .sum { font-size: 15px; color: #444; margin: 14px 0 0; padding: 12px;
          background: #f0f4ff; border-radius: 8px; }
   .sum b { color: #4f46e5; }
-  .actions { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-top: 16px; }
-  @media (max-width: 500px) { .actions { grid-template-columns: 1fr; } }
+  .actions-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 16px; }
+  @media (max-width: 600px) { .actions-3 { grid-template-columns: 1fr; } }
 
-  /* === Автодополнение === */
+  /* ---- Автодополнение ---- */
   .ac-wrap { position: relative; }
   .ac-list {
     position: absolute; left: 0; right: 0; top: calc(100% + 4px);
@@ -79,7 +99,7 @@
   }
   .ac-list.open { display: block; }
   .ac-item {
-    padding: 14px 14px; font-size: 16px; border-radius: 8px;
+    padding: 14px; font-size: 16px; border-radius: 8px;
     cursor: pointer; display: flex; align-items: center; gap: 10px;
   }
   .ac-item:hover, .ac-item.active { background: #eef2ff; }
@@ -91,12 +111,19 @@
 
 <h1>📐 Учёт панелей ЛДСП</h1>
 
+<div class="list-bar">
+  <select id="listSelect" onchange="switchList(this.value)"></select>
+  <button class="icon-btn" onclick="newList()" title="Новый список">➕</button>
+  <button class="icon-btn" onclick="renameList()" title="Переименовать">✏️</button>
+  <button class="icon-btn danger" onclick="deleteList()" title="Удалить список">🗑</button>
+</div>
+
 <div class="card">
   <div class="form-grid">
     <div class="full">
       <label>Наименование</label>
       <div class="ac-wrap">
-        <input id="name" placeholder="Начните вводить — появятся подсказки" autocomplete="off">
+        <input id="name" type="text" placeholder="Начните вводить — появятся подсказки" autocomplete="off">
         <div class="ac-list" id="acList"></div>
       </div>
     </div>
@@ -135,19 +162,107 @@
   <div id="empty" class="empty">Пока пусто. Добавьте первую панель.</div>
   <div class="sum" id="sum" style="display:none"></div>
 
-  <div class="actions">
+  <div class="actions-3">
     <button class="sec" onclick="exportExcel()">📥 Скачать Excel</button>
-    <button class="del" onclick="clearAll()">🗑 Очистить</button>
+    <button class="imp" onclick="document.getElementById('fileInput').click()">📂 Импорт Excel</button>
+    <button class="del" onclick="clearAll()">🗑 Очистить список</button>
   </div>
+  <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none" onchange="handleFile(event)">
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
-const KEY = 'ldsp_items_v1';
-let items = JSON.parse(localStorage.getItem(KEY) || '[]');
+/* ==================== ХРАНИЛИЩЕ ==================== */
+const STORAGE_KEY = 'ldsp_lists_v1';
+const OLD_KEY = 'ldsp_items_v1';
 const $ = id => document.getElementById(id);
 
-function save() { localStorage.setItem(KEY, JSON.stringify(items)); }
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      if (s && Array.isArray(s.lists) && s.lists.length) return s;
+    }
+  } catch (e) { console.error(e); }
+
+  // Миграция из старого формата (одна таблица)
+  let oldItems = [];
+  try { oldItems = JSON.parse(localStorage.getItem(OLD_KEY) || '[]'); } catch {}
+  const list = { id: uid(), name: 'Список 1', items: Array.isArray(oldItems) ? oldItems : [] };
+  const s = { lists: [list], currentListId: list.id };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+  return s;
+}
+
+let state = loadState();
+
+function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+function currentList() { return state.lists.find(l => l.id === state.currentListId) || state.lists[0]; }
+function getItems() { return currentList().items; }
+function setItems(items) { currentList().items = items; saveState(); }
+
+/* ==================== УПРАВЛЕНИЕ СПИСКАМИ ==================== */
+function renderListSelect() {
+  const sel = $('listSelect');
+  sel.innerHTML = '';
+  state.lists.forEach(l => {
+    const opt = document.createElement('option');
+    opt.value = l.id;
+    opt.textContent = `${l.name} (${l.items.length})`;
+    if (l.id === state.currentListId) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function switchList(id) {
+  state.currentListId = id;
+  saveState();
+  closeAc();
+  render();
+}
+
+function newList() {
+  const name = prompt('Название нового списка:', `Список ${state.lists.length + 1}`);
+  if (name === null) return;
+  const trimmed = name.trim() || `Список ${state.lists.length + 1}`;
+  const list = { id: uid(), name: trimmed, items: [] };
+  state.lists.push(list);
+  state.currentListId = list.id;
+  saveState();
+  closeAc();
+  renderListSelect();
+  render();
+}
+
+function renameList() {
+  const l = currentList();
+  const name = prompt('Новое название:', l.name);
+  if (name === null) return;
+  const trimmed = name.trim();
+  if (!trimmed) return;
+  l.name = trimmed;
+  saveState();
+  renderListSelect();
+}
+
+function deleteList() {
+  if (state.lists.length <= 1) {
+    alert('Нельзя удалить единственный список');
+    return;
+  }
+  const l = currentList();
+  if (!confirm(`Удалить список "${l.name}" (${l.items.length} записей)?`)) return;
+  state.lists = state.lists.filter(x => x.id !== l.id);
+  state.currentListId = state.lists[0].id;
+  saveState();
+  renderListSelect();
+  render();
+}
 
 /* ==================== АВТОДОПОЛНЕНИЕ ==================== */
 const nameInput = $('name');
@@ -155,48 +270,34 @@ const acList = $('acList');
 let acMatches = [];
 let acActive = -1;
 
-// Уникальные наименования из сохранённых панелей
 function uniqueNames() {
-  const set = new Set(items.map(i => i.name.trim()));
+  const set = new Set(getItems().map(i => i.name.trim()));
   return [...set].filter(Boolean).sort((a, b) => a.localeCompare(b, 'ru'));
 }
 
-// Подсветка совпавшей части
 function highlight(text, query) {
   if (!query) return escapeHtml(text);
   const idx = text.toLowerCase().indexOf(query.toLowerCase());
   if (idx === -1) return escapeHtml(text);
-  const before = escapeHtml(text.slice(0, idx));
-  const match  = escapeHtml(text.slice(idx, idx + query.length));
-  const after  = escapeHtml(text.slice(idx + query.length));
-  return `${before}<mark>${match}</mark>${after}`;
+  return escapeHtml(text.slice(0, idx))
+       + '<mark>' + escapeHtml(text.slice(idx, idx + query.length)) + '</mark>'
+       + escapeHtml(text.slice(idx + query.length));
 }
 
 function openAc(query) {
   const all = uniqueNames();
   const q = query.trim().toLowerCase();
-  // Если поле пустое — показываем все уникальные (до 8), иначе совпадения
-  acMatches = (q
-      ? all.filter(n => n.toLowerCase().includes(q))
-      : all
-  ).slice(0, 8);
+  acMatches = (q ? all.filter(n => n.toLowerCase().includes(q)) : all).slice(0, 8);
 
-  if (!acMatches.length) {
-    acList.classList.remove('open');
-    return;
-  }
+  if (!acMatches.length) { acList.classList.remove('open'); return; }
   acActive = -1;
   acList.innerHTML = acMatches.map((n, i) =>
-    `<div class="ac-item" data-idx="${i}">
-       <span class="ico">▸</span>
-       <span>${highlight(n, q)}</span>
-     </div>`
+    `<div class="ac-item" data-idx="${i}"><span class="ico">▸</span><span>${highlight(n, q)}</span></div>`
   ).join('');
   acList.classList.add('open');
 
   acList.querySelectorAll('.ac-item').forEach(el => {
     el.addEventListener('mousedown', e => {
-      // mousedown, чтобы не терять фокус с input
       e.preventDefault();
       pickAc(parseInt(el.dataset.idx, 10));
     });
@@ -207,11 +308,7 @@ function openAc(query) {
   });
 }
 
-function closeAc() {
-  acList.classList.remove('open');
-  acActive = -1;
-  acMatches = [];
-}
+function closeAc() { acList.classList.remove('open'); acActive = -1; acMatches = []; }
 
 function pickAc(idx) {
   if (idx < 0 || idx >= acMatches.length) return;
@@ -222,38 +319,22 @@ function pickAc(idx) {
 
 nameInput.addEventListener('input', () => openAc(nameInput.value));
 nameInput.addEventListener('focus', () => openAc(nameInput.value));
-nameInput.addEventListener('blur', () => {
-  // Небольшая задержка, чтобы сработал выбор по тапу
-  setTimeout(closeAc, 150);
-});
-
+nameInput.addEventListener('blur', () => setTimeout(closeAc, 150));
 nameInput.addEventListener('keydown', e => {
   if (!acList.classList.contains('open')) return;
   const els = acList.querySelectorAll('.ac-item');
-  if (e.key === 'ArrowDown') {
-    e.preventDefault();
-    acActive = (acActive + 1) % els.length;
-    updateActive(els);
-  } else if (e.key === 'ArrowUp') {
-    e.preventDefault();
-    acActive = (acActive - 1 + els.length) % els.length;
-    updateActive(els);
-  } else if (e.key === 'Enter') {
-    if (acActive >= 0) { e.preventDefault(); pickAc(acActive); }
-  } else if (e.key === 'Escape') {
-    closeAc();
-  }
+  if (e.key === 'ArrowDown') { e.preventDefault(); acActive = (acActive + 1) % els.length; updateActive(els); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); acActive = (acActive - 1 + els.length) % els.length; updateActive(els); }
+  else if (e.key === 'Enter' && acActive >= 0) { e.preventDefault(); pickAc(acActive); }
+  else if (e.key === 'Escape') closeAc();
 });
 
 function updateActive(els) {
   els.forEach((el, i) => el.classList.toggle('active', i === acActive));
-  if (acActive >= 0 && els[acActive]) {
-    els[acActive].scrollIntoView({ block: 'nearest' });
-  }
+  if (acActive >= 0 && els[acActive]) els[acActive].scrollIntoView({ block: 'nearest' });
 }
 
-/* ==================== ОСНОВНАЯ ЛОГИКА ==================== */
-
+/* ==================== ОСНОВНЫЕ ОПЕРАЦИИ ==================== */
 function addItem() {
   const name  = $('name').value.trim();
   const width = parseFloat($('width').value);
@@ -264,8 +345,11 @@ function addItem() {
   if (!(width > 0) || !(len > 0) || !(thick > 0))
     return alert('Ширина, длина и толщина должны быть положительными');
 
-  items.push({ id: Date.now(), name, width, length: len, thick });
-  save(); render();
+  const items = getItems();
+  items.push({ id: uid(), name, width, length: len, thick });
+  setItems(items);
+  render();
+  renderListSelect();
 
   $('name').value = ''; $('width').value = '';
   $('length').value = ''; $('thick').value = '';
@@ -275,27 +359,31 @@ function addItem() {
 
 function removeItem(id) {
   if (!confirm('Удалить запись?')) return;
-  items = items.filter(i => i.id !== id);
-  save(); render();
+  setItems(getItems().filter(i => i.id !== id));
+  render();
+  renderListSelect();
 }
 
 function clearAll() {
-  if (!items.length) return;
-  if (!confirm('Удалить все записи?')) return;
-  items = []; save(); render();
+  if (!getItems().length) return;
+  if (!confirm(`Удалить все записи из списка "${currentList().name}"?`)) return;
+  setItems([]);
+  render();
+  renderListSelect();
 }
 
 function render() {
+  const items = getItems();
   const tbody = $('tbody');
   tbody.innerHTML = '';
   $('empty').style.display = items.length ? 'none' : 'block';
   const sumBox = $('sum');
   sumBox.style.display = items.length ? 'block' : 'none';
 
-  let totalM2 = 0, totalPcs = 0;
+  let totalM2 = 0;
   items.forEach(i => {
     const m2 = (i.width / 1000) * (i.length / 1000);
-    totalM2 += m2; totalPcs++;
+    totalM2 += m2;
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${escapeHtml(i.name)}</td>
@@ -306,15 +394,16 @@ function render() {
       <td><button class="x" onclick="removeItem(${i.id})" aria-label="Удалить">✕</button></td>`;
     tbody.appendChild(tr);
   });
-  sumBox.innerHTML =
-    `Панелей: <b>${totalPcs}</b> · Общая площадь: <b>${totalM2.toFixed(3)} м²</b>`;
+  sumBox.innerHTML = `Панелей: <b>${items.length}</b> · Общая площадь: <b>${totalM2.toFixed(3)} м²</b>`;
 }
 
 function escapeHtml(s) {
-  return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 }
 
+/* ==================== ЭКСПОРТ ==================== */
 function exportExcel() {
+  const items = getItems();
   if (!items.length) return alert('Список пуст');
   const rows = items.map((i, n) => ({
     '№': n + 1,
@@ -328,10 +417,89 @@ function exportExcel() {
   ws['!cols'] = [{wch:5},{wch:28},{wch:12},{wch:12},{wch:12},{wch:12}];
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'ЛДСП');
+  const safeName = currentList().name.replace(/[\\/:*?"<>|]/g, '_').trim() || 'ЛДСП';
   const date = new Date().toISOString().slice(0,10);
-  XLSX.writeFile(wb, `ЛДСП_${date}.xlsx`);
+  XLSX.writeFile(wb, `${safeName}_${date}.xlsx`);
 }
 
+/* ==================== ИМПОРТ ==================== */
+function findCol(keys, keywords, exacts = []) {
+  for (const k of keys) {
+    const low = k.toLowerCase().trim();
+    if (keywords.some(kw => low.includes(kw))) return k;
+  }
+  for (const k of keys) {
+    if (exacts.includes(k.toLowerCase().trim())) return k;
+  }
+  return null;
+}
+
+function handleFile(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const data = new Uint8Array(ev.target.result);
+      const wb = XLSX.read(data, { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
+      if (!rows.length) throw new Error('Файл пуст');
+
+      const keys = Object.keys(rows[0]);
+      const kName = findCol(keys, ['наименован', 'name'], ['имя']);
+      const kW    = findCol(keys, ['ширин', 'width'], ['ш']);
+      const kL    = findCol(keys, ['длин', 'length'], ['д']);
+      const kT    = findCol(keys, ['толщин', 'thick', 'толщ'], ['т']);
+
+      if (!kName || !kW || !kL || !kT)
+        throw new Error('Не найдены нужные колонки.\nОжидаются: Наименование, Ширина, Длина, Толщина.');
+
+      const toNum = v => parseFloat(String(v).replace(',', '.'));
+      const items = [];
+      for (const r of rows) {
+        const name = String(r[kName] ?? '').trim();
+        const w = toNum(r[kW]);
+        const l = toNum(r[kL]);
+        const t = toNum(r[kT]);
+        if (name && w > 0 && l > 0 && t > 0)
+          items.push({ id: uid(), name, width: w, length: l, thick: t });
+      }
+      if (!items.length) throw new Error('Не найдено ни одной корректной строки');
+
+      askImport(items);
+    } catch (err) {
+      alert('Ошибка импорта: ' + err.message);
+    }
+    e.target.value = '';
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+function askImport(items) {
+  const cur = currentList();
+  if (!cur.items.length) {
+    setItems(items);
+    saveState();
+    render();
+    renderListSelect();
+    return;
+  }
+  const replace = confirm(
+    `Найдено ${items.length} строк в Excel.\n\n` +
+    `Текущий список "${cur.name}" содержит ${cur.items.length} записей.\n\n` +
+    `ОК — ЗАМЕНИТЬ текущий список\n` +
+    `Отмена — ДОБАВИТЬ в конец`
+  );
+  setItems(replace ? items : cur.items.concat(items));
+  saveState();
+  render();
+  renderListSelect();
+}
+
+/* ==================== СТАРТ ==================== */
+renderListSelect();
 render();
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 </script>

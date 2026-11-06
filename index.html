@@ -755,73 +755,74 @@ function exportExcel() {
 async function shareExcel() {
   if (!getItems().length) return alert('Список пуст');
 
-  try {
-    // Готовим Excel-файл
-    const wb = buildWorkbook();
-    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-    const mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-    const blob = new Blob([wbout], { type: mime });
-    const fileName = getFileName();
-    const file = new File([blob], fileName, { type: mime });
+  const items = getItems();
+  const rows = items.map((i, n) => ({
+    '№': n + 1,
+    'Наименование': i.name,
+    'Ширина, мм': i.width,
+    'Длина, мм': i.length,
+    'Толщина, мм': i.thick,
+    'Кол-во': i.qty || 1,
+    'Площадь, м²': +areaOf(i).toFixed(3)
+  }));
 
-    // Проверка наличия Web Share API
-    if (typeof navigator.share !== 'function') {
-      downloadBlob(blob, fileName);
-      alert('Ваш браузер не поддерживает функцию "Поделиться".\nФайл сохранён в папку "Загрузки".');
-      return;
-    }
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'ЛДСП');
+  
+  const safeName = currentList().name.replace(/[\\/:*?"<>|]/g, '_').trim() || 'ЛДСП';
+  const date = new Date().toISOString().slice(0,10);
+  const xlsxFileName = `${safeName}_${date}.xlsx`;
+  const csvFileName = `${safeName}_${date}.csv`;
 
-    // Попытка №1: поделиться файлом напрямую
+  // Генерируем XLSX
+  const wboutXlsx = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+  const xlsxBlob = new Blob([wboutXlsx], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const xlsxFile = new File([xlsxBlob], xlsxFileName, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+  // Пытаемся поделиться XLSX
+  if (navigator.canShare && navigator.canShare({ files: [xlsxFile] })) {
     try {
       await navigator.share({
-        files: [file],
-        title: currentList().name
+        files: [xlsxFile],
+        title: currentList().name,
+        text: `Список ЛДСП: ${currentList().name}`
       });
-      return; // Успех!
-    } catch (err) {
-      if (err.name === 'AbortError') return; // Пользователь сам закрыл меню
-      console.error('Share с файлом не удался:', err.name, err.message);
-    }
-
-    // Попытка №2: поделиться текстом (без файла)
-    try {
-      const preview = getItems().slice(0, 5).map(i =>
-        `• ${i.name}: ${i.width}×${i.length}×${i.thick} мм × ${i.qty || 1}`
-      ).join('\n');
-      await navigator.share({
-        title: `Список ЛДСП: ${currentList().name}`,
-        text: `Позиций: ${getItems().length}\n\n${preview}`
-      });
-      // Текст ушёл, теперь отдельно сохраняем файл
-      downloadBlob(blob, fileName);
-      return;
+      return; // Успех
     } catch (err) {
       if (err.name === 'AbortError') return;
-      console.error('Share с текстом не удался:', err.name, err.message);
     }
-
-    // Ничего не сработало — скачиваем файл
-    downloadBlob(blob, fileName);
-    alert(
-      'Системное меню "Поделиться" для Excel-файлов недоступно на этом устройстве.\n\n' +
-      '📁 Файл сохранён в папку "Загрузки".\n\n' +
-      'Откройте его через "Загрузки" или "Файлы" и нажмите "Поделиться" вручную.'
-    );
-
-  } catch (err) {
-    alert('Ошибка: ' + err.message);
   }
-}
 
-function downloadBlob(blob, fileName) {
-  const url = URL.createObjectURL(blob);
+  // Если XLSX не поддерживается, пробуем CSV (он поддерживается везде)
+  const csvContent = "\uFEFF" + XLSX.utils.sheet_to_csv(ws, { FS: ';' }); // BOM для Excel и точка с запятой для русской локали
+  const csvBlob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const csvFile = new File([csvBlob], csvFileName, { type: 'text/csv' });
+
+  if (navigator.canShare && navigator.canShare({ files: [csvFile] })) {
+    try {
+      await navigator.share({
+        files: [csvFile],
+        title: currentList().name,
+        text: `Список ЛДСП: ${currentList().name}`
+      });
+      return; // Успех с CSV
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+    }
+  }
+
+  // Если ничего не сработало — скачиваем XLSX
+  const url = URL.createObjectURL(xlsxBlob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = fileName;
+  a.download = xlsxFileName;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 30000);
+  
+  alert('Меню "Поделиться" недоступно на этом устройстве. Файл сохранён в папку "Загрузки".');
 }
 
 /* ==================== ИМПОРТ ==================== */

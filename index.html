@@ -17,6 +17,19 @@
     padding: 16px; padding-bottom: calc(20px + env(safe-area-inset-bottom));
     max-width: 1100px; margin: 0 auto;
   }
+
+  /* ---- Логотип сверху по центру, на белом ---- */
+  .logo-bar {
+    background: #fff; border-radius: 12px;
+    padding: 16px; margin: 0 0 14px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.07);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .logo-bar img {
+    height: 56px; width: auto; max-width: 220px;
+    object-fit: contain; display: block;
+  }
+
   h1 { font-size: 22px; margin: 0 0 14px; }
 
   /* ---- Списки (верхняя панель) ---- */
@@ -105,9 +118,18 @@
   .ac-item:hover, .ac-item.active { background: #eef2ff; }
   .ac-item .ico { color: #4f46e5; font-size: 14px; flex-shrink: 0; }
   .ac-item mark { background: #fde68a; color: inherit; padding: 0 1px; border-radius: 2px; }
+
+  @media (max-width: 500px) {
+    .logo-bar img { height: 44px; }
+    h1 { font-size: 18px; }
+  }
 </style>
 </head>
 <body>
+
+<div class="logo-bar">
+  <img src="parma.svg" alt="Parma">
+</div>
 
 <h1>📐 Учёт панелей ЛДСП</h1>
 
@@ -391,7 +413,7 @@ function render() {
       <td class="num">${i.length}</td>
       <td class="num">${i.thick}</td>
       <td class="num">${m2.toFixed(3)}</td>
-      <td><button class="x" onclick="removeItem(${i.id})" aria-label="Удалить">✕</button></td>`;
+      <td><button class="x" onclick="removeItem('${i.id}')" aria-label="Удалить">✕</button></td>`;
     tbody.appendChild(tr);
   });
   sumBox.innerHTML = `Панелей: <b>${items.length}</b> · Общая площадь: <b>${totalM2.toFixed(3)} м²</b>`;

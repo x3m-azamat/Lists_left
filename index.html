@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<title>Учёт ЛДСП</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #f5f5f5; color: #222;
+    padding: 20px; padding-bottom: env(safe-area-inset-bottom);
+    max-width: 1100px; margin: 0 auto;
+  }
+  h1 { font-size: 24px; margin: 0 0 16px; }
+  .card {
+    background: #fff; border-radius: 14px; padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.07); margin-bottom: 20px;
+  }
+  label { display: block; font-size: 15px; margin: 0 0 6px; color: #555; font-weight: 500; }
+  input {
+    width: 100%; padding: 14px 16px; font-size: 17px;
+    border: 1.5px solid #d0d0d0; border-radius: 10px;
+    background: #fafafa;
+  }
+  input:focus { outline: none; border-color: #4f46e5; background: #fff; }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 14px;
+    align-items: end;
+  }
+  @media (max-width: 700px) {
+    .form-grid { grid-template-columns: 1fr 1fr; }
+    .form-grid .full { grid-column: 1 / -1; }
+  }
+  button {
+    padding: 16px; font-size: 17px; border: 0; border-radius: 10px;
+    background: #4f46e5; color: #fff; cursor: pointer; font-weight: 500;
+    transition: transform .05s, filter .15s;
+  }
+  button:active { transform: scale(.98); filter: brightness(.92); }
+  button.sec { background: #16a34a; }
+  button.del { background: #dc2626; }
+  .add-btn { margin-top: 18px; width: 100%; font-size: 18px; padding: 18px; }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
+  th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #f0f0f0; font-weight: 600; font-size: 14px;
+       text-transform: uppercase; letter-spacing: .03em; color: #555; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  th.num { text-align: right; }
+  .x {
+    background: #fee2e2; color: #dc2626; border: 0;
+    width: 40px; height: 40px; border-radius: 8px;
+    font-size: 20px; cursor: pointer; padding: 0;
+  }
+  .empty { color: #999; text-align: center; padding: 40px 20px; font-size: 16px; }
+  .sum { font-size: 15px; color: #444; margin: 14px 0 0; padding: 12px;
+         background: #f0f4ff; border-radius: 8px; }
+  .sum b { color: #4f46e5; }
+  .actions { display: grid; grid-template-columns: 2fr 1fr; gap: 12px; margin-top: 16px; }
+  @media (max-width: 500px) { .actions { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>📐 Учёт панелей ЛДСП</h1>
+
+<div class="card">
+  <div class="form-grid">
+    <div class="full">
+      <label>Наименование</label>
+      <input id="name" placeholder="ЛДСП белый / дуб сонома..." autocomplete="off">
+    </div>
+    <div>
+      <label>Ширина, мм</label>
+      <input id="width" type="number" inputmode="numeric" placeholder="600">
+    </div>
+    <div>
+      <label>Длина, мм</label>
+      <input id="length" type="number" inputmode="numeric" placeholder="1200">
+    </div>
+    <div>
+      <label>Толщина, мм</label>
+      <input id="thick" type="number" inputmode="numeric" placeholder="16">
+    </div>
+  </div>
+  <button class="add-btn" onclick="addItem()">➕ Добавить панель</button>
+</div>
+
+<div class="card">
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Наименование</th>
+          <th class="num">Ш, мм</th>
+          <th class="num">Д, мм</th>
+          <th class="num">Т, мм</th>
+          <th class="num">Площадь, м²</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+  <div id="empty" class="empty">Пока пусто. Добавьте первую панель.</div>
+  <div class="sum" id="sum" style="display:none"></div>
+
+  <div class="actions">
+    <button class="sec" onclick="exportExcel()">📥 Скачать Excel</button>
+    <button class="del" onclick="clearAll()">🗑 Очистить</button>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script>
+const KEY = 'ldsp_items_v1';
+let items = JSON.parse(localStorage.getItem(KEY) || '[]');
+const $ = id => document.getElementById(id);
+
+function save() { localStorage.setItem(KEY, JSON.stringify(items)); }
+
+function addItem() {
+  const name  = $('name').value.trim();
+  const width = parseFloat($('width').value);
+  const len   = parseFloat($('length').value);
+  const thick = parseFloat($('thick').value);
+
+  if (!name) return alert('Введите наименование');
+  if (!(width > 0) || !(len > 0) || !(thick > 0))
+    return alert('Ширина, длина и толщина должны быть положительными');
+
+  items.push({ id: Date.now(), name, width, length: len, thick });
+  save(); render();
+
+  $('name').value = ''; $('width').value = '';
+  $('length').value = ''; $('thick').value = '';
+  $('name').focus();
+}
+
+function removeItem(id) {
+  if (!confirm('Удалить запись?')) return;
+  items = items.filter(i => i.id !== id);
+  save(); render();
+}
+
+function clearAll() {
+  if (!items.length) return;
+  if (!confirm('Удалить все записи?')) return;
+  items = []; save(); render();
+}
+
+function render() {
+  const tbody = $('tbody');
+  tbody.innerHTML = '';
+  $('empty').style.display = items.length ? 'none' : 'block';
+  const sumBox = $('sum');
+  sumBox.style.display = items.length ? 'block' : 'none';
+
+  let totalM2 = 0, totalPcs = 0;
+  items.forEach(i => {
+    const m2 = (i.width / 1000) * (i.length / 1000);
+    totalM2 += m2; totalPcs++;
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${escapeHtml(i.name)}</td>
+      <td class="num">${i.width}</td>
+      <td class="num">${i.length}</td>
+      <td class="num">${i.thick}</td>
+      <td class="num">${m2.toFixed(3)}</td>
+      <td><button class="x" onclick="removeItem(${i.id})" aria-label="Удалить">✕</button></td>`;
+    tbody.appendChild(tr);
+  });
+  sumBox.innerHTML =
+    `Панелей: <b>${totalPcs}</b> · Общая площадь: <b>${totalM2.toFixed(3)} м²</b>`;
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+
+function exportExcel() {
+  if (!items.length) return alert('Список пуст');
+  const rows = items.map((i, n) => ({
+    '№': n + 1,
+    'Наименование': i.name,
+    'Ширина, мм': i.width,
+    'Длина, мм': i.length,
+    'Толщина, мм': i.thick,
+    'Площадь, м²': +((i.width / 1000) * (i.length / 1000)).toFixed(3)
+  }));
+  const ws = XLSX.utils.json_to_sheet(rows);
+  ws['!cols'] = [{wch:5},{wch:28},{wch:12},{wch:12},{wch:12},{wch:12}];
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'ЛДСП');
+  const date = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, `ЛДСП_${date}.xlsx`);
+}
+
+render();
+if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>

@@ -127,7 +127,6 @@
   .ac-item .ico { color: #4f46e5; font-size: 14px; flex-shrink: 0; }
   .ac-item mark { background: #fde68a; color: #222; padding: 0 1px; border-radius: 2px; }
 
-  /* Модалки */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; z-index: 100; padding: 16px; }
   .modal-overlay.open { display: flex; }
   .modal { background: var(--bg-card); border-radius: 14px; padding: 24px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.4); }
@@ -136,12 +135,13 @@
   .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
   .btn-cancel { background: var(--bg-tab); color: var(--text-main); }
 
-  /* Камера */
-  #cameraModal .modal { max-width: 600px; padding: 10px; background: #000; }
-  #videoFeed { width: 100%; border-radius: 10px; display: block; }
-  .camera-controls { display: flex; gap: 10px; margin-top: 10px; }
-  .camera-controls button { flex: 1; padding: 16px; }
-  .btn-snap { background: #16a34a; font-size: 18px; }
+  /* Живая камера */
+  #cameraModal { padding: 0; background: #000; }
+  #cameraModal .modal { max-width: 100%; height: 100%; border-radius: 0; padding: 10px; display: flex; flex-direction: column; background: #000; }
+  #videoFeed { flex: 1; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; background: #111; }
+  .camera-controls { display: flex; gap: 10px; margin-top: 10px; padding-bottom: env(safe-area-inset-bottom); }
+  .camera-controls button { flex: 1; padding: 20px; font-size: 18px; }
+  .btn-snap { background: #16a34a; }
 
   @media (max-width: 500px) { .logo-bar img { height: 44px; } h1 { font-size: 18px; } .theme-btn svg { width: 20px; height: 20px; } }
 </style>
@@ -177,7 +177,7 @@
       </div>
     </div>
     <div><label>Ширина, мм</label><input id="width" type="number" inputmode="numeric" placeholder="600"></div>
-    <div><label>Длина, мм</label><input type="number" id="length" inputmode="numeric" placeholder="1200"></div>
+    <div><label>Длина, мм</label><input id="length" type="number" inputmode="numeric" placeholder="1200"></div>
     <div><label>Толщина, мм</label><input id="thick" type="number" inputmode="numeric" placeholder="16"></div>
     <div><label>Количество</label><input id="qty" type="number" inputmode="numeric" min="1" placeholder="1"></div>
   </div>
@@ -494,6 +494,7 @@ async function initTesseract() {
 async function startCamera() {
   $('cameraModal').classList.add('open');
   try {
+    // Запрашиваем максимальное разрешение
     videoStream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } }
     });
@@ -540,13 +541,13 @@ async function capturePhoto() {
   document.body.appendChild(loader);
 
   try {
-    // Предобработка (контраст)
+    // Улучшенная предобработка: черно-белый фильтр (бинаризация) для текста
     const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imgData.data;
     for (let i = 0; i < data.length; i += 4) {
       const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
-      const contrast = 1.5; 
-      const val = Math.min(255, Math.max(0, contrast * (gray - 128) + 128));
+      // Делаем текст контрастным (черное на белом)
+      const val = gray > 140 ? 255 : 0;
       data[i] = data[i+1] = data[i+2] = val;
     }
     ctx.putImageData(imgData, 0, 0);
@@ -560,7 +561,6 @@ async function capturePhoto() {
 
     // 1. Ищем размеры (например: 616 x 495 x 16)
     let width = 0, length = 0, thick = 0;
-    // Более мягкий поиск, ловит и "616х495х16" и "616 x 495 * 16"
     const dimRegex = /(\d{2,4}(?:[.,]\d)?)\s*[xXхХ×*]\s*(\d{2,4}(?:[.,]\d)?)\s*[xXхХ×*]\s*(\d{1,2})/;
     const dimMatch = text.match(dimRegex);
     if (dimMatch) {
@@ -575,9 +575,9 @@ async function capturePhoto() {
     let materialLine = lines.find(l => /ЛДСП|МДФ|ДСП|Egger/i.test(l));
     
     if (materialLine) {
-        // 1. Убираем всё до "ЛДСП" включительно
-        materialLine = materialLine.replace(/.*(ЛДСП|МДФ)/i, '$1').trim(); 
-        // 2. Убираем "16мм" (и пробелы)
+        // 1. Оставляем только ту часть, которая начинается с "ЛДСП" или "МДФ"
+        materialLine = materialLine.replace(/.*?(ЛДСП|МДФ)/i, '$1').trim(); 
+        // 2. Убираем "16мм"
         materialLine = materialLine.replace(/\s*\d+\s*мм,?\s*/i, ' ').trim(); 
         // 3. Убираем артикул в конце (пробел + буква + цифры)
         materialLine = materialLine.replace(/\s+[a-zA-Zа-яА-Я]\d+.*$/i, '').trim(); 

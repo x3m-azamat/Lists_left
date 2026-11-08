@@ -467,7 +467,6 @@ let isWorkerReady = false;
 
 async function initTesseract() {
   if (isWorkerReady) return;
-  // Инициализируем только русский язык для точности
   tesseractWorker = await Tesseract.createWorker('rus', 1, {
     langPath: 'https://tessdata.projectnaptha.com/4.0.0_fast',
     corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.0.0',
@@ -513,8 +512,7 @@ async function handlePhoto(event) {
     document.body.removeChild(loader);
 
     // ИСПРАВЛЕНИЕ ОШИБОК OCR
-    text = text.replace(/Еввег|Евгер/gi, 'Egger')
-               .replace(/Еггер/gi, 'Egger');
+    text = text.replace(/Еввег|Евгер|Еггер/gi, 'Egger');
 
     // 1. Ищем размеры (первую строку с размерами)
     let width = 0, length = 0, thick = 0;
@@ -532,11 +530,15 @@ async function handlePhoto(event) {
     let materialLine = lines.find(l => /ЛДСП|МДФ|ДСП|Egger/i.test(l));
     
     if (materialLine) {
-        // Очистка строки
-        materialLine = materialLine.replace(/.*Бирка\s*-\s*\d+/i, '').trim(); // убираем "Карта - 14 Бирка - 1"
-        materialLine = materialLine.replace(/\s+W\d+.*$/i, '').trim(); // убираем "W1200 ST9"
-        materialLine = materialLine.replace(/\s*\d+\s*мм,?\s*/i, ' ').trim(); // убираем "16мм,"
-        materialLine = materialLine.replace(/[^a-zA-Zа-яА-Я0-9, ]+/g, ' '); // оставляем только буквы, цифры, запятые
+        // 1. Убираем всё до "Бирка - X" включительно
+        materialLine = materialLine.replace(/.*Бирка\s*-\s*\d+/i, '').trim(); 
+        // 2. Убираем "16мм"
+        materialLine = materialLine.replace(/\s*\d+\s*мм,?\s*/i, ' ').trim(); 
+        // 3. Убираем АРТИКУЛ (начинается с буквы/цифр в конце строки, например W1200, М120, U702 и т.д.)
+        materialLine = materialLine.replace(/\s+[a-zA-Zа-яА-Я]\d+.*$/i, '').trim(); 
+        // 4. Оставляем только буквы, цифры, запятые и пробелы
+        materialLine = materialLine.replace(/[^a-zA-Zа-яА-Я0-9, ]+/g, ' '); 
+        // 5. Схлопываем пробелы
         material = materialLine.replace(/\s+/g, ' ').trim();
     } else {
         for (let line of lines) {
@@ -585,7 +587,7 @@ async function preprocessImage(file) {
 
       const imageData = ctx.getImageData(0, 0, width, height);
       const data = imageData.data;
-      // Мягкое повышение контраста (без потери тонких букв)
+      // Мягкое повышение контраста
       for (let i = 0; i < data.length; i += 4) {
         const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
         const contrast = 1.5; 

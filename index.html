@@ -24,7 +24,6 @@
     --shadow: rgba(0,0,0,.07);
     --ac-bg-hover: #eef2ff;
   }
-
   body.dark {
     --bg-body: #121212;
     --bg-card: #1e1e1e;
@@ -40,42 +39,30 @@
     --shadow: rgba(0,0,0,.3);
     --ac-bg-hover: #333333;
   }
-
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body { margin: 0; padding: 0; }
   body {
     font-family: system-ui, -apple-system, sans-serif;
     background: var(--bg-body); color: var(--text-main);
     padding: 16px; padding-bottom: calc(20px + env(safe-area-inset-bottom));
-    max-width: 1100px; margin: 0 auto;
-    transition: background 0.3s, color 0.3s;
+    max-width: 1100px; margin: 0 auto; transition: background 0.3s, color 0.3s;
   }
-
   .logo-bar {
     background: var(--bg-card); border-radius: 12px; padding: 16px; margin: 0 0 14px;
-    box-shadow: 0 2px 10px var(--shadow);
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
+    box-shadow: 0 2px 10px var(--shadow); display: flex; align-items: center; justify-content: center; position: relative;
   }
   .logo-bar img { height: 56px; width: auto; max-width: 220px; object-fit: contain; display: block; }
-  
   .theme-btn {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    background: transparent; border: 0; padding: 8px;
-    cursor: pointer; color: var(--text-label); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.2s, color 0.2s;
+    position: absolute; top: 50%; transform: translateY(-50%); background: transparent; border: 0; padding: 8px;
+    cursor: pointer; color: var(--text-label); border-radius: 50%; display: flex; align-items: center; justify-content: center;
   }
   .theme-btn:hover { background: var(--bg-tab); color: var(--text-main); }
-  .theme-btn.left { left: 8px; }
-  .theme-btn.right { right: 8px; }
+  .theme-btn.left { left: 8px; } .theme-btn.right { right: 8px; }
   .theme-btn svg { width: 24px; height: 24px; fill: currentColor; }
 
   h1 { font-size: 22px; margin: 0 0 14px; }
-
   .list-bar {
-    display: flex; gap: 8px; align-items: center;
-    background: var(--bg-card); border-radius: 12px; padding: 10px;
+    display: flex; gap: 8px; align-items: center; background: var(--bg-card); border-radius: 12px; padding: 10px;
     box-shadow: 0 2px 10px var(--shadow); margin-bottom: 14px; flex-wrap: wrap;
   }
   .list-bar select {
@@ -84,129 +71,71 @@
   }
   .list-bar select:focus { outline: none; border-color: #4f46e5; }
   .icon-btn {
-    width: 46px; height: 46px; padding: 0; font-size: 18px;
-    background: var(--bg-btn-icon); color: #4f46e5; border-radius: 10px;
-    flex-shrink: 0; border: 0; cursor: pointer;
+    width: 46px; height: 46px; padding: 0; font-size: 18px; background: var(--bg-btn-icon); color: #4f46e5;
+    border-radius: 10px; flex-shrink: 0; border: 0; cursor: pointer;
   }
   .icon-btn.danger { background: #fee2e2; color: #dc2626; }
   body.dark .icon-btn.danger { background: #4a1c1c; color: #f87171; }
 
-  .card {
-    background: var(--bg-card); border-radius: 14px; padding: 20px;
-    box-shadow: 0 2px 10px var(--shadow); margin-bottom: 16px;
-  }
+  .card { background: var(--bg-card); border-radius: 14px; padding: 20px; box-shadow: 0 2px 10px var(--shadow); margin-bottom: 16px; }
   label { display: block; font-size: 15px; margin: 0 0 6px; color: var(--text-label); font-weight: 500; }
   input[type="text"], input[type="number"], input:not([type]) {
-    width: 100%; padding: 14px 16px; font-size: 17px;
-    border: 1.5px solid var(--border-color); border-radius: 10px; 
-    background: var(--bg-input); color: var(--text-main);
+    width: 100%; padding: 14px 16px; font-size: 17px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-input); color: var(--text-main);
   }
   input:focus { outline: none; border-color: #4f46e5; background: var(--bg-card); }
-  
   .form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 14px; align-items: end; }
-  @media (max-width: 800px) {
-    .form-grid { grid-template-columns: 1fr 1fr; }
-    .form-grid .full { grid-column: 1 / -1; }
-  }
+  @media (max-width: 800px) { .form-grid { grid-template-columns: 1fr 1fr; } .form-grid .full { grid-column: 1 / -1; } }
 
   button {
-    padding: 16px; font-size: 17px; border: 0; border-radius: 10px;
-    background: #4f46e5; color: #fff; cursor: pointer; font-weight: 500;
-    transition: transform .05s, filter .15s;
+    padding: 16px; font-size: 17px; border: 0; border-radius: 10px; background: #4f46e5; color: #fff; cursor: pointer; font-weight: 500;
   }
   button:active { transform: scale(.98); filter: brightness(.92); }
-  button.sec { background: #16a34a; }
-  button.imp { background: #0ea5e9; }
-  button.shr { background: #9333ea; }
-  button.qrs { background: #ea580c; }
-  button.del { background: #dc2626; }
-  
+  button.sec { background: #16a34a; } button.imp { background: #0ea5e9; } button.shr { background: #9333ea; }
+  button.qrs { background: #ea580c; } button.del { background: #dc2626; }
   .add-btn { margin-top: 18px; width: 100%; font-size: 18px; padding: 18px; }
   .scan-btn { margin-top: 10px; width: 100%; font-size: 18px; padding: 18px; }
 
   .table-toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-  .table-toolbar input[type="text"] {
-    flex: 1; min-width: 180px; padding: 12px 14px; font-size: 16px;
-    border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-input); color: var(--text-main);
-  }
-  .table-toolbar select {
-    padding: 12px 14px; font-size: 15px;
-    border: 1.5px solid var(--border-color); border-radius: 10px; 
-    background: var(--bg-input); color: var(--text-main);
-    min-width: 170px;
-  }
-  .table-toolbar input:focus, .table-toolbar select:focus { outline: none; border-color: #4f46e5; background: var(--bg-card); }
-
+  .table-toolbar input[type="text"] { flex: 1; min-width: 180px; padding: 12px 14px; font-size: 16px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-input); color: var(--text-main); }
+  .table-toolbar select { padding: 12px 14px; font-size: 15px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-input); color: var(--text-main); min-width: 170px; }
+  
   .view-tabs { display: flex; margin-bottom: 12px; background: var(--bg-tab); border-radius: 10px; padding: 4px; gap: 4px; }
-  .view-tabs .tab {
-    flex: 1; padding: 10px; background: transparent; color: var(--text-label);
-    border-radius: 8px; font-size: 15px; font-weight: 500; border: 0; margin: 0;
-  }
+  .view-tabs .tab { flex: 1; padding: 10px; background: transparent; color: var(--text-label); border-radius: 8px; font-size: 15px; font-weight: 500; border: 0; margin: 0; }
   .view-tabs .tab.active { background: var(--bg-tab-active); color: #4f46e5; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
   body.dark .view-tabs .tab.active { color: #818cf8; }
 
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: collapse; font-size: 16px; }
   th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
-  th { background: var(--bg-th); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: .03em; color: var(--text-th); }
-  td.num { text-align: right; font-variant-numeric: tabular-nums; }
-  th.num { text-align: right; }
-  tbody tr { cursor: pointer; }
-  tbody tr:hover { background: var(--bg-tab); }
-  .x {
-    background: #fee2e2; color: #dc2626; border: 0;
-    width: 40px; height: 40px; border-radius: 8px;
-    font-size: 20px; cursor: pointer; padding: 0; position: relative; z-index: 1;
-  }
+  th { background: var(--bg-th); font-weight: 600; font-size: 14px; text-transform: uppercase; color: var(--text-th); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; } th.num { text-align: right; }
+  tbody tr { cursor: pointer; } tbody tr:hover { background: var(--bg-tab); }
+  .x { background: #fee2e2; color: #dc2626; border: 0; width: 40px; height: 40px; border-radius: 8px; font-size: 20px; cursor: pointer; padding: 0; }
   body.dark .x { background: #4a1c1c; color: #f87171; }
-
+  
   .empty { color: var(--text-label); text-align: center; padding: 40px 20px; font-size: 16px; }
   .sum { font-size: 15px; color: var(--text-main); margin: 14px 0 0; padding: 12px; background: var(--bg-tab); border-radius: 8px; }
   .sum b { color: #4f46e5; }
   body.dark .sum b { color: #818cf8; }
 
-  .actions {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px; margin-top: 16px;
-  }
-
+  .actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 16px; }
   .ac-wrap { position: relative; }
-  .ac-list {
-    position: absolute; left: 0; right: 0; top: calc(100% + 4px);
-    background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px;
-    box-shadow: 0 6px 20px rgba(0,0,0,.15); max-height: 280px; overflow-y: auto;
-    z-index: 50; display: none; padding: 4px;
-  }
+  .ac-list { position: absolute; left: 0; right: 0; top: calc(100% + 4px); background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,.15); max-height: 280px; overflow-y: auto; z-index: 50; display: none; padding: 4px; }
   .ac-list.open { display: block; }
   .ac-item { padding: 14px; font-size: 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; color: var(--text-main); }
   .ac-item:hover, .ac-item.active { background: var(--ac-bg-hover); }
   .ac-item .ico { color: #4f46e5; font-size: 14px; flex-shrink: 0; }
   .ac-item mark { background: #fde68a; color: #222; padding: 0 1px; border-radius: 2px; }
 
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,.6);
-    display: none; align-items: center; justify-content: center;
-    z-index: 100; padding: 16px;
-  }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; z-index: 100; padding: 16px; }
   .modal-overlay.open { display: flex; }
-  .modal {
-    background: var(--bg-card); border-radius: 14px; padding: 24px;
-    max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0,0,0,.4);
-  }
+  .modal { background: var(--bg-card); border-radius: 14px; padding: 24px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.4); }
   .modal h2 { margin: 0 0 16px; font-size: 20px; }
   .modal .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px; }
   .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
   .btn-cancel { background: var(--bg-tab); color: var(--text-main); }
 
-  #qrReader { width: 100%; border-radius: 10px; overflow: hidden; }
-  #qrReader video { width: 100% !important; height: auto !important; }
-
-  @media (max-width: 500px) {
-    .logo-bar img { height: 44px; }
-    h1 { font-size: 18px; }
-    .theme-btn svg { width: 20px; height: 20px; }
-  }
+  @media (max-width: 500px) { .logo-bar img { height: 44px; } h1 { font-size: 18px; } .theme-btn svg { width: 20px; height: 20px; } }
 </style>
 </head>
 <body>
@@ -215,9 +144,7 @@
   <button class="theme-btn left" onclick="setTheme('dark')" title="Темная тема">
     <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
   </button>
-
   <img id="appLogo" src="parma.svg" alt="Parma">
-
   <button class="theme-btn right" onclick="setTheme('light')" title="Светлая тема">
     <svg viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 0 0-1.41 0 .996.996 0 0 0 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 0 0 0-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 0 0 0-1.41.996.996 0 0 0-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
   </button>
@@ -241,25 +168,13 @@
         <div class="ac-list" id="acList"></div>
       </div>
     </div>
-    <div>
-      <label>Ширина, мм</label>
-      <input id="width" type="number" inputmode="numeric" placeholder="600">
-    </div>
-    <div>
-      <label>Длина, мм</label>
-      <input id="length" type="number" inputmode="numeric" placeholder="1200">
-    </div>
-    <div>
-      <label>Толщина, мм</label>
-      <input id="thick" type="number" inputmode="numeric" placeholder="16">
-    </div>
-    <div>
-      <label>Количество</label>
-      <input id="qty" type="number" inputmode="numeric" min="1" placeholder="1">
-    </div>
+    <div><label>Ширина, мм</label><input id="width" type="number" inputmode="numeric" placeholder="600"></div>
+    <div><label>Длина, мм</label><input id="length" type="number" inputmode="numeric" placeholder="1200"></div>
+    <div><label>Толщина, мм</label><input id="thick" type="number" inputmode="numeric" placeholder="16"></div>
+    <div><label>Количество</label><input id="qty" type="number" inputmode="numeric" min="1" placeholder="1"></div>
   </div>
   <button class="add-btn" onclick="addItem()">➕ Добавить панель</button>
-  <button class="scan-btn qrs" onclick="openScanner()">📷 Сканировать QR</button>
+  <button class="scan-btn qrs" onclick="openPhotoMenu()">📷 Сканировать (Фото)</button>
 </div>
 
 <div class="card">
@@ -273,51 +188,28 @@
       <option value="area-desc">Площадь ↓</option>
     </select>
   </div>
-
   <div class="view-tabs">
     <button class="tab active" id="tabDetail" onclick="setView('detail')">Детально</button>
     <button class="tab" id="tabSummary" onclick="setView('summary')">Сводка</button>
   </div>
-
   <div id="empty" class="empty">Пока пусто. Добавьте первую панель.</div>
-
   <div id="viewDetail">
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Наименование</th>
-            <th class="num">Ш, мм</th>
-            <th class="num">Д, мм</th>
-            <th class="num">Т, мм</th>
-            <th class="num">Кол-во</th>
-            <th class="num">Площадь, м²</th>
-            <th></th>
-          </tr>
-        </thead>
+        <thead><tr><th>Наименование</th><th class="num">Ш, мм</th><th class="num">Д, мм</th><th class="num">Т, мм</th><th class="num">Кол-во</th><th class="num">Площадь, м²</th><th></th></tr></thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
   </div>
-
   <div id="viewSummary" style="display:none">
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Наименование</th>
-            <th class="num">Позиций</th>
-            <th class="num">Панелей, шт</th>
-            <th class="num">Площадь, м²</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Наименование</th><th class="num">Позиций</th><th class="num">Панелей, шт</th><th class="num">Площадь, м²</th></tr></thead>
         <tbody id="tbodySummary"></tbody>
       </table>
     </div>
   </div>
-
   <div class="sum" id="sum" style="display:none"></div>
-
   <div class="actions">
     <button class="sec" onclick="exportExcel()">📥 Скачать Excel</button>
     <button class="shr" onclick="shareExcel()">📤 Поделиться</button>
@@ -334,21 +226,12 @@
     <label>Наименование</label>
     <input type="text" id="editName" autocomplete="off">
     <div class="row-3">
-      <div>
-        <label>Ширина, мм</label>
-        <input type="number" inputmode="numeric" id="editWidth">
-      </div>
-      <div>
-        <label>Длина, мм</label>
-        <input type="number" inputmode="numeric" id="editLength">
-      </div>
-      <div>
-        <label>Толщина, мм</label>
-        <input type="number" inputmode="numeric" id="editThick">
-      </div>
+      <div><label>Ширина, мм</label><input type="number" id="editWidth"></div>
+      <div><label>Длина, мм</label><input type="number" id="editLength"></div>
+      <div><label>Толщина, мм</label><input type="number" id="editThick"></div>
     </div>
     <label>Количество</label>
-    <input type="number" inputmode="numeric" id="editQty" min="1">
+    <input type="number" id="editQty" min="1">
     <div class="modal-actions">
       <button class="btn-cancel" onclick="closeEdit()">Отмена</button>
       <button onclick="saveEdit()">Сохранить</button>
@@ -356,272 +239,118 @@
   </div>
 </div>
 
-<!-- Модалка сканера -->
-<div class="modal-overlay" id="scanModal">
-  <div class="modal" style="text-align:center;max-width:520px">
-    <h2>📷 Сканирование QR</h2>
-    <div id="qrReader"></div>
-    <p style="color:var(--text-label);font-size:14px;margin-top:12px">
-      Наведите камеру на QR-код или загрузите фото
-    </p>
-    <button style="width:100%;padding:14px;margin-top:16px;background:#0ea5e9"
-            onclick="document.getElementById('qrFileInput').click()">
-      📁 Загрузить фото
-    </button>
-    <button class="btn-cancel" style="width:100%;padding:14px;margin-top:10px" onclick="closeScanner()">Отмена</button>
-    <input type="file" id="qrFileInput" accept="image/*" style="display:none" onchange="handleQrFile(event)">
-  </div>
-</div>
-
 <!-- Модалка подтверждения сканирования -->
 <div class="modal-overlay" id="scanConfirmModal">
   <div class="modal">
-    <h2>📷 Найдено в QR</h2>
+    <h2>📷 Результат распознавания</h2>
     <p id="scanRaw" style="font-size:13px;color:var(--text-label);background:var(--bg-input);padding:10px;border-radius:8px;word-break:break-all;margin-bottom:16px"></p>
     <label>Наименование</label>
     <input type="text" id="scanName">
     <div class="row-3">
-      <div>
-        <label>Ширина, мм</label>
-        <input type="number" id="scanWidth" inputmode="numeric">
-      </div>
-      <div>
-        <label>Длина, мм</label>
-        <input type="number" id="scanLength" inputmode="numeric">
-      </div>
-      <div>
-        <label>Толщина, мм</label>
-        <input type="number" id="scanThick" inputmode="numeric">
-      </div>
+      <div><label>Ширина, мм</label><input type="number" id="scanWidth"></div>
+      <div><label>Длина, мм</label><input type="number" id="scanLength"></div>
+      <div><label>Толщина, мм</label><input type="number" id="scanThick"></div>
     </div>
     <label>Количество</label>
-    <input type="number" id="scanQty" inputmode="numeric" min="1">
+    <input type="number" id="scanQty" min="1">
     <div class="modal-actions">
       <button class="btn-cancel" onclick="cancelScanConfirm()">Отмена</button>
       <button onclick="confirmScanAdd()">Добавить</button>
     </div>
-    <button style="width:100%;margin-top:10px;background:#0891b2"
-            onclick="cancelScanConfirm();setTimeout(openScanner,200)">
-      📷 Сканировать следующую
-    </button>
   </div>
 </div>
 
+<!-- Скрытые инпуты для вызова камеры и галереи -->
+<input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none" onchange="handlePhoto(event)">
+<input type="file" id="galleryInput" accept="image/*" style="display:none" onchange="handlePhoto(event)">
+
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-<!-- Библиотека OCR -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
 /* ==================== ТЕМА ==================== */
 function setTheme(theme) {
   const logo = document.getElementById('appLogo');
-
   if (theme === 'dark') {
-    document.body.classList.add('dark');
-    localStorage.setItem('ldsp_theme', 'dark');
-    if (logo) logo.src = 'parma_dark.svg';
-    let meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', '#1e1e1e');
+    document.body.classList.add('dark'); localStorage.setItem('ldsp_theme', 'dark');
+    if (logo) logo.src = 'parma_dark.svg'; document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#1e1e1e');
   } else {
-    document.body.classList.remove('dark');
-    localStorage.setItem('ldsp_theme', 'light');
-    if (logo) logo.src = 'parma.svg';
-    let meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', '#4f46e5');
+    document.body.classList.remove('dark'); localStorage.setItem('ldsp_theme', 'light');
+    if (logo) logo.src = 'parma.svg'; document.querySelector('meta[name="theme-color"]')?.setAttribute('content', '#4f46e5');
   }
 }
-
-(function initTheme() {
-  const saved = localStorage.getItem('ldsp_theme');
-  if (saved === 'dark') setTheme('dark');
-})();
+(function initTheme() { if (localStorage.getItem('ldsp_theme') === 'dark') setTheme('dark'); })();
 
 /* ==================== ХРАНИЛИЩЕ ==================== */
 const STORAGE_KEY = 'ldsp_lists_v1';
-const OLD_KEY = 'ldsp_items_v1';
 const $ = id => document.getElementById(id);
-
-function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-}
-
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
 function migrateItems(arr) {
   if (!Array.isArray(arr)) return [];
   return arr.map(i => ({
-    id: i.id || uid(),
-    name: String(i.name || '').trim(),
-    width: Number(i.width) || 0,
-    length: Number(i.length) || 0,
-    thick: Number(i.thick) || 0,
+    id: i.id || uid(), name: String(i.name || '').trim(),
+    width: Number(i.width) || 0, length: Number(i.length) || 0, thick: Number(i.thick) || 0,
     qty: Number.isFinite(+i.qty) && +i.qty > 0 ? Math.floor(+i.qty) : 1
   }));
 }
-
 function loadState() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const s = JSON.parse(raw);
-      if (s && Array.isArray(s.lists) && s.lists.length) {
-        s.lists.forEach(l => { l.items = migrateItems(l.items); });
-        return s;
-      }
-    }
-  } catch (e) { console.error(e); }
-
-  let oldItems = [];
-  try { oldItems = JSON.parse(localStorage.getItem(OLD_KEY) || '[]'); } catch {}
-  const list = { id: uid(), name: 'Список 1', items: migrateItems(oldItems) };
-  const s = { lists: [list], currentListId: list.id };
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
-  return s;
+    if (raw) { const s = JSON.parse(raw); if (s && Array.isArray(s.lists) && s.lists.length) { s.lists.forEach(l => { l.items = migrateItems(l.items); }); return s; } }
+  } catch (e) {}
+  const list = { id: uid(), name: 'Список 1', items: [] };
+  return { lists: [list], currentListId: list.id };
 }
-
 let state = loadState();
-let searchQuery = '';
-let sortKey = 'default';
-let viewMode = 'detail';
-let editingId = null;
-
+let searchQuery = '', sortKey = 'default', viewMode = 'detail', editingId = null;
 function saveState() { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 function currentList() { return state.lists.find(l => l.id === state.currentListId) || state.lists[0]; }
 function getItems() { return currentList().items; }
 function setItems(items) { currentList().items = items; saveState(); }
 
-/* ==================== СЛИЯНИЕ ОДИНАКОВЫХ ==================== */
+/* ==================== СЛИЯНИЕ ==================== */
 function panelsEqual(a, b) {
   return String(a.name).trim().toLowerCase() === String(b.name).trim().toLowerCase()
-      && +a.width  === +b.width
-      && +a.length === +b.length
-      && +a.thick  === +b.thick;
+      && +a.width === +b.width && +a.length === +b.length && +a.thick === +b.thick;
 }
-
 function addOrMergeItem(item) {
-  const items = getItems();
-  const idx = items.findIndex(x => panelsEqual(x, item));
-  if (idx !== -1) {
-    items[idx].qty = (items[idx].qty || 1) + (item.qty || 1);
-    setItems(items);
-    return 'merged';
-  }
-  items.push(item);
-  setItems(items);
-  return 'added';
+  const items = getItems(); const idx = items.findIndex(x => panelsEqual(x, item));
+  if (idx !== -1) { items[idx].qty = (items[idx].qty || 1) + (item.qty || 1); setItems(items); return 'merged'; }
+  items.push(item); setItems(items); return 'added';
 }
-
 function showMergeToast(name) {
-  const old = document.getElementById('mergeToast');
-  if (old) old.remove();
-  const t = document.createElement('div');
-  t.id = 'mergeToast';
-  t.style.cssText = `
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
-    background: #16a34a; color: #fff; padding: 12px 20px; border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,.25); z-index: 9999;
-    font-size: 15px; font-weight: 500; max-width: 90vw; text-align: center;
-  `;
-  t.textContent = `➕ Прибавлено к «${name}»`;
-  document.body.appendChild(t);
-  setTimeout(() => t.remove(), 1800);
+  const old = $('mergeToast'); if (old) old.remove();
+  const t = document.createElement('div'); t.id = 'mergeToast';
+  t.style.cssText = `position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #16a34a; color: #fff; padding: 12px 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.25); z-index: 9999; font-size: 15px; font-weight: 500;`;
+  t.textContent = `➕ Прибавлено к «${name}»`; document.body.appendChild(t); setTimeout(() => t.remove(), 1800);
 }
 
 /* ==================== СПИСКИ ==================== */
 function renderListSelect() {
-  const sel = $('listSelect');
-  sel.innerHTML = '';
-  state.lists.forEach(l => {
-    const opt = document.createElement('option');
-    opt.value = l.id;
-    opt.textContent = `${l.name} (${l.items.length})`;
-    if (l.id === state.currentListId) opt.selected = true;
-    sel.appendChild(opt);
-  });
+  const sel = $('listSelect'); sel.innerHTML = '';
+  state.lists.forEach(l => { const opt = document.createElement('option'); opt.value = l.id; opt.textContent = `${l.name} (${l.items.length})`; if (l.id === state.currentListId) opt.selected = true; sel.appendChild(opt); });
 }
-
-function switchList(id) {
-  state.currentListId = id;
-  saveState(); closeAc();
-  searchQuery = ''; $('searchBox').value = '';
-  render();
-}
-
-function newList() {
-  const name = prompt('Название нового списка:', `Список ${state.lists.length + 1}`);
-  if (name === null) return;
-  const trimmed = name.trim() || `Список ${state.lists.length + 1}`;
-  const list = { id: uid(), name: trimmed, items: [] };
-  state.lists.push(list);
-  state.currentListId = list.id;
-  saveState(); closeAc();
-  searchQuery = ''; $('searchBox').value = '';
-  render();
-}
-
-function renameList() {
-  const l = currentList();
-  const name = prompt('Новое название:', l.name);
-  if (name === null) return;
-  const trimmed = name.trim();
-  if (!trimmed) return;
-  l.name = trimmed;
-  saveState(); renderListSelect();
-}
-
-function deleteList() {
-  if (state.lists.length <= 1) { alert('Нельзя удалить единственный список'); return; }
-  const l = currentList();
-  if (!confirm(`Удалить список "${l.name}" (${l.items.length} записей)?`)) return;
-  state.lists = state.lists.filter(x => x.id !== l.id);
-  state.currentListId = state.lists[0].id;
-  saveState();
-  searchQuery = ''; $('searchBox').value = '';
-  render();
-}
+function switchList(id) { state.currentListId = id; saveState(); closeAc(); searchQuery = ''; $('searchBox').value = ''; render(); }
+function newList() { const name = prompt('Название:', `Список ${state.lists.length + 1}`); if (name === null) return; state.lists.push({ id: uid(), name: name.trim() || 'Новый', items: [] }); state.currentListId = state.lists[state.lists.length-1].id; saveState(); render(); }
+function renameList() { const l = currentList(); const name = prompt('Новое название:', l.name); if (name && name.trim()) { l.name = name.trim(); saveState(); renderListSelect(); } }
+function deleteList() { if (state.lists.length <= 1) return alert('Нельзя удалить единственный список'); if (!confirm(`Удалить список "${currentList().name}"?`)) return; state.lists = state.lists.filter(x => x.id !== state.currentListId); state.currentListId = state.lists[0].id; saveState(); render(); }
 
 /* ==================== АВТОДОПОЛНЕНИЕ ==================== */
-const nameInput = $('name');
-const acList = $('acList');
-let acMatches = [];
-let acActive = -1;
-
-function uniqueNames() {
-  const set = new Set(getItems().map(i => i.name.trim()));
-  return [...set].filter(Boolean).sort((a, b) => a.localeCompare(b, 'ru'));
-}
-
-function highlight(text, query) {
-  if (!query) return escapeHtml(text);
-  const idx = text.toLowerCase().indexOf(query.toLowerCase());
-  if (idx === -1) return escapeHtml(text);
-  return escapeHtml(text.slice(0, idx))
-       + '<mark>' + escapeHtml(text.slice(idx, idx + query.length)) + '</mark>'
-       + escapeHtml(text.slice(idx + query.length));
-}
-
+const nameInput = $('name'), acList = $('acList'); let acMatches = [], acActive = -1;
+function uniqueNames() { const set = new Set(getItems().map(i => i.name.trim())); return [...set].filter(Boolean).sort((a, b) => a.localeCompare(b, 'ru')); }
+function highlight(text, query) { if (!query) return escapeHtml(text); const idx = text.toLowerCase().indexOf(query.toLowerCase()); if (idx === -1) return escapeHtml(text); return escapeHtml(text.slice(0, idx)) + '<mark>' + escapeHtml(text.slice(idx, idx + query.length)) + '</mark>' + escapeHtml(text.slice(idx + query.length)); }
 function openAc(query) {
-  const all = uniqueNames();
-  const q = query.trim().toLowerCase();
+  const all = uniqueNames(); const q = query.trim().toLowerCase();
   acMatches = (q ? all.filter(n => n.toLowerCase().includes(q)) : all).slice(0, 8);
   if (!acMatches.length) { acList.classList.remove('open'); return; }
-  acActive = -1;
-  acList.innerHTML = acMatches.map((n, i) =>
-    `<div class="ac-item" data-idx="${i}"><span class="ico">▸</span><span>${highlight(n, q)}</span></div>`
-  ).join('');
+  acActive = -1; acList.innerHTML = acMatches.map((n, i) => `<div class="ac-item" data-idx="${i}"><span class="ico">▸</span><span>${highlight(n, q)}</span></div>`).join('');
   acList.classList.add('open');
   acList.querySelectorAll('.ac-item').forEach(el => {
     el.addEventListener('mousedown', e => { e.preventDefault(); pickAc(parseInt(el.dataset.idx, 10)); });
     el.addEventListener('touchstart', e => { e.preventDefault(); pickAc(parseInt(el.dataset.idx, 10)); }, { passive: false });
   });
 }
-
 function closeAc() { acList.classList.remove('open'); acActive = -1; acMatches = []; }
-
-function pickAc(idx) {
-  if (idx < 0 || idx >= acMatches.length) return;
-  nameInput.value = acMatches[idx];
-  closeAc(); nameInput.focus();
-}
-
+function pickAc(idx) { if (idx >= 0 && idx < acMatches.length) { nameInput.value = acMatches[idx]; closeAc(); nameInput.focus(); } }
 nameInput.addEventListener('input', () => openAc(nameInput.value));
 nameInput.addEventListener('focus', () => openAc(nameInput.value));
 nameInput.addEventListener('blur', () => setTimeout(closeAc, 150));
@@ -633,114 +362,44 @@ nameInput.addEventListener('keydown', e => {
   else if (e.key === 'Enter' && acActive >= 0) { e.preventDefault(); pickAc(acActive); }
   else if (e.key === 'Escape') closeAc();
 });
+function updateActive(els) { els.forEach((el, i) => el.classList.toggle('active', i === acActive)); if (acActive >= 0 && els[acActive]) els[acActive].scrollIntoView({ block: 'nearest' }); }
 
-function updateActive(els) {
-  els.forEach((el, i) => el.classList.toggle('active', i === acActive));
-  if (acActive >= 0 && els[acActive]) els[acActive].scrollIntoView({ block: 'nearest' });
-}
-
-/* ==================== ОСНОВНЫЕ ОПЕРАЦИИ ==================== */
+/* ==================== ОПЕРАЦИИ ==================== */
 function areaOf(i) { return (i.width / 1000) * (i.length / 1000) * (i.qty || 1); }
-
 function addItem() {
-  const name  = $('name').value.trim();
-  const width = parseFloat($('width').value);
-  const len   = parseFloat($('length').value);
-  const thick = parseFloat($('thick').value);
-  const qtyStr = $('qty').value.trim();
-  const qty = qtyStr === '' ? 1 : parseInt(qtyStr, 10);
-
+  const name = $('name').value.trim(), width = parseFloat($('width').value), len = parseFloat($('length').value), thick = parseFloat($('thick').value), qty = parseInt($('qty').value, 10) || 1;
   if (!name) return alert('Введите наименование');
-  if (!(width > 0) || !(len > 0) || !(thick > 0))
-    return alert('Ширина, длина и толщина должны быть положительными');
-  if (!(qty >= 1)) return alert('Количество должно быть не меньше 1');
-
-  const result = addOrMergeItem({
-    id: uid(), name, width, length: len, thick, qty
-  });
+  if (!(width > 0) || !(len > 0) || !(thick > 0)) return alert('Размеры должны быть положительными');
+  const result = addOrMergeItem({ id: uid(), name, width, length: len, thick, qty });
   render();
-
-  $('name').value = ''; $('width').value = '';
-  $('length').value = ''; $('thick').value = ''; $('qty').value = '';
-  closeAc(); $('name').focus();
-
-  if (result === 'merged') showMergeToast(name);
+  $('name').value = ''; $('width').value = ''; $('length').value = ''; $('thick').value = ''; $('qty').value = '';
+  closeAc(); $('name').focus(); if (result === 'merged') showMergeToast(name);
 }
-
-function removeItem(id) {
-  if (!confirm('Удалить запись?')) return;
-  setItems(getItems().filter(i => i.id !== id));
-  render();
-}
-
-function clearAll() {
-  if (!getItems().length) return;
-  if (!confirm(`Удалить все записи из списка "${currentList().name}"?`)) return;
-  setItems([]); render();
-}
+function removeItem(id) { if (!confirm('Удалить запись?')) return; setItems(getItems().filter(i => i.id !== id)); render(); }
+function clearAll() { if (!getItems().length) return; if (!confirm(`Удалить все записи из списка "${currentList().name}"?`)) return; setItems([]); render(); }
 
 /* ==================== РЕДАКТИРОВАНИЕ ==================== */
 function openEdit(id) {
-  const item = getItems().find(i => i.id === id);
-  if (!item) return;
-  editingId = id;
-  $('editName').value = item.name;
-  $('editWidth').value = item.width;
-  $('editLength').value = item.length;
-  $('editThick').value = item.thick;
-  $('editQty').value = item.qty || 1;
-  $('editModal').classList.add('open');
-  setTimeout(() => $('editName').focus(), 100);
+  const item = getItems().find(i => i.id === id); if (!item) return; editingId = id;
+  $('editName').value = item.name; $('editWidth').value = item.width; $('editLength').value = item.length; $('editThick').value = item.thick; $('editQty').value = item.qty || 1;
+  $('editModal').classList.add('open'); setTimeout(() => $('editName').focus(), 100);
 }
-
-function closeEdit() {
-  $('editModal').classList.remove('open');
-  editingId = null;
-}
-
+function closeEdit() { $('editModal').classList.remove('open'); editingId = null; }
 function saveEdit() {
   if (!editingId) return;
-  const name = $('editName').value.trim();
-  const width = parseFloat($('editWidth').value);
-  const len = parseFloat($('editLength').value);
-  const thick = parseFloat($('editThick').value);
-  const qty = parseInt($('editQty').value, 10);
-
-  if (!name) return alert('Введите наименование');
-  if (!(width > 0) || !(len > 0) || !(thick > 0))
-    return alert('Ширина, длина и толщина должны быть положительными');
-  if (!(qty >= 1)) return alert('Количество должно быть не меньше 1');
-
-  const items = getItems();
-  const idx = items.findIndex(i => i.id === editingId);
-  if (idx === -1) return closeEdit();
-
+  const name = $('editName').value.trim(), width = parseFloat($('editWidth').value), len = parseFloat($('editLength').value), thick = parseFloat($('editThick').value), qty = parseInt($('editQty').value, 10) || 1;
+  if (!name) return alert('Введите наименование'); if (!(width > 0) || !(len > 0) || !(thick > 0)) return alert('Размеры должны быть положительными');
+  const items = getItems(); const idx = items.findIndex(i => i.id === editingId); if (idx === -1) return closeEdit();
   const edited = { id: editingId, name, width, length: len, thick, qty };
   const dupIdx = items.findIndex((x, i) => i !== idx && panelsEqual(x, edited));
-
-  if (dupIdx !== -1) {
-    if (!confirm(`Такая панель уже есть в списке.\n\nПрибавить количество (${qty}) к существующей?`)) return;
-    items[dupIdx].qty = (items[dupIdx].qty || 1) + qty;
-    items.splice(idx, 1);
-  } else {
-    items[idx] = edited;
-  }
-
-  setItems(items);
-  closeEdit(); render();
+  if (dupIdx !== -1) { if (confirm(`Такая панель уже есть. Прибавить количество?`)) { items[dupIdx].qty += qty; items.splice(idx, 1); } } else { items[idx] = edited; }
+  setItems(items); closeEdit(); render();
 }
-
-$('editModal').addEventListener('click', e => {
-  if (e.target === $('editModal')) closeEdit();
-});
-document.addEventListener('keydown', e => {
-  if ($('editModal').classList.contains('open') && e.key === 'Escape') closeEdit();
-});
+$('editModal').addEventListener('click', e => { if (e.target === $('editModal')) closeEdit(); });
 
 /* ==================== ТАБЛИЦА ==================== */
 function getViewItems() {
-  let view = getItems();
-  const q = searchQuery.trim().toLowerCase();
+  let view = getItems(); const q = searchQuery.trim().toLowerCase();
   if (q) view = view.filter(i => i.name.toLowerCase().includes(q));
   view = [...view];
   if (sortKey === 'name') view.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
@@ -749,280 +408,88 @@ function getViewItems() {
   else if (sortKey === 'area-desc') view.sort((a, b) => areaOf(b) - areaOf(a));
   return view;
 }
-
 function groupItems(items) {
   const map = new Map();
-  items.forEach(i => {
-    const key = i.name.trim().toLowerCase();
-    if (!map.has(key)) map.set(key, { name: i.name.trim(), count: 0, panels: 0, area: 0 });
-    const g = map.get(key);
-    g.count += 1; g.panels += i.qty || 1; g.area += areaOf(i);
-  });
+  items.forEach(i => { const key = i.name.trim().toLowerCase(); if (!map.has(key)) map.set(key, { name: i.name.trim(), count: 0, panels: 0, area: 0 }); const g = map.get(key); g.count += 1; g.panels += i.qty || 1; g.area += areaOf(i); });
   return [...map.values()].sort((a, b) => a.name.localeCompare(b.name, 'ru'));
 }
-
 function renderTable() {
-  const items = getViewItems();
-  const hasItems = items.length > 0;
-  const totalInList = getItems().length;
-
-  const emptyEl = $('empty');
-  if (!hasItems) {
-    emptyEl.style.display = 'block';
-    emptyEl.textContent = totalInList === 0
-      ? 'Пока пусто. Добавьте первую панель.'
-      : 'Ничего не найдено по запросу.';
-  } else {
-    emptyEl.style.display = 'none';
-  }
-
-  const tbody = $('tbody');
-  tbody.innerHTML = '';
+  const items = getViewItems(); const hasItems = items.length > 0; const totalInList = getItems().length;
+  const emptyEl = $('empty'); if (!hasItems) { emptyEl.style.display = 'block'; emptyEl.textContent = totalInList === 0 ? 'Пока пусто. Добавьте первую панель.' : 'Ничего не найдено.'; } else { emptyEl.style.display = 'none'; }
+  const tbody = $('tbody'); tbody.innerHTML = '';
   let totalArea = 0, totalPanels = 0;
   items.forEach(i => {
-    const a = areaOf(i);
-    totalArea += a;
-    totalPanels += i.qty || 1;
+    const a = areaOf(i); totalArea += a; totalPanels += i.qty || 1;
     const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${escapeHtml(i.name)}</td>
-      <td class="num">${i.width}</td>
-      <td class="num">${i.length}</td>
-      <td class="num">${i.thick}</td>
-      <td class="num">${i.qty || 1}</td>
-      <td class="num">${a.toFixed(3)}</td>
-      <td><button class="x" data-id="${i.id}" aria-label="Удалить">✕</button></td>`;
-    tr.addEventListener('click', e => {
-      if (e.target.closest('.x')) return;
-      openEdit(i.id);
-    });
-    tbody.appendChild(tr);
+    tr.innerHTML = `<td>${escapeHtml(i.name)}</td><td class="num">${i.width}</td><td class="num">${i.length}</td><td class="num">${i.thick}</td><td class="num">${i.qty || 1}</td><td class="num">${a.toFixed(3)}</td><td><button class="x" data-id="${i.id}">✕</button></td>`;
+    tr.addEventListener('click', e => { if (!e.target.closest('.x')) openEdit(i.id); }); tbody.appendChild(tr);
   });
-  tbody.querySelectorAll('.x').forEach(btn => {
-    btn.addEventListener('click', e => { e.stopPropagation(); removeItem(btn.dataset.id); });
-  });
-
-  if (viewMode === 'summary') {
-    const groups = groupItems(items);
-    $('tbodySummary').innerHTML = groups.map(g => `
-      <tr>
-        <td>${escapeHtml(g.name)}</td>
-        <td class="num">${g.count}</td>
-        <td class="num">${g.panels}</td>
-        <td class="num">${g.area.toFixed(3)}</td>
-      </tr>
-    `).join('');
-  }
-
-  const sumBox = $('sum');
-  if (hasItems) {
-    sumBox.style.display = 'block';
-    sumBox.innerHTML = `Панелей: <b>${totalPanels}</b> (позиций: ${items.length}) · Площадь: <b>${totalArea.toFixed(3)} м²</b>`;
-  } else {
-    sumBox.style.display = 'none';
-  }
-
-  $('viewDetail').style.display = (viewMode === 'detail' && hasItems) ? 'block' : 'none';
-  $('viewSummary').style.display = (viewMode === 'summary' && hasItems) ? 'block' : 'none';
-  $('tabDetail').classList.toggle('active', viewMode === 'detail');
-  $('tabSummary').classList.toggle('active', viewMode === 'summary');
+  tbody.querySelectorAll('.x').forEach(btn => { btn.addEventListener('click', e => { e.stopPropagation(); removeItem(btn.dataset.id); }); });
+  if (viewMode === 'summary') { const groups = groupItems(items); $('tbodySummary').innerHTML = groups.map(g => `<tr><td>${escapeHtml(g.name)}</td><td class="num">${g.count}</td><td class="num">${g.panels}</td><td class="num">${g.area.toFixed(3)}</td></tr>`).join(''); }
+  const sumBox = $('sum'); if (hasItems) { sumBox.style.display = 'block'; sumBox.innerHTML = `Панелей: <b>${totalPanels}</b> (позиций: ${items.length}) · Площадь: <b>${totalArea.toFixed(3)} м²</b>`; } else { sumBox.style.display = 'none'; }
+  $('viewDetail').style.display = (viewMode === 'detail' && hasItems) ? 'block' : 'none'; $('viewSummary').style.display = (viewMode === 'summary' && hasItems) ? 'block' : 'none';
+  $('tabDetail').classList.toggle('active', viewMode === 'detail'); $('tabSummary').classList.toggle('active', viewMode === 'summary');
 }
-
 function render() { renderListSelect(); renderTable(); }
 function setView(mode) { viewMode = mode; renderTable(); }
-
 $('searchBox').addEventListener('input', e => { searchQuery = e.target.value; renderTable(); });
 $('sortSelect').addEventListener('change', e => { sortKey = e.target.value; renderTable(); });
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-}
+function escapeHtml(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
 /* ==================== ЭКСПОРТ ==================== */
 function buildWorkbook() {
   const items = getItems();
-  const rows = items.map((i, n) => ({
-    '№': n + 1,
-    'Наименование': i.name,
-    'Ширина, мм': i.width,
-    'Длина, мм': i.length,
-    'Толщина, мм': i.thick,
-    'Кол-во': i.qty || 1,
-    'Площадь, м²': +areaOf(i).toFixed(3)
-  }));
-  const ws = XLSX.utils.json_to_sheet(rows);
-  ws['!cols'] = [{wch:5},{wch:28},{wch:12},{wch:12},{wch:12},{wch:8},{wch:12}];
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'ЛДСП');
-  return wb;
+  const rows = items.map((i, n) => ({ '№': n + 1, 'Наименование': i.name, 'Ширина, мм': i.width, 'Длина, мм': i.length, 'Толщина, мм': i.thick, 'Кол-во': i.qty || 1, 'Площадь, м²': +areaOf(i).toFixed(3) }));
+  const ws = XLSX.utils.json_to_sheet(rows); ws['!cols'] = [{wch:5},{wch:28},{wch:12},{wch:12},{wch:12},{wch:8},{wch:12}];
+  const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'ЛДСП'); return wb;
 }
-
-function getFileName() {
-  const safeName = currentList().name.replace(/[\\/:*?"<>|]/g, '_').trim() || 'ЛДСП';
-  const date = new Date().toISOString().slice(0,10);
-  return `${safeName}_${date}.xlsx`;
-}
-
-function exportExcel() {
-  if (!getItems().length) return alert('Список пуст');
-  XLSX.writeFile(buildWorkbook(), getFileName());
-}
-
-/* ==================== ПОДЕЛИТЬСЯ ==================== */
+function getFileName() { const safeName = currentList().name.replace(/[\\/:*?"<>|]/g, '_').trim() || 'ЛДСП'; return `${safeName}_${new Date().toISOString().slice(0,10)}.xlsx`; }
+function exportExcel() { if (!getItems().length) return alert('Список пуст'); XLSX.writeFile(buildWorkbook(), getFileName()); }
 async function shareExcel() {
   if (!getItems().length) return alert('Список пуст');
-  const items = getItems();
-  const rows = items.map((i, n) => ({
-    '№': n + 1, 'Наименование': i.name, 'Ширина, мм': i.width,
-    'Длина, мм': i.length, 'Толщина, мм': i.thick,
-    'Кол-во': i.qty || 1, 'Площадь, м²': +areaOf(i).toFixed(3)
-  }));
-  const ws = XLSX.utils.json_to_sheet(rows);
-  const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, 'ЛДСП');
-  const safeName = currentList().name.replace(/[\\/:*?"<>|]/g, '_').trim() || 'ЛДСП';
-  const date = new Date().toISOString().slice(0,10);
-  const xlsxFileName = `${safeName}_${date}.xlsx`;
-  const csvFileName  = `${safeName}_${date}.csv`;
-
+  const wb = buildWorkbook(); const xlsxFileName = getFileName(); const csvFileName = xlsxFileName.replace('.xlsx', '.csv');
   const wboutXlsx = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
   const xlsxBlob = new Blob([wboutXlsx], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
   const xlsxFile = new File([xlsxBlob], xlsxFileName, { type: xlsxBlob.type });
-
-  if (navigator.canShare && navigator.canShare({ files: [xlsxFile] })) {
-    try {
-      await navigator.share({ files: [xlsxFile], title: currentList().name });
-      return;
-    } catch (err) { if (err.name === 'AbortError') return; }
-  }
-
-  const csvContent = "\uFEFF" + XLSX.utils.sheet_to_csv(ws, { FS: ';' });
+  if (navigator.canShare && navigator.canShare({ files: [xlsxFile] })) { try { await navigator.share({ files: [xlsxFile], title: currentList().name }); return; } catch (err) { if (err.name === 'AbortError') return; } }
+  const csvContent = "\uFEFF" + XLSX.utils.sheet_to_csv(XLSX.utils.json_to_sheet(getItems()), { FS: ';' });
   const csvBlob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const csvFile = new File([csvBlob], csvFileName, { type: 'text/csv' });
-
-  if (navigator.canShare && navigator.canShare({ files: [csvFile] })) {
-    try {
-      await navigator.share({ files: [csvFile], title: currentList().name });
-      return;
-    } catch (err) { if (err.name === 'AbortError') return; }
-  }
-
-  const url = URL.createObjectURL(xlsxBlob);
-  const a = document.createElement('a');
-  a.href = url; a.download = xlsxFileName;
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  setTimeout(() => URL.revokeObjectURL(url), 30000);
-  alert('Меню "Поделиться" недоступно на этом устройстве. Файл сохранён в папку "Загрузки".');
+  if (navigator.canShare && navigator.canShare({ files: [csvFile] })) { try { await navigator.share({ files: [csvFile], title: currentList().name }); return; } catch (err) { if (err.name === 'AbortError') return; } }
+  const url = URL.createObjectURL(xlsxBlob); const a = document.createElement('a'); a.href = url; a.download = xlsxFileName;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(() => URL.revokeObjectURL(url), 30000);
+  alert('Файл сохранён в "Загрузки".');
 }
 
-/* ==================== QR И OCR ==================== */
-let qrScanner = null;
+/* ==================== СКАНЕР (ТОЛЬКО OCR) ==================== */
 let tesseractWorker = null;
 let isWorkerReady = false;
 
 async function initTesseract() {
   if (isWorkerReady) return;
-  // Подключаем и русский, и английский (чтобы Egger не превращался в Еввег)
-  tesseractWorker = await Tesseract.createWorker('rus+eng', 1, {
+  // Инициализируем только русский язык для точности
+  tesseractWorker = await Tesseract.createWorker('rus', 1, {
     langPath: 'https://tessdata.projectnaptha.com/4.0.0_fast',
     corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.0.0',
   });
-  // Убираем жесткое ограничение символов, оставляем только базовые
-  await tesseractWorker.setParameters({
-    preserve_interword_spaces: '1',
-  });
+  await tesseractWorker.setParameters({ preserve_interword_spaces: '1' });
   isWorkerReady = true;
 }
 
-// Улучшенная предобработка (без жесткой бинаризации)
-async function preprocessImage(file) {
-  return new Promise((resolve) => {
-    const img = new Image();
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      
-      const maxDim = 2000;
-      let { width, height } = img;
-      if (Math.max(width, height) > maxDim) {
-        const scale = maxDim / Math.max(width, height);
-        width *= scale;
-        height *= scale;
-      }
-      canvas.width = width;
-      canvas.height = height;
-      ctx.drawImage(img, 0, 0, width, height);
-
-      const imageData = ctx.getImageData(0, 0, width, height);
-      const data = imageData.data;
-      // Переводим в оттенки серого и повышаем контраст (мягко)
-      for (let i = 0; i < data.length; i += 4) {
-        const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
-        const contrast = 1.5; // Коэффициент контраста
-        const val = Math.min(255, Math.max(0, contrast * (gray - 128) + 128));
-        data[i] = data[i+1] = data[i+2] = val;
-      }
-      ctx.putImageData(imageData, 0, 0);
-
-      canvas.toBlob((blob) => {
-        resolve(new File([blob], file.name, { type: 'image/jpeg' }));
-      }, 'image/jpeg', 0.9);
-    };
-    img.src = URL.createObjectURL(file);
-  });
-}
-
-async function openScanner() {
-  $('scanModal').classList.add('open');
-
-  if (typeof Html5Qrcode === 'undefined') {
-    alert('Библиотека сканера не загрузилась. Проверьте интернет.');
-    closeScanner();
-    return;
-  }
-
-  if (!qrScanner) qrScanner = new Html5Qrcode("qrReader", { verbose: false });
-
-  try {
-    await qrScanner.start(
-      { facingMode: "environment" },
-      { 
-        fps: 20, // Увеличиваем частоту кадров
-        // Делаем область сканирования адаптивной (зависит от размера экрана)
-        qrbox: function(viewfinderWidth, viewfinderHeight) {
-          let minEdgePercentage = 0.7; // 70% от меньшей стороны
-          let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
-          let qrboxSize = Math.floor(minEdgeSize * minEdgePercentage / 2);
-          return { width: qrboxSize, height: qrboxSize };
-        },
-        aspectRatio: 1.0
-      },
-      text => { closeScanner().then(() => handleQrContent(text)); },
-      () => {}
-    );
-  } catch (err) {
-    closeScanner();
-    alert('Не удалось открыть камеру.\n\n' + (err.message || err) +
-          '\n\nПроверьте разрешение на камеру для этого сайта в настройках Chrome.');
+function openPhotoMenu() {
+  const choice = confirm("Сделать снимок камерой?\n\nОК — Камера\nОтмена — Выбрать из галереи");
+  if (choice) {
+    $('cameraInput').click();
+  } else {
+    $('galleryInput').click();
   }
 }
 
-async function closeScanner() {
-  $('scanModal').classList.remove('open');
-  if (qrScanner) {
-    try { await qrScanner.stop(); } catch(e) {}
-    try { await qrScanner.clear(); } catch(e) {}
-  }
-}
-
-async function handleQrFile(event) {
+async function handlePhoto(event) {
   const file = event.target.files[0];
   if (!file) return;
+  event.target.value = '';
 
-  await closeScanner();
-  await new Promise(r => setTimeout(r, 100));
-
-  // Инициализация OCR
   if (!isWorkerReady) {
     const loader = document.createElement('div');
     loader.id = 'ocr-loader';
@@ -1033,34 +500,23 @@ async function handleQrFile(event) {
     document.body.removeChild(loader);
   }
 
-  // 1. Пробуем QR
-  if (typeof Html5Qrcode !== 'undefined') {
-    if (!qrScanner) qrScanner = new Html5Qrcode("qrReader", { verbose: false });
-    try {
-      const text = await qrScanner.scanFile(file, false);
-      event.target.value = '';
-      handleQrContent(text);
-      return;
-    } catch (err) {
-      console.log('QR не найден, запускаем OCR...');
-    }
-  }
+  const loader = document.createElement('div');
+  loader.id = 'ocr-loader';
+  loader.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;font-size:18px;padding:20px;text-align:center;';
+  loader.textContent = '⏳ Распознавание...';
+  document.body.appendChild(loader);
 
-  // 2. Запускаем OCR
   try {
-    const loader = document.createElement('div');
-    loader.id = 'ocr-loader';
-    loader.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;font-size:18px;padding:20px;text-align:center;';
-    loader.textContent = '⏳ Распознавание текста...';
-    document.body.appendChild(loader);
-
     const processedFile = await preprocessImage(file);
     const ret = await tesseractWorker.recognize(processedFile);
-    const text = ret.data.text;
-    
+    let text = ret.data.text;
     document.body.removeChild(loader);
-    event.target.value = '';
 
+    // ИСПРАВЛЕНИЕ ОШИБОК OCR
+    text = text.replace(/Еввег|Евгер/gi, 'Egger')
+               .replace(/Еггер/gi, 'Egger');
+
+    // 1. Ищем размеры (первую строку с размерами)
     let width = 0, length = 0, thick = 0;
     const dimRegex = /(\d{2,4}(?:[.,]\d)?)\s*[xXхХ×*]\s*(\d{2,4}(?:[.,]\d)?)\s*[xXхХ×*]\s*(\d{1,2})/;
     const dimMatch = text.match(dimRegex);
@@ -1070,25 +526,22 @@ async function handleQrFile(event) {
         thick = parseFloat(dimMatch[3]);
     }
 
+    // 2. Ищем материал
     let material = '';
     const lines = text.split('\n').map(l => l.trim());
-    // Ищем строку, которая начинается с "Карта", или содержит ЛДСП, МДФ, Egger
-    let materialLine = lines.find(l => /ЛДСП|МДФ|ДСП|Egger|Еггер/i.test(l));
+    let materialLine = lines.find(l => /ЛДСП|МДФ|ДСП|Egger/i.test(l));
     
     if (materialLine) {
-        // 1. Убираем всё до "Бирка - X" включительно
-        materialLine = materialLine.replace(/.*Бирка\s*-\s*\d+/i, '').trim();
-        // 2. Убираем "W1200..." и всё после него
-        materialLine = materialLine.replace(/\s+W\d+.*$/i, '').trim();
-        // 3. Убираем "16мм, " и прочее
-        materialLine = materialLine.replace(/\s*\d+\s*мм,?\s*/i, ' ').trim();
-        // 4. Агрессивная чистка от лишних символов в начале и конце (оставляем только буквы, цифры, пробелы, запятые и дефисы)
-        materialLine = materialLine.replace(/^[^a-zA-Zа-яА-Я0-9]+/, '').replace(/[^a-zA-Zа-яА-Я0-9]+$/, '');
-        material = materialLine.trim();
+        // Очистка строки
+        materialLine = materialLine.replace(/.*Бирка\s*-\s*\d+/i, '').trim(); // убираем "Карта - 14 Бирка - 1"
+        materialLine = materialLine.replace(/\s+W\d+.*$/i, '').trim(); // убираем "W1200 ST9"
+        materialLine = materialLine.replace(/\s*\d+\s*мм,?\s*/i, ' ').trim(); // убираем "16мм,"
+        materialLine = materialLine.replace(/[^a-zA-Zа-яА-Я0-9, ]+/g, ' '); // оставляем только буквы, цифры, запятые
+        material = materialLine.replace(/\s+/g, ' ').trim();
     } else {
         for (let line of lines) {
             if (line.length > 3 && !/^[0-9\s.,xX×*]+$/.test(line) && !line.includes('Карта') && !line.includes('izdeg') && !line.includes('Бирка') && !line.includes('поз')) {
-                material = line.replace(/^[^a-zA-Zа-яА-Я0-9]+/, '').replace(/[^a-zA-Zа-яА-Я0-9]+$/, '');
+                material = line.replace(/[^a-zA-Zа-яА-Я0-9, ]+/g, ' ').trim();
                 break;
             }
         }
@@ -1106,292 +559,93 @@ async function handleQrFile(event) {
     } else {
         alert('Текст распознан, но нужные данные не найдены.\n\nТекст:\n' + text);
     }
-
-  } catch (ocrErr) {
-    const loader = document.getElementById('ocr-loader');
-    if (loader) loader.remove();
-    event.target.value = '';
-    alert('Не удалось распознать ни QR-код, ни текст на фото.\n\nПопробуйте сфотографировать бирку крупнее и без бликов.');
-    console.error('OCR error:', ocrErr);
+  } catch (err) {
+    const l = document.getElementById('ocr-loader');
+    if (l) l.remove();
+    alert('Ошибка: ' + err.message);
   }
 }
 
-function handleQrContent(text) {
-  text = String(text || '').trim();
-  if (!text) return;
-
-  if (/^https?:\/\//i.test(text)) {
-    if (confirm('Открыть ссылку?\n\n' + text)) {
-      window.open(text, '_blank', 'noopener');
-    }
-    return;
-  }
-
-  const parsed = parsePanelText(text);
-
-  if (parsed && parsed.length) {
-    showScanConfirm(parsed);
-    return;
-  }
-
-  if (confirm('Не удалось распознать размеры в QR.\n\nСодержимое:\n' + text +
-              '\n\nИспользовать как наименование панели?')) {
-    $('name').value = text;
-    $('name').focus();
-  }
-}
-
-function parsePanelText(text) {
-  const tryJson = (s) => {
-    try {
-      const data = JSON.parse(s);
-      const arr = Array.isArray(data) ? data : (data.items || [data]);
-      return arr.map(x => ({
-        name: x.n || x.name || x.naimenovanie || x.material || '',
-        width: +x.w || +x.width || +x.shirota || 0,
-        length: +x.l || +x.length || +x.dlina || 0,
-        thick: +x.t || +x.thick || +x.tolshina || 0,
-        qty: +x.q || +x.qty || +x.kol || 1
-      }));
-    } catch { return null; }
-  };
-
-  if (text.startsWith('{') || text.startsWith('[')) {
-    const r = tryJson(text);
-    if (r && r.length) return r.filter(isValidPanel).map(toItem);
-  }
-
-  const splitRe = /\s*[|;\t]\s*/;
-  if (splitRe.test(text)) {
-    const parts = text.split(splitRe);
-    if (parts.length >= 4) {
-      const nums = parts.slice(1).map(p => parseFloat(String(p).replace(',', '.')));
-      if (nums.length >= 3 && nums.slice(0,3).every(n => !isNaN(n) && n > 0)) {
-        return [toItem({
-          name: parts[0].trim(),
-          width: nums[0], length: nums[1], thick: nums[2],
-          qty: nums[3] > 0 ? Math.floor(nums[3]) : 1
-        })];
+async function preprocessImage(file) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const maxDim = 2000; 
+      let { width, height } = img;
+      if (Math.max(width, height) > maxDim) {
+        const scale = maxDim / Math.max(width, height);
+        width *= scale;
+        height *= scale;
       }
-    }
-  }
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
 
-  if (text.split(',').length >= 4) {
-    const parts = text.split(',');
-    const nums = parts.slice(1).map(p => parseFloat(String(p).replace(',', '.')));
-    if (nums.length >= 3 && nums.slice(0,3).every(n => !isNaN(n) && n > 0)) {
-      return [toItem({
-        name: parts[0].trim(),
-        width: nums[0], length: nums[1], thick: nums[2],
-        qty: nums[3] > 0 ? Math.floor(nums[3]) : 1
-      })];
-    }
-  }
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      // Мягкое повышение контраста (без потери тонких букв)
+      for (let i = 0; i < data.length; i += 4) {
+        const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+        const contrast = 1.5; 
+        const val = Math.min(255, Math.max(0, contrast * (gray - 128) + 128));
+        data[i] = data[i+1] = data[i+2] = val;
+      }
+      ctx.putImageData(imageData, 0, 0);
 
-  const dimRe = /(\d+(?:[.,]\d+)?)\s*[x×*]\s*(\d+(?:[.,]\d+)?)\s*[x×*]\s*(\d+(?:[.,]\d+)?)/i;
-  const dimMatch = text.match(dimRe);
-  if (dimMatch) {
-    const name = text.replace(dimRe, '').replace(/[\[\]()]/g, '').trim();
-    return [toItem({
-      name: name || 'Панель',
-      width: parseFloat(dimMatch[1].replace(',', '.')),
-      length: parseFloat(dimMatch[2].replace(',', '.')),
-      thick: parseFloat(dimMatch[3].replace(',', '.'))
-    })];
-  }
-
-  const named = parseNamedFields(text);
-  if (named) return [toItem(named)];
-
-  return null;
-
-  function isValidPanel(x) { return x.name && x.width > 0 && x.length > 0 && x.thick > 0; }
-  function toItem(x) {
-    return {
-      id: uid(),
-      name: String(x.name || '').trim() || 'Панель',
-      width: +x.width, length: +x.length, thick: +x.thick,
-      qty: Math.max(1, Math.floor(+x.qty || 1))
+      canvas.toBlob((blob) => resolve(new File([blob], file.name, { type: 'image/jpeg' })), 'image/jpeg', 0.95);
     };
-  }
+    img.src = URL.createObjectURL(file);
+  });
 }
-
-function parseNamedFields(text) {
-  const re = /([A-Za-zА-Яа-я]+)\s*[=:]\s*(\d+(?:[.,]\d+)?)/g;
-  const fields = {};
-  let m;
-  while ((m = re.exec(text)) !== null) {
-    const key = m[1].toUpperCase();
-    const val = parseFloat(m[2].replace(',', '.'));
-    if (['W', 'Ш', 'ШИРИНА', 'WIDTH'].includes(key)) fields.width = val;
-    else if (['L', 'Д', 'LEN', 'LENGTH', 'ДЛИНА'].includes(key)) fields.length = val;
-    else if (['T', 'Т', 'THICK', 'ТОЛЩИНА', 'THICKNESS'].includes(key)) fields.thick = val;
-    else if (['Q', 'QTY', 'КОЛ', 'КОЛ-ВО', 'КОЛИЧЕСТВО'].includes(key)) fields.qty = val;
-  }
-  if (!fields.width || !fields.length || !fields.thick) return null;
-  const name = text.replace(re, '').replace(/[,;|]/g, ' ').trim();
-  return {
-    name: name || 'Панель',
-    width: fields.width,
-    length: fields.length,
-    thick: fields.thick,
-    qty: fields.qty || 1
-  };
-}
-
-let pendingScanItem = null;
 
 function showScanConfirm(items) {
-  if (items.length > 1) {
-    askImport(items);
-    return;
-  }
-
   const it = items[0];
-  pendingScanItem = it;
-  $('scanRaw').textContent = 'Содержимое: ' + JSON.stringify({
-    name: it.name, width: it.width, length: it.length,
-    thick: it.thick, qty: it.qty
-  });
-  $('scanName').value   = it.name;
-  $('scanWidth').value  = it.width;
-  $('scanLength').value = it.length;
-  $('scanThick').value  = it.thick;
-  $('scanQty').value    = it.qty || 1;
+  $('scanRaw').textContent = 'Результат: ' + JSON.stringify({ name: it.name, width: it.width, length: it.length, thick: it.thick });
+  $('scanName').value = it.name; $('scanWidth').value = it.width; $('scanLength').value = it.length; $('scanThick').value = it.thick; $('scanQty').value = it.qty || 1;
   $('scanConfirmModal').classList.add('open');
-  setTimeout(() => $('scanName').focus(), 100);
 }
-
-function cancelScanConfirm() {
-  $('scanConfirmModal').classList.remove('open');
-  pendingScanItem = null;
-}
-
+function cancelScanConfirm() { $('scanConfirmModal').classList.remove('open'); }
 function confirmScanAdd() {
-  const name  = $('scanName').value.trim();
-  const width = parseFloat($('scanWidth').value);
-  const length = parseFloat($('scanLength').value);
-  const thick = parseFloat($('scanThick').value);
-  const qty = parseInt($('scanQty').value, 10) || 1;
-
-  if (!name) return alert('Введите наименование');
-  if (!(width > 0) || !(length > 0) || !(thick > 0))
-    return alert('Размеры должны быть положительными');
-  if (qty < 1) return alert('Количество ≥ 1');
-
-  const result = addOrMergeItem({
-    id: uid(), name, width, length, thick, qty
-  });
-  render();
-
-  cancelScanConfirm();
-
-  if (result === 'merged') showMergeToast(name);
-
-  setTimeout(openScanner, 300);
+  const name = $('scanName').value.trim(), width = parseFloat($('scanWidth').value), length = parseFloat($('scanLength').value), thick = parseFloat($('scanThick').value), qty = parseInt($('scanQty').value, 10) || 1;
+  if (!name) return alert('Введите материал');
+  if (!(width > 0) || !(length > 0) || !(thick > 0)) return alert('Размеры должны быть положительными');
+  const result = addOrMergeItem({ id: uid(), name, width, length, thick, qty });
+  render(); cancelScanConfirm(); if (result === 'merged') showMergeToast(name);
 }
+$('scanConfirmModal').addEventListener('click', e => { if (e.target === $('scanConfirmModal')) cancelScanConfirm(); });
 
-$('scanConfirmModal').addEventListener('click', e => {
-  if (e.target === $('scanConfirmModal')) cancelScanConfirm();
-});
-
-/* ==================== ИМПОРТ EXCEL ==================== */
-function findCol(keys, keywords, exacts = []) {
-  for (const k of keys) {
-    const low = k.toLowerCase().trim();
-    if (keywords.some(kw => low.includes(kw))) return k;
-  }
-  for (const k of keys) {
-    if (exacts.includes(k.toLowerCase().trim())) return k;
-  }
-  return null;
-}
-
+/* ==================== ИМПОРТ ==================== */
+function findCol(keys, keywords, exacts = []) { for (const k of keys) { const low = k.toLowerCase().trim(); if (keywords.some(kw => low.includes(kw))) return k; } for (const k of keys) { if (exacts.includes(k.toLowerCase().trim())) return k; } return null; }
 function handleFile(e) {
-  const file = e.target.files[0];
-  if (!file) return;
+  const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = ev => {
     try {
-      const data = new Uint8Array(ev.target.result);
-      const wb = XLSX.read(data, { type: 'array' });
-      const ws = wb.Sheets[wb.SheetNames[0]];
-      const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
-      if (!rows.length) throw new Error('Файл пуст');
-
+      const wb = XLSX.read(new Uint8Array(ev.target.result), { type: 'array' });
+      const ws = wb.Sheets[wb.SheetNames[0]]; const rows = XLSX.utils.sheet_to_json(ws, { defval: '' });
       const keys = Object.keys(rows[0]);
-      const kName = findCol(keys, ['наименован', 'name'], ['имя']);
-      const kW    = findCol(keys, ['ширин', 'width'], ['ш']);
-      const kL    = findCol(keys, ['длин', 'length'], ['д']);
-      const kT    = findCol(keys, ['толщин', 'thick', 'толщ'], ['т']);
-      const kQ    = findCol(keys, ['количеств', 'кол-во', 'кол', 'qty']);
-
-      if (!kName || !kW || !kL || !kT)
-        throw new Error('Не найдены нужные колонки.\nОжидаются: Наименование, Ширина, Длина, Толщина.');
-
-      const toNum = v => parseFloat(String(v).replace(',', '.'));
+      const kName = findCol(keys, ['наименован', 'name', 'материал']); const kW = findCol(keys, ['ширин', 'width']); const kL = findCol(keys, ['длин', 'length']); const kT = findCol(keys, ['толщин', 'thick']); const kQ = findCol(keys, ['количеств', 'кол-во', 'qty']);
+      if (!kName || !kW || !kL || !kT) throw new Error('Не найдены нужные колонки.');
       const items = [];
       for (const r of rows) {
-        const name = String(r[kName] ?? '').trim();
-        const w = toNum(r[kW]);
-        const l = toNum(r[kL]);
-        const t = toNum(r[kT]);
-        const q = kQ ? Math.max(1, Math.floor(toNum(r[kQ]) || 1)) : 1;
-        if (name && w > 0 && l > 0 && t > 0)
-          items.push({ id: uid(), name, width: w, length: l, thick: t, qty: q });
+        const name = String(r[kName] ?? '').trim(); const w = parseFloat(String(r[kW]).replace(',', '.')); const l = parseFloat(String(r[kL]).replace(',', '.')); const t = parseFloat(String(r[kT]).replace(',', '.'));
+        if (name && w > 0 && l > 0 && t > 0) items.push({ id: uid(), name, width: w, length: l, thick: t, qty: kQ ? Math.max(1, Math.floor(parseFloat(String(r[kQ]).replace(',', '.')) || 1)) : 1 });
       }
-      if (!items.length) throw new Error('Не найдено ни одной корректной строки');
       askImport(items);
-    } catch (err) {
-      alert('Ошибка импорта: ' + err.message);
-    }
+    } catch (err) { alert('Ошибка импорта: ' + err.message); }
     e.target.value = '';
   };
   reader.readAsArrayBuffer(file);
 }
-
-function dedupeItems(arr) {
-  const out = [];
-  arr.forEach(item => {
-    const idx = out.findIndex(x => panelsEqual(x, item));
-    if (idx !== -1) out[idx].qty += (item.qty || 1);
-    else out.push({ ...item });
-  });
-  return out;
-}
-
-function mergeItemArrays(base, incoming) {
-  const out = base.map(x => ({ ...x }));
-  incoming.forEach(item => {
-    const idx = out.findIndex(x => panelsEqual(x, item));
-    if (idx !== -1) out[idx].qty = (out[idx].qty || 1) + (item.qty || 1);
-    else out.push({ ...item });
-  });
-  return out;
-}
-
+function dedupeItems(arr) { const out = []; arr.forEach(item => { const idx = out.findIndex(x => panelsEqual(x, item)); if (idx !== -1) out[idx].qty += (item.qty || 1); else out.push({ ...item }); }); return out; }
+function mergeItemArrays(base, incoming) { const out = base.map(x => ({ ...x })); incoming.forEach(item => { const idx = out.findIndex(x => panelsEqual(x, item)); if (idx !== -1) out[idx].qty += (item.qty || 1); else out.push({ ...item }); }); return out; }
 function askImport(items) {
-  const cur = currentList();
-  const incoming = dedupeItems(items);
-
-  if (!cur.items.length) {
-    setItems(incoming);
-    saveState(); render();
-    return;
-  }
-
-  const replace = confirm(
-    `Найдено ${incoming.length} строк (после объединения дубликатов).\n\n` +
-    `Текущий список "${cur.name}" содержит ${cur.items.length} записей.\n\n` +
-    `ОК — ЗАМЕНИТЬ текущий список\n` +
-    `Отмена — ДОБАВИТЬ в конец (с объединением одинаковых)`
-  );
-
-  if (replace) {
-    setItems(incoming);
-  } else {
-    setItems(mergeItemArrays(cur.items, incoming));
-  }
+  const cur = currentList(); const incoming = dedupeItems(items);
+  if (!cur.items.length) { setItems(incoming); saveState(); render(); return; }
+  const replace = confirm(`Найдено ${incoming.length} строк.\n\nОК — ЗАМЕНИТЬ\nОтмена — ДОБАВИТЬ в конец`);
+  if (replace) setItems(incoming); else setItems(mergeItemArrays(cur.items, incoming));
   saveState(); render();
 }
 

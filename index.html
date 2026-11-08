@@ -410,7 +410,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-<!-- Добавлена библиотека OCR для распознавания текста -->
+<!-- Библиотека OCR -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 <script>
 /* ==================== ТЕМА ==================== */
@@ -918,6 +918,58 @@ async function shareExcel() {
 
 /* ==================== QR И OCR ==================== */
 let qrScanner = null;
+let tesseractWorker = null;
+let isWorkerReady = false;
+
+async function initTesseract() {
+  if (isWorkerReady) return;
+  tesseractWorker = await Tesseract.createWorker('rus', 1, {
+    langPath: 'https://tessdata.projectnaptha.com/4.0.0_fast', // Ускоренные данные
+    corePath: 'https://cdn.jsdelivr.net/npm/tesseract.js-core@5.0.0',
+  });
+  await tesseractWorker.setParameters({
+    tessedit_char_whitelist: '0123456789xXхХ*., ЛДСПМДФ',
+    preserve_interword_spaces: '1',
+  });
+  isWorkerReady = true;
+}
+
+async function preprocessImage(file) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      
+      // Масштабируем: если изображение большое, уменьшаем
+      const maxDim = 2000;
+      let { width, height } = img;
+      if (Math.max(width, height) > maxDim) {
+        const scale = maxDim / Math.max(width, height);
+        width *= scale;
+        height *= scale;
+      }
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Улучшаем контраст (бинаризация)
+      const imageData = ctx.getImageData(0, 0, width, height);
+      const data = imageData.data;
+      for (let i = 0; i < data.length; i += 4) {
+        const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+        const val = gray > 128 ? 255 : 0;
+        data[i] = data[i+1] = data[i+2] = val;
+      }
+      ctx.putImageData(imageData, 0, 0);
+
+      canvas.toBlob((blob) => {
+        resolve(new File([blob], file.name, { type: 'image/jpeg' }));
+      }, 'image/jpeg', 0.9);
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
 
 async function openScanner() {
   $('scanModal').classList.add('open');
@@ -952,7 +1004,6 @@ async function closeScanner() {
   }
 }
 
-/* --- Загрузка фото (с QR и OCR) --- */
 async function handleQrFile(event) {
   const file = event.target.files[0];
   if (!file) return;
@@ -960,42 +1011,45 @@ async function handleQrFile(event) {
   await closeScanner();
   await new Promise(r => setTimeout(r, 100));
 
-  if (typeof Html5Qrcode === 'undefined') {
-    alert('Библиотека сканера не загрузилась. Проверьте интернет.');
-    event.target.value = '';
-    return;
+  // Инициализация OCR
+  if (!isWorkerReady) {
+    const loader = document.createElement('div');
+    loader.id = 'ocr-loader';
+    loader.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;font-size:18px;padding:20px;text-align:center;';
+    loader.textContent = '⏳ Подготовка OCR...';
+    document.body.appendChild(loader);
+    await initTesseract();
+    document.body.removeChild(loader);
   }
 
-  if (!qrScanner) qrScanner = new Html5Qrcode("qrReader", { verbose: false });
-
-  // 1. Пробуем найти QR-код на фото
-  try {
-    const text = await qrScanner.scanFile(file, false);
-    event.target.value = '';
-    handleQrContent(text);
-    return;
-  } catch (err) {
-    console.log('QR не найден, запускаем OCR...');
+  // 1. Пробуем QR
+  if (typeof Html5Qrcode !== 'undefined') {
+    if (!qrScanner) qrScanner = new Html5Qrcode("qrReader", { verbose: false });
+    try {
+      const text = await qrScanner.scanFile(file, false);
+      event.target.value = '';
+      handleQrContent(text);
+      return;
+    } catch (err) {
+      console.log('QR не найден, запускаем OCR...');
+    }
   }
 
-  // 2. Если QR не найден — запускаем OCR (распознавание текста)
+  // 2. Запускаем OCR
   try {
-    // Показываем временную плашку загрузки
     const loader = document.createElement('div');
     loader.id = 'ocr-loader';
     loader.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);color:#fff;display:flex;align-items:center;justify-content:center;z-index:9999;font-size:18px;padding:20px;text-align:center;';
     loader.textContent = '⏳ Распознавание текста...';
     document.body.appendChild(loader);
 
-    const worker = await Tesseract.createWorker('rus');
-    const ret = await worker.recognize(file);
+    const processedFile = await preprocessImage(file);
+    const ret = await tesseractWorker.recognize(processedFile);
     const text = ret.data.text;
-    await worker.terminate();
     
     document.body.removeChild(loader);
     event.target.value = '';
 
-    // Ищем размеры (например, 616 x 495 x 16)
     let width = 0, length = 0, thick = 0;
     const dimRegex = /(\d{2,4}(?:[.,]\d)?)\s*[xXхХ×*]\s*(\d{2,4}(?:[.,]\d)?)\s*[xXхХ×*]\s*(\d{1,2})/;
     const dimMatch = text.match(dimRegex);
@@ -1005,19 +1059,17 @@ async function handleQrFile(event) {
         thick = parseFloat(dimMatch[3]);
     }
 
-    // Ищем материал (после "Карта - X Бирка - Y" и до "W1200...")
     let material = '';
     const lines = text.split('\n').map(l => l.trim());
     let materialLine = lines.find(l => l.includes('ЛДСП') || l.includes('МДФ') || l.includes('ДСП'));
     
     if (materialLine) {
         materialLine = materialLine.replace(/Карта\s*-\s*\d+\s*Бирка\s*-\s*\d+/i, '').trim();
-        materialLine = materialLine.replace(/\s+W\d+.*$/i, '').trim(); // убираем W1200
-        materialLine = materialLine.replace(/\s*\d+\s*мм,?\s*/i, ' ').trim(); // убираем 16мм
-        materialLine = materialLine.replace(/^[,\s-]+|[,\s-]+$/g, ''); // чистим запятые
+        materialLine = materialLine.replace(/\s+W\d+.*$/i, '').trim();
+        materialLine = materialLine.replace(/\s*\d+\s*мм,?\s*/i, ' ').trim();
+        materialLine = materialLine.replace(/^[,\s-]+|[,\s-]+$/g, '');
         material = materialLine;
     } else {
-        // Запасной вариант, если не нашли слово ЛДСП
         for (let line of lines) {
             if (line.length > 3 && !/^[0-9\s.,xX×*]+$/.test(line) && !line.includes('Карта') && !line.includes('izdeg') && !line.includes('Бирка') && !line.includes('поз')) {
                 material = line;

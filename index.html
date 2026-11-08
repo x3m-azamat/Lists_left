@@ -218,7 +218,8 @@
     <svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 0 1-4.4 2.26 5.403 5.403 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg>
   </button>
 
-  <img src="parma.svg" alt="Parma">
+  <!-- Логотип (будет меняться в зависимости от темы) -->
+  <img id="appLogo" src="parma.svg" alt="Parma">
 
   <!-- Кнопка светлой темы (справа) -->
   <button class="theme-btn right" onclick="setTheme('light')" title="Светлая тема">
@@ -410,15 +411,18 @@
 <script>
 /* ==================== ТЕМА ==================== */
 function setTheme(theme) {
+  const logo = document.getElementById('appLogo');
+  
   if (theme === 'dark') {
     document.body.classList.add('dark');
     localStorage.setItem('ldsp_theme', 'dark');
-    // Обновляем цвет статус-бара на мобильных
+    if (logo) logo.src = 'parma_dark.svg';
     let meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', '#1e1e1e');
   } else {
     document.body.classList.remove('dark');
     localStorage.setItem('ldsp_theme', 'light');
+    if (logo) logo.src = 'parma.svg';
     let meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute('content', '#4f46e5');
   }
@@ -1025,8 +1029,7 @@ function parsePanelText(text) {
       name: name || 'Панель',
       width: parseFloat(dimMatch[1].replace(',', '.')),
       length: parseFloat(dimMatch[2].replace(',', '.')),
-      thick: parseFloat(dimMatch[3].replace(',', '.')),
-      qty: 1
+      thick: parseFloat(dimMatch[3].replace(',', '.'))
     })];
   }
 

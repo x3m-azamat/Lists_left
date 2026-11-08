@@ -1,4 +1,4 @@
-const CACHE = 'ldsp-v12';
+const CACHE = 'ldsp-v13';
 const ASSETS = [
   './',
   './index.html',

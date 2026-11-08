@@ -1,4 +1,4 @@
-const CACHE = 'ldsp-v5';
+const CACHE = 'ldsp-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -6,7 +6,9 @@ const ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './parma.svg',
-  'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js'
+  './parma_dark.svg', // <--- Добавили новый логотип
+  'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',
+  'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'
 ];
 
 self.addEventListener('install', e => {

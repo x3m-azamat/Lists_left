@@ -1,4 +1,4 @@
-const CACHE = 'ldsp-v16';
+const CACHE = 'ldsp-v18';
 const ASSETS = [
   './', './index.html', './manifest.json',
   './icon-192.png', './icon-512.png',

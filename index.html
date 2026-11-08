@@ -17,33 +17,22 @@
     padding: 16px; padding-bottom: calc(20px + env(safe-area-inset-bottom));
     max-width: 1100px; margin: 0 auto;
   }
-
-  /* ---- Логотип сверху по центру, на белом ---- */
   .logo-bar {
-    background: #fff; border-radius: 12px;
-    padding: 16px; margin: 0 0 14px;
+    background: #fff; border-radius: 12px; padding: 16px; margin: 0 0 14px;
     box-shadow: 0 2px 10px rgba(0,0,0,.07);
     display: flex; align-items: center; justify-content: center;
   }
-  .logo-bar img {
-    height: 56px; width: auto; max-width: 220px;
-    object-fit: contain; display: block;
-  }
-
+  .logo-bar img { height: 56px; width: auto; max-width: 220px; object-fit: contain; display: block; }
   h1 { font-size: 22px; margin: 0 0 14px; }
 
-  /* ---- Списки (верхняя панель) ---- */
   .list-bar {
     display: flex; gap: 8px; align-items: center;
     background: #fff; border-radius: 12px; padding: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,.07);
-    margin-bottom: 14px; flex-wrap: wrap;
+    box-shadow: 0 2px 10px rgba(0,0,0,.07); margin-bottom: 14px; flex-wrap: wrap;
   }
   .list-bar select {
-    flex: 1; min-width: 180px;
-    padding: 12px 14px; font-size: 16px; font-weight: 500;
-    border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa;
-    color: #222;
+    flex: 1; min-width: 180px; padding: 12px 14px; font-size: 16px; font-weight: 500;
+    border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa; color: #222;
   }
   .list-bar select:focus { outline: none; border-color: #4f46e5; }
   .icon-btn {
@@ -63,16 +52,11 @@
     border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa;
   }
   input:focus { outline: none; border-color: #4f46e5; background: #fff; }
-
-  .form-grid {
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-    gap: 14px; align-items: end;
-  }
+  .form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 14px; align-items: end; }
   @media (max-width: 800px) {
     .form-grid { grid-template-columns: 1fr 1fr; }
     .form-grid .full { grid-column: 1 / -1; }
   }
-
   button {
     padding: 16px; font-size: 17px; border: 0; border-radius: 10px;
     background: #4f46e5; color: #fff; cursor: pointer; font-weight: 500;
@@ -82,16 +66,14 @@
   button.sec { background: #16a34a; }
   button.imp { background: #0ea5e9; }
   button.shr { background: #9333ea; }
+  button.qr  { background: #0891b2; }
+  button.qrs { background: #ea580c; }
   button.del { background: #dc2626; }
   .add-btn { margin-top: 18px; width: 100%; font-size: 18px; padding: 18px; }
 
-  /* ---- Панель поиска и сортировки ---- */
-  .table-toolbar {
-    display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap;
-  }
+  .table-toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
   .table-toolbar input[type="text"] {
-    flex: 1; min-width: 180px;
-    padding: 12px 14px; font-size: 16px;
+    flex: 1; min-width: 180px; padding: 12px 14px; font-size: 16px;
     border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa;
   }
   .table-toolbar select {
@@ -99,30 +81,19 @@
     border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fafafa;
     min-width: 170px; color: #222;
   }
-  .table-toolbar input:focus, .table-toolbar select:focus {
-    outline: none; border-color: #4f46e5; background: #fff;
-  }
+  .table-toolbar input:focus, .table-toolbar select:focus { outline: none; border-color: #4f46e5; background: #fff; }
 
-  /* ---- Табы Детально/Сводка ---- */
-  .view-tabs {
-    display: flex; margin-bottom: 12px;
-    background: #f0f0f0; border-radius: 10px; padding: 4px; gap: 4px;
-  }
+  .view-tabs { display: flex; margin-bottom: 12px; background: #f0f0f0; border-radius: 10px; padding: 4px; gap: 4px; }
   .view-tabs .tab {
     flex: 1; padding: 10px; background: transparent; color: #555;
-    border-radius: 8px; font-size: 15px; font-weight: 500;
-    border: 0; margin: 0;
+    border-radius: 8px; font-size: 15px; font-weight: 500; border: 0; margin: 0;
   }
-  .view-tabs .tab.active {
-    background: #fff; color: #4f46e5;
-    box-shadow: 0 1px 3px rgba(0,0,0,.08);
-  }
+  .view-tabs .tab.active { background: #fff; color: #4f46e5; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
 
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   table { width: 100%; border-collapse: collapse; font-size: 16px; }
   th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #eee; }
-  th { background: #f0f0f0; font-weight: 600; font-size: 14px;
-       text-transform: uppercase; letter-spacing: .03em; color: #555; }
+  th { background: #f0f0f0; font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: .03em; color: #555; }
   td.num { text-align: right; font-variant-numeric: tabular-nums; }
   th.num { text-align: right; }
   tbody tr { cursor: pointer; }
@@ -130,39 +101,30 @@
   .x {
     background: #fee2e2; color: #dc2626; border: 0;
     width: 40px; height: 40px; border-radius: 8px;
-    font-size: 20px; cursor: pointer; padding: 0;
-    position: relative; z-index: 1;
+    font-size: 20px; cursor: pointer; padding: 0; position: relative; z-index: 1;
   }
   .empty { color: #999; text-align: center; padding: 40px 20px; font-size: 16px; }
-  .sum { font-size: 15px; color: #444; margin: 14px 0 0; padding: 12px;
-         background: #f0f4ff; border-radius: 8px; }
+  .sum { font-size: 15px; color: #444; margin: 14px 0 0; padding: 12px; background: #f0f4ff; border-radius: 8px; }
   .sum b { color: #4f46e5; }
 
   .actions {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 10px; margin-top: 16px;
   }
 
-  /* ---- Автодополнение ---- */
   .ac-wrap { position: relative; }
   .ac-list {
     position: absolute; left: 0; right: 0; top: calc(100% + 4px);
     background: #fff; border: 1px solid #e0e0e0; border-radius: 10px;
-    box-shadow: 0 6px 20px rgba(0,0,0,.12);
-    max-height: 280px; overflow-y: auto;
+    box-shadow: 0 6px 20px rgba(0,0,0,.12); max-height: 280px; overflow-y: auto;
     z-index: 50; display: none; padding: 4px;
   }
   .ac-list.open { display: block; }
-  .ac-item {
-    padding: 14px; font-size: 16px; border-radius: 8px;
-    cursor: pointer; display: flex; align-items: center; gap: 10px;
-  }
+  .ac-item { padding: 14px; font-size: 16px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; }
   .ac-item:hover, .ac-item.active { background: #eef2ff; }
   .ac-item .ico { color: #4f46e5; font-size: 14px; flex-shrink: 0; }
   .ac-item mark { background: #fde68a; color: inherit; padding: 0 1px; border-radius: 2px; }
 
-  /* ---- Модальное окно редактирования ---- */
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(0,0,0,.5);
     display: none; align-items: center; justify-content: center;
@@ -175,15 +137,12 @@
     box-shadow: 0 20px 60px rgba(0,0,0,.3);
   }
   .modal h2 { margin: 0 0 16px; font-size: 20px; }
-  .modal .row-3 {
-    display: grid; grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px; margin-top: 4px;
-  }
-  .modal-actions {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 10px; margin-top: 20px;
-  }
+  .modal .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px; }
+  .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
   .btn-cancel { background: #e5e7eb; color: #333; }
+
+  #qrReader { width: 100%; border-radius: 10px; overflow: hidden; }
+  #qrReader video { width: 100% !important; height: auto !important; }
 
   @media (max-width: 500px) {
     .logo-bar img { height: 44px; }
@@ -295,12 +254,14 @@
     <button class="sec" onclick="exportExcel()">📥 Скачать Excel</button>
     <button class="shr" onclick="shareExcel()">📤 Поделиться</button>
     <button class="imp" onclick="document.getElementById('fileInput').click()">📂 Импорт Excel</button>
+    <button class="qr" onclick="showShareQr()">📱 QR списка</button>
+    <button class="qrs" onclick="openScanner()">📷 Сканировать QR</button>
     <button class="del" onclick="clearAll()">🗑 Очистить</button>
   </div>
   <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none" onchange="handleFile(event)">
 </div>
 
-<!-- Модальное окно редактирования -->
+<!-- Модалка редактирования -->
 <div class="modal-overlay" id="editModal">
   <div class="modal">
     <h2>✏️ Редактировать панель</h2>
@@ -329,7 +290,68 @@
   </div>
 </div>
 
+<!-- Модалка QR списка -->
+<div class="modal-overlay" id="shareQrModal">
+  <div class="modal" style="text-align:center">
+    <h2>📱 QR для передачи списка</h2>
+    <p style="color:#666;margin-bottom:14px;font-size:15px">
+      Отсканируйте QR на другом устройстве кнопкой «Сканировать QR»
+    </p>
+    <div id="qrContent" style="display:flex;justify-content:center;margin:14px 0"></div>
+    <p id="qrInfo" style="font-size:13px;color:#888;margin:12px 0"></p>
+    <button class="btn-cancel" style="width:100%;padding:14px" onclick="document.getElementById('shareQrModal').classList.remove('open')">Закрыть</button>
+  </div>
+</div>
+
+<!-- Модалка сканера -->
+<div class="modal-overlay" id="scanModal">
+  <div class="modal" style="text-align:center;max-width:520px">
+    <h2>📷 Сканирование QR</h2>
+    <div id="qrReader"></div>
+    <p style="color:#888;font-size:14px;margin-top:12px">
+      Наведите камеру на QR-код
+    </p>
+    <button class="btn-cancel" style="width:100%;padding:14px;margin-top:16px" onclick="closeScanner()">Отмена</button>
+  </div>
+</div>
+
+<!-- Модалка подтверждения сканирования -->
+<div class="modal-overlay" id="scanConfirmModal">
+  <div class="modal">
+    <h2>📷 Найдено в QR</h2>
+    <p id="scanRaw" style="font-size:13px;color:#888;background:#f5f5f5;padding:10px;border-radius:8px;word-break:break-all;margin-bottom:16px"></p>
+    <label>Наименование</label>
+    <input type="text" id="scanName">
+    <div class="row-3">
+      <div>
+        <label>Ширина, мм</label>
+        <input type="number" id="scanWidth" inputmode="numeric">
+      </div>
+      <div>
+        <label>Длина, мм</label>
+        <input type="number" id="scanLength" inputmode="numeric">
+      </div>
+      <div>
+        <label>Толщина, мм</label>
+        <input type="number" id="scanThick" inputmode="numeric">
+      </div>
+    </div>
+    <label>Количество</label>
+    <input type="number" id="scanQty" inputmode="numeric" min="1">
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="cancelScanConfirm()">Отмена</button>
+      <button onclick="confirmScanAdd()">Добавить</button>
+    </div>
+    <button style="width:100%;margin-top:10px;background:#0891b2"
+            onclick="cancelScanConfirm();setTimeout(openScanner,200)">
+      📷 Сканировать следующую
+    </button>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
 /* ==================== ХРАНИЛИЩЕ ==================== */
 const STORAGE_KEY = 'ldsp_lists_v1';
@@ -383,7 +405,44 @@ function currentList() { return state.lists.find(l => l.id === state.currentList
 function getItems() { return currentList().items; }
 function setItems(items) { currentList().items = items; saveState(); }
 
-/* ==================== УПРАВЛЕНИЕ СПИСКАМИ ==================== */
+/* ==================== СЛИЯНИЕ ОДИНАКОВЫХ ==================== */
+function panelsEqual(a, b) {
+  return String(a.name).trim().toLowerCase() === String(b.name).trim().toLowerCase()
+      && +a.width  === +b.width
+      && +a.length === +b.length
+      && +a.thick  === +b.thick;
+}
+
+function addOrMergeItem(item) {
+  const items = getItems();
+  const idx = items.findIndex(x => panelsEqual(x, item));
+  if (idx !== -1) {
+    items[idx].qty = (items[idx].qty || 1) + (item.qty || 1);
+    setItems(items);
+    return 'merged';
+  }
+  items.push(item);
+  setItems(items);
+  return 'added';
+}
+
+function showMergeToast(name) {
+  const old = document.getElementById('mergeToast');
+  if (old) old.remove();
+  const t = document.createElement('div');
+  t.id = 'mergeToast';
+  t.style.cssText = `
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: #16a34a; color: #fff; padding: 12px 20px; border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.25); z-index: 9999;
+    font-size: 15px; font-weight: 500; max-width: 90vw; text-align: center;
+  `;
+  t.textContent = `➕ Прибавлено к «${name}»`;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 1800);
+}
+
+/* ==================== СПИСКИ ==================== */
 function renderListSelect() {
   const sel = $('listSelect');
   sel.innerHTML = '';
@@ -398,10 +457,8 @@ function renderListSelect() {
 
 function switchList(id) {
   state.currentListId = id;
-  saveState();
-  closeAc();
-  searchQuery = '';
-  $('searchBox').value = '';
+  saveState(); closeAc();
+  searchQuery = ''; $('searchBox').value = '';
   render();
 }
 
@@ -412,10 +469,8 @@ function newList() {
   const list = { id: uid(), name: trimmed, items: [] };
   state.lists.push(list);
   state.currentListId = list.id;
-  saveState();
-  closeAc();
-  searchQuery = '';
-  $('searchBox').value = '';
+  saveState(); closeAc();
+  searchQuery = ''; $('searchBox').value = '';
   render();
 }
 
@@ -426,22 +481,17 @@ function renameList() {
   const trimmed = name.trim();
   if (!trimmed) return;
   l.name = trimmed;
-  saveState();
-  renderListSelect();
+  saveState(); renderListSelect();
 }
 
 function deleteList() {
-  if (state.lists.length <= 1) {
-    alert('Нельзя удалить единственный список');
-    return;
-  }
+  if (state.lists.length <= 1) { alert('Нельзя удалить единственный список'); return; }
   const l = currentList();
   if (!confirm(`Удалить список "${l.name}" (${l.items.length} записей)?`)) return;
   state.lists = state.lists.filter(x => x.id !== l.id);
   state.currentListId = state.lists[0].id;
   saveState();
-  searchQuery = '';
-  $('searchBox').value = '';
+  searchQuery = ''; $('searchBox').value = '';
   render();
 }
 
@@ -486,8 +536,7 @@ function closeAc() { acList.classList.remove('open'); acActive = -1; acMatches =
 function pickAc(idx) {
   if (idx < 0 || idx >= acMatches.length) return;
   nameInput.value = acMatches[idx];
-  closeAc();
-  nameInput.focus();
+  closeAc(); nameInput.focus();
 }
 
 nameInput.addEventListener('input', () => openAc(nameInput.value));
@@ -508,9 +557,7 @@ function updateActive(els) {
 }
 
 /* ==================== ОСНОВНЫЕ ОПЕРАЦИИ ==================== */
-function areaOf(i) {
-  return (i.width / 1000) * (i.length / 1000) * (i.qty || 1);
-}
+function areaOf(i) { return (i.width / 1000) * (i.length / 1000) * (i.qty || 1); }
 
 function addItem() {
   const name  = $('name').value.trim();
@@ -525,15 +572,16 @@ function addItem() {
     return alert('Ширина, длина и толщина должны быть положительными');
   if (!(qty >= 1)) return alert('Количество должно быть не меньше 1');
 
-  const items = getItems();
-  items.push({ id: uid(), name, width, length: len, thick, qty });
-  setItems(items);
+  const result = addOrMergeItem({
+    id: uid(), name, width, length: len, thick, qty
+  });
   render();
 
   $('name').value = ''; $('width').value = '';
   $('length').value = ''; $('thick').value = ''; $('qty').value = '';
-  closeAc();
-  $('name').focus();
+  closeAc(); $('name').focus();
+
+  if (result === 'merged') showMergeToast(name);
 }
 
 function removeItem(id) {
@@ -545,8 +593,7 @@ function removeItem(id) {
 function clearAll() {
   if (!getItems().length) return;
   if (!confirm(`Удалить все записи из списка "${currentList().name}"?`)) return;
-  setItems([]);
-  render();
+  setItems([]); render();
 }
 
 /* ==================== РЕДАКТИРОВАНИЕ ==================== */
@@ -584,10 +631,20 @@ function saveEdit() {
   const items = getItems();
   const idx = items.findIndex(i => i.id === editingId);
   if (idx === -1) return closeEdit();
-  items[idx] = { ...items[idx], name, width, length: len, thick, qty };
+
+  const edited = { id: editingId, name, width, length: len, thick, qty };
+  const dupIdx = items.findIndex((x, i) => i !== idx && panelsEqual(x, edited));
+
+  if (dupIdx !== -1) {
+    if (!confirm(`Такая панель уже есть в списке.\n\nПрибавить количество (${qty}) к существующей?`)) return;
+    items[dupIdx].qty = (items[dupIdx].qty || 1) + qty;
+    items.splice(idx, 1);
+  } else {
+    items[idx] = edited;
+  }
+
   setItems(items);
-  closeEdit();
-  render();
+  closeEdit(); render();
 }
 
 $('editModal').addEventListener('click', e => {
@@ -597,7 +654,7 @@ document.addEventListener('keydown', e => {
   if ($('editModal').classList.contains('open') && e.key === 'Escape') closeEdit();
 });
 
-/* ==================== ОТРИСОВКА ТАБЛИЦЫ ==================== */
+/* ==================== ТАБЛИЦА ==================== */
 function getViewItems() {
   let view = getItems();
   const q = searchQuery.trim().toLowerCase();
@@ -616,9 +673,7 @@ function groupItems(items) {
     const key = i.name.trim().toLowerCase();
     if (!map.has(key)) map.set(key, { name: i.name.trim(), count: 0, panels: 0, area: 0 });
     const g = map.get(key);
-    g.count += 1;
-    g.panels += i.qty || 1;
-    g.area += areaOf(i);
+    g.count += 1; g.panels += i.qty || 1; g.area += areaOf(i);
   });
   return [...map.values()].sort((a, b) => a.name.localeCompare(b.name, 'ru'));
 }
@@ -628,7 +683,6 @@ function renderTable() {
   const hasItems = items.length > 0;
   const totalInList = getItems().length;
 
-  // Empty state
   const emptyEl = $('empty');
   if (!hasItems) {
     emptyEl.style.display = 'block';
@@ -639,7 +693,6 @@ function renderTable() {
     emptyEl.style.display = 'none';
   }
 
-  // Detail table
   const tbody = $('tbody');
   tbody.innerHTML = '';
   let totalArea = 0, totalPanels = 0;
@@ -663,13 +716,9 @@ function renderTable() {
     tbody.appendChild(tr);
   });
   tbody.querySelectorAll('.x').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      removeItem(btn.dataset.id);
-    });
+    btn.addEventListener('click', e => { e.stopPropagation(); removeItem(btn.dataset.id); });
   });
 
-  // Summary table
   if (viewMode === 'summary') {
     const groups = groupItems(items);
     $('tbodySummary').innerHTML = groups.map(g => `
@@ -682,7 +731,6 @@ function renderTable() {
     `).join('');
   }
 
-  // Sum
   const sumBox = $('sum');
   if (hasItems) {
     sumBox.style.display = 'block';
@@ -691,31 +739,17 @@ function renderTable() {
     sumBox.style.display = 'none';
   }
 
-  // Toggle views
   $('viewDetail').style.display = (viewMode === 'detail' && hasItems) ? 'block' : 'none';
   $('viewSummary').style.display = (viewMode === 'summary' && hasItems) ? 'block' : 'none';
   $('tabDetail').classList.toggle('active', viewMode === 'detail');
   $('tabSummary').classList.toggle('active', viewMode === 'summary');
 }
 
-function render() {
-  renderListSelect();
-  renderTable();
-}
+function render() { renderListSelect(); renderTable(); }
+function setView(mode) { viewMode = mode; renderTable(); }
 
-function setView(mode) {
-  viewMode = mode;
-  renderTable();
-}
-
-$('searchBox').addEventListener('input', e => {
-  searchQuery = e.target.value;
-  renderTable();
-});
-$('sortSelect').addEventListener('change', e => {
-  sortKey = e.target.value;
-  renderTable();
-});
+$('searchBox').addEventListener('input', e => { searchQuery = e.target.value; renderTable(); });
+$('sortSelect').addEventListener('change', e => { sortKey = e.target.value; renderTable(); });
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -754,78 +788,298 @@ function exportExcel() {
 /* ==================== ПОДЕЛИТЬСЯ ==================== */
 async function shareExcel() {
   if (!getItems().length) return alert('Список пуст');
-
   const items = getItems();
   const rows = items.map((i, n) => ({
-    '№': n + 1,
-    'Наименование': i.name,
-    'Ширина, мм': i.width,
-    'Длина, мм': i.length,
-    'Толщина, мм': i.thick,
-    'Кол-во': i.qty || 1,
-    'Площадь, м²': +areaOf(i).toFixed(3)
+    '№': n + 1, 'Наименование': i.name, 'Ширина, мм': i.width,
+    'Длина, мм': i.length, 'Толщина, мм': i.thick,
+    'Кол-во': i.qty || 1, 'Площадь, м²': +areaOf(i).toFixed(3)
   }));
-
   const ws = XLSX.utils.json_to_sheet(rows);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'ЛДСП');
-  
   const safeName = currentList().name.replace(/[\\/:*?"<>|]/g, '_').trim() || 'ЛДСП';
   const date = new Date().toISOString().slice(0,10);
   const xlsxFileName = `${safeName}_${date}.xlsx`;
-  const csvFileName = `${safeName}_${date}.csv`;
+  const csvFileName  = `${safeName}_${date}.csv`;
 
-  // Генерируем XLSX
   const wboutXlsx = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
   const xlsxBlob = new Blob([wboutXlsx], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  const xlsxFile = new File([xlsxBlob], xlsxFileName, { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  const xlsxFile = new File([xlsxBlob], xlsxFileName, { type: xlsxBlob.type });
 
-  // Пытаемся поделиться XLSX
   if (navigator.canShare && navigator.canShare({ files: [xlsxFile] })) {
     try {
-      await navigator.share({
-        files: [xlsxFile],
-        title: currentList().name,
-        text: `Список ЛДСП: ${currentList().name}`
-      });
-      return; // Успех
-    } catch (err) {
-      if (err.name === 'AbortError') return;
-    }
+      await navigator.share({ files: [xlsxFile], title: currentList().name });
+      return;
+    } catch (err) { if (err.name === 'AbortError') return; }
   }
 
-  // Если XLSX не поддерживается, пробуем CSV (он поддерживается везде)
-  const csvContent = "\uFEFF" + XLSX.utils.sheet_to_csv(ws, { FS: ';' }); // BOM для Excel и точка с запятой для русской локали
+  const csvContent = "\uFEFF" + XLSX.utils.sheet_to_csv(ws, { FS: ';' });
   const csvBlob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const csvFile = new File([csvBlob], csvFileName, { type: 'text/csv' });
 
   if (navigator.canShare && navigator.canShare({ files: [csvFile] })) {
     try {
-      await navigator.share({
-        files: [csvFile],
-        title: currentList().name,
-        text: `Список ЛДСП: ${currentList().name}`
-      });
-      return; // Успех с CSV
-    } catch (err) {
-      if (err.name === 'AbortError') return;
-    }
+      await navigator.share({ files: [csvFile], title: currentList().name });
+      return;
+    } catch (err) { if (err.name === 'AbortError') return; }
   }
 
-  // Если ничего не сработало — скачиваем XLSX
   const url = URL.createObjectURL(xlsxBlob);
   const a = document.createElement('a');
-  a.href = url;
-  a.download = xlsxFileName;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  a.href = url; a.download = xlsxFileName;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 30000);
-  
   alert('Меню "Поделиться" недоступно на этом устройстве. Файл сохранён в папку "Загрузки".');
 }
 
-/* ==================== ИМПОРТ ==================== */
+/* ==================== QR: СОЗДАНИЕ ==================== */
+function showShareQr() {
+  const items = getItems();
+  if (!items.length) return alert('Список пуст');
+
+  const compact = items.map(i => ({
+    n: i.name, w: i.width, l: i.length, t: i.thick, q: i.qty || 1
+  }));
+  const json = JSON.stringify(compact);
+  const bytes = new Blob([json]).size;
+
+  if (bytes > 2400) {
+    alert(`Список слишком большой для QR-кода (${bytes} байт, лимит ~2400).\n\nИспользуйте «Скачать Excel» или «Поделиться».`);
+    return;
+  }
+
+  const box = $('qrContent');
+  box.innerHTML = '';
+  const level = bytes > 1500 ? QRCode.CorrectLevel.L
+              : bytes > 1000 ? QRCode.CorrectLevel.M
+              : QRCode.CorrectLevel.Q;
+  new QRCode(box, {
+    text: json,
+    width: 300, height: 300,
+    colorDark: '#000000', colorLight: '#ffffff',
+    correctLevel: level
+  });
+  $('qrInfo').textContent = `${items.length} позиций · ${bytes} байт`;
+  $('shareQrModal').classList.add('open');
+}
+
+/* ==================== QR: СКАНИРОВАНИЕ ==================== */
+let qrScanner = null;
+
+async function openScanner() {
+  $('scanModal').classList.add('open');
+
+  if (typeof Html5Qrcode === 'undefined') {
+    alert('Библиотека сканера не загрузилась. Проверьте интернет.');
+    closeScanner();
+    return;
+  }
+
+  if (!qrScanner) qrScanner = new Html5Qrcode("qrReader", { verbose: false });
+
+  try {
+    await qrScanner.start(
+      { facingMode: "environment" },
+      { fps: 10, qrbox: { width: 260, height: 260 } },
+      text => { closeScanner().then(() => handleQrContent(text)); },
+      () => {}
+    );
+  } catch (err) {
+    closeScanner();
+    alert('Не удалось открыть камеру.\n\n' + (err.message || err) +
+          '\n\nПроверьте разрешение на камеру для этого сайта в настройках Chrome.');
+  }
+}
+
+async function closeScanner() {
+  $('scanModal').classList.remove('open');
+  if (qrScanner) {
+    try { await qrScanner.stop(); } catch(e) {}
+    try { await qrScanner.clear(); } catch(e) {}
+  }
+}
+
+function handleQrContent(text) {
+  text = String(text || '').trim();
+  if (!text) return;
+
+  if (/^https?:\/\//i.test(text)) {
+    if (confirm('Открыть ссылку?\n\n' + text)) {
+      window.open(text, '_blank', 'noopener');
+    }
+    return;
+  }
+
+  const parsed = parsePanelText(text);
+
+  if (parsed && parsed.length) {
+    showScanConfirm(parsed);
+    return;
+  }
+
+  if (confirm('Не удалось распознать размеры в QR.\n\nСодержимое:\n' + text +
+              '\n\nИспользовать как наименование панели?')) {
+    $('name').value = text;
+    $('name').focus();
+  }
+}
+
+function parsePanelText(text) {
+  const tryJson = (s) => {
+    try {
+      const data = JSON.parse(s);
+      const arr = Array.isArray(data) ? data : (data.items || [data]);
+      return arr.map(x => ({
+        name: x.n || x.name || x.naimenovanie || x.material || '',
+        width: +x.w || +x.width || +x.shirota || 0,
+        length: +x.l || +x.length || +x.dlina || 0,
+        thick: +x.t || +x.thick || +x.tolshina || 0,
+        qty: +x.q || +x.qty || +x.kol || 1
+      }));
+    } catch { return null; }
+  };
+
+  if (text.startsWith('{') || text.startsWith('[')) {
+    const r = tryJson(text);
+    if (r && r.length) return r.filter(isValidPanel).map(toItem);
+  }
+
+  const splitRe = /\s*[|;\t]\s*/;
+  if (splitRe.test(text)) {
+    const parts = text.split(splitRe);
+    if (parts.length >= 4) {
+      const nums = parts.slice(1).map(p => parseFloat(String(p).replace(',', '.')));
+      if (nums.length >= 3 && nums.slice(0,3).every(n => !isNaN(n) && n > 0)) {
+        return [toItem({
+          name: parts[0].trim(),
+          width: nums[0], length: nums[1], thick: nums[2],
+          qty: nums[3] > 0 ? Math.floor(nums[3]) : 1
+        })];
+      }
+    }
+  }
+
+  if (text.split(',').length >= 4) {
+    const parts = text.split(',');
+    const nums = parts.slice(1).map(p => parseFloat(String(p).replace(',', '.')));
+    if (nums.length >= 3 && nums.slice(0,3).every(n => !isNaN(n) && n > 0)) {
+      return [toItem({
+        name: parts[0].trim(),
+        width: nums[0], length: nums[1], thick: nums[2],
+        qty: nums[3] > 0 ? Math.floor(nums[3]) : 1
+      })];
+    }
+  }
+
+  const dimRe = /(\d+(?:[.,]\d+)?)\s*[x×*]\s*(\d+(?:[.,]\d+)?)\s*[x×*]\s*(\d+(?:[.,]\d+)?)/i;
+  const dimMatch = text.match(dimRe);
+  if (dimMatch) {
+    const name = text.replace(dimRe, '').replace(/[\[\]()]/g, '').trim();
+    return [toItem({
+      name: name || 'Панель',
+      width: parseFloat(dimMatch[1].replace(',', '.')),
+      length: parseFloat(dimMatch[2].replace(',', '.')),
+      thick: parseFloat(dimMatch[3].replace(',', '.')),
+      qty: 1
+    })];
+  }
+
+  const named = parseNamedFields(text);
+  if (named) return [toItem(named)];
+
+  return null;
+
+  function isValidPanel(x) { return x.name && x.width > 0 && x.length > 0 && x.thick > 0; }
+  function toItem(x) {
+    return {
+      id: uid(),
+      name: String(x.name || '').trim() || 'Панель',
+      width: +x.width, length: +x.length, thick: +x.thick,
+      qty: Math.max(1, Math.floor(+x.qty || 1))
+    };
+  }
+}
+
+function parseNamedFields(text) {
+  const re = /([A-Za-zА-Яа-я]+)\s*[=:]\s*(\d+(?:[.,]\d+)?)/g;
+  const fields = {};
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const key = m[1].toUpperCase();
+    const val = parseFloat(m[2].replace(',', '.'));
+    if (['W', 'Ш', 'ШИРИНА', 'WIDTH'].includes(key)) fields.width = val;
+    else if (['L', 'Д', 'LEN', 'LENGTH', 'ДЛИНА'].includes(key)) fields.length = val;
+    else if (['T', 'Т', 'THICK', 'ТОЛЩИНА', 'THICKNESS'].includes(key)) fields.thick = val;
+    else if (['Q', 'QTY', 'КОЛ', 'КОЛ-ВО', 'КОЛИЧЕСТВО'].includes(key)) fields.qty = val;
+  }
+  if (!fields.width || !fields.length || !fields.thick) return null;
+  const name = text.replace(re, '').replace(/[,;|]/g, ' ').trim();
+  return {
+    name: name || 'Панель',
+    width: fields.width,
+    length: fields.length,
+    thick: fields.thick,
+    qty: fields.qty || 1
+  };
+}
+
+let pendingScanItem = null;
+
+function showScanConfirm(items) {
+  if (items.length > 1) {
+    askImport(items);
+    return;
+  }
+
+  const it = items[0];
+  pendingScanItem = it;
+  $('scanRaw').textContent = 'Содержимое: ' + JSON.stringify({
+    name: it.name, width: it.width, length: it.length,
+    thick: it.thick, qty: it.qty
+  });
+  $('scanName').value   = it.name;
+  $('scanWidth').value  = it.width;
+  $('scanLength').value = it.length;
+  $('scanThick').value  = it.thick;
+  $('scanQty').value    = it.qty || 1;
+  $('scanConfirmModal').classList.add('open');
+  setTimeout(() => $('scanName').focus(), 100);
+}
+
+function cancelScanConfirm() {
+  $('scanConfirmModal').classList.remove('open');
+  pendingScanItem = null;
+}
+
+function confirmScanAdd() {
+  const name  = $('scanName').value.trim();
+  const width = parseFloat($('scanWidth').value);
+  const length = parseFloat($('scanLength').value);
+  const thick = parseFloat($('scanThick').value);
+  const qty = parseInt($('scanQty').value, 10) || 1;
+
+  if (!name) return alert('Введите наименование');
+  if (!(width > 0) || !(length > 0) || !(thick > 0))
+    return alert('Размеры должны быть положительными');
+  if (qty < 1) return alert('Количество ≥ 1');
+
+  const result = addOrMergeItem({
+    id: uid(), name, width, length, thick, qty
+  });
+  render();
+
+  cancelScanConfirm();
+
+  if (result === 'merged') showMergeToast(name);
+
+  setTimeout(openScanner, 300);
+}
+
+$('scanConfirmModal').addEventListener('click', e => {
+  if (e.target === $('scanConfirmModal')) cancelScanConfirm();
+});
+
+/* ==================== ИМПОРТ EXCEL ==================== */
 function findCol(keys, keywords, exacts = []) {
   for (const k of keys) {
     const low = k.toLowerCase().trim();
@@ -880,23 +1134,49 @@ function handleFile(e) {
   reader.readAsArrayBuffer(file);
 }
 
+function dedupeItems(arr) {
+  const out = [];
+  arr.forEach(item => {
+    const idx = out.findIndex(x => panelsEqual(x, item));
+    if (idx !== -1) out[idx].qty += (item.qty || 1);
+    else out.push({ ...item });
+  });
+  return out;
+}
+
+function mergeItemArrays(base, incoming) {
+  const out = base.map(x => ({ ...x }));
+  incoming.forEach(item => {
+    const idx = out.findIndex(x => panelsEqual(x, item));
+    if (idx !== -1) out[idx].qty = (out[idx].qty || 1) + (item.qty || 1);
+    else out.push({ ...item });
+  });
+  return out;
+}
+
 function askImport(items) {
   const cur = currentList();
+  const incoming = dedupeItems(items);
+
   if (!cur.items.length) {
-    setItems(items);
-    saveState();
-    render();
+    setItems(incoming);
+    saveState(); render();
     return;
   }
+
   const replace = confirm(
-    `Найдено ${items.length} строк в Excel.\n\n` +
+    `Найдено ${incoming.length} строк (после объединения дубликатов).\n\n` +
     `Текущий список "${cur.name}" содержит ${cur.items.length} записей.\n\n` +
     `ОК — ЗАМЕНИТЬ текущий список\n` +
-    `Отмена — ДОБАВИТЬ в конец`
+    `Отмена — ДОБАВИТЬ в конец (с объединением одинаковых)`
   );
-  setItems(replace ? items : cur.items.concat(items));
-  saveState();
-  render();
+
+  if (replace) {
+    setItems(incoming);
+  } else {
+    setItems(mergeItemArrays(cur.items, incoming));
+  }
+  saveState(); render();
 }
 
 /* ==================== СТАРТ ==================== */

@@ -63,32 +63,40 @@
     width: 100%; padding: 14px 16px; font-size: 17px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-input); color: var(--text-main);
   }
   input:focus { outline: none; border-color: #4f46e5; background: var(--bg-card); }
-  .form-grid { display: grid; grid-template-columns: 1fr 2fr 1fr 1fr 1fr 1fr; gap: 14px; align-items: end; }
-  @media (max-width: 900px) { .form-grid { grid-template-columns: 1fr 1fr; } .form-grid .full { grid-column: 1 / -1; } }
+  
+  /* Сетка формы как была изначально (без артикула) */
+  .form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 14px; align-items: end; }
+  @media (max-width: 800px) { .form-grid { grid-template-columns: 1fr 1fr; } .form-grid .full { grid-column: 1 / -1; } }
+  
   button { padding: 16px; font-size: 17px; border: 0; border-radius: 10px; background: #4f46e5; color: #fff; cursor: pointer; font-weight: 500; }
   button:active { transform: scale(.98); filter: brightness(.92); }
   button.sec { background: #16a34a; } button.imp { background: #0ea5e9; } button.shr { background: #9333ea; }
   button.qrs { background: #ea580c; } button.del { background: #dc2626; }
   .add-btn { margin-top: 18px; width: 100%; font-size: 18px; padding: 18px; }
   .scan-btn { margin-top: 10px; width: 100%; font-size: 18px; padding: 18px; }
+  
   .table-toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
   .table-toolbar input[type="text"] { flex: 1; min-width: 180px; padding: 12px 14px; font-size: 16px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-input); color: var(--text-main); }
   .table-toolbar select { padding: 12px 14px; font-size: 15px; border: 1.5px solid var(--border-color); border-radius: 10px; background: var(--bg-input); color: var(--text-main); min-width: 170px; }
+  
   .view-tabs { display: flex; margin-bottom: 12px; background: var(--bg-tab); border-radius: 10px; padding: 4px; gap: 4px; }
   .view-tabs .tab { flex: 1; padding: 10px; background: transparent; color: var(--text-label); border-radius: 8px; font-size: 15px; font-weight: 500; border: 0; margin: 0; }
   .view-tabs .tab.active { background: var(--bg-tab-active); color: #4f46e5; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  
   .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  table { width: 100%; border-collapse: collapse; font-size: 16px; }
   th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid var(--border-color); }
-  th { background: var(--bg-th); font-weight: 600; font-size: 13px; text-transform: uppercase; color: var(--text-th); }
+  th { background: var(--bg-th); font-weight: 600; font-size: 14px; text-transform: uppercase; letter-spacing: .03em; color: var(--text-th); }
   td.num { text-align: right; font-variant-numeric: tabular-nums; } th.num { text-align: right; }
   tbody tr { cursor: pointer; } tbody tr:hover { background: var(--bg-tab); }
   .x { background: #fee2e2; color: #dc2626; border: 0; width: 40px; height: 40px; border-radius: 8px; font-size: 20px; cursor: pointer; padding: 0; }
   body.dark .x { background: #4a1c1c; color: #f87171; }
+  
   .empty { color: var(--text-label); text-align: center; padding: 40px 20px; font-size: 16px; }
   .sum { font-size: 15px; color: var(--text-main); margin: 14px 0 0; padding: 12px; background: var(--bg-tab); border-radius: 8px; }
   .sum b { color: #4f46e5; }
   .actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 16px; }
+  
   .ac-wrap { position: relative; }
   .ac-list { position: absolute; left: 0; right: 0; top: calc(100% + 4px); background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,.15); max-height: 280px; overflow-y: auto; z-index: 50; display: none; padding: 4px; }
   .ac-list.open { display: block; }
@@ -96,6 +104,7 @@
   .ac-item:hover, .ac-item.active { background: var(--ac-bg-hover); }
   .ac-item .ico { color: #4f46e5; font-size: 14px; flex-shrink: 0; }
   .ac-item mark { background: #fde68a; color: #222; padding: 0 1px; border-radius: 2px; }
+  
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; z-index: 100; padding: 16px; }
   .modal-overlay.open { display: flex; }
   .modal { background: var(--bg-card); border-radius: 14px; padding: 24px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,.4); }
@@ -103,9 +112,11 @@
   .modal .row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 4px; }
   .modal-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
   .btn-cancel { background: var(--bg-tab); color: var(--text-main); }
+  
   #qrReader { width: 100%; border-radius: 10px; overflow: hidden; }
   #qrReader video { width: 100% !important; height: auto !important; }
   .loader { text-align: center; padding: 20px; font-size: 16px; color: #4f46e5; font-weight: bold; }
+  
   @media (max-width: 500px) { .logo-bar img { height: 44px; } h1 { font-size: 18px; } .theme-btn svg { width: 20px; height: 20px; } .form-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -132,14 +143,10 @@
 
 <div class="card">
   <div class="form-grid">
-    <div>
-      <label>Чертёж (ID)</label>
-      <input id="sku" type="text" placeholder="izdeg..." autocomplete="off">
-    </div>
-    <div>
-      <label>Материал (Наименование)</label>
+    <div class="full">
+      <label>Наименование (Материал)</label>
       <div class="ac-wrap">
-        <input id="name" type="text" placeholder="ЛДСП..." autocomplete="off">
+        <input id="name" type="text" placeholder="Начните вводить" autocomplete="off">
         <div class="ac-list" id="acList"></div>
       </div>
     </div>
@@ -154,11 +161,11 @@
 
 <div class="card">
   <div class="table-toolbar">
-    <input type="text" id="searchBox" placeholder="🔍 Поиск по материалу или ID" autocomplete="off">
+    <input type="text" id="searchBox" placeholder="🔍 Поиск по наименованию" autocomplete="off">
     <select id="sortSelect">
       <option value="default">Без сортировки</option>
-      <option value="name">Материал ↑</option>
-      <option value="name-desc">Материал ↓</option>
+      <option value="name">Наименование ↑</option>
+      <option value="name-desc">Наименование ↓</option>
       <option value="area">Площадь ↑</option>
       <option value="area-desc">Площадь ↓</option>
     </select>
@@ -171,7 +178,7 @@
   <div id="viewDetail">
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Чертёж</th><th>Материал</th><th class="num">Ш</th><th class="num">Д</th><th class="num">Т</th><th class="num">Кол</th><th class="num">Площадь</th><th></th></tr></thead>
+        <thead><tr><th>Наименование</th><th class="num">Ш, мм</th><th class="num">Д, мм</th><th class="num">Т, мм</th><th class="num">Кол</th><th class="num">Площадь</th><th></th></tr></thead>
         <tbody id="tbody"></tbody>
       </table>
     </div>
@@ -179,7 +186,7 @@
   <div id="viewSummary" style="display:none">
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Материал</th><th class="num">Позиций</th><th class="num">Панелей, шт</th><th class="num">Площадь, м²</th></tr></thead>
+        <thead><tr><th>Наименование</th><th class="num">Позиций</th><th class="num">Панелей, шт</th><th class="num">Площадь, м²</th></tr></thead>
         <tbody id="tbodySummary"></tbody>
       </table>
     </div>
@@ -198,9 +205,7 @@
 <div class="modal-overlay" id="editModal">
   <div class="modal">
     <h2>✏️ Редактировать панель</h2>
-    <label>Чертёж (ID)</label>
-    <input type="text" id="editSku" autocomplete="off">
-    <label>Материал (Наименование)</label>
+    <label>Наименование (Материал)</label>
     <input type="text" id="editName" autocomplete="off">
     <div class="row-3">
       <div><label>Ширина, мм</label><input type="number" id="editWidth"></div>
@@ -236,9 +241,8 @@
   <div class="modal">
     <h2>📷 Найдено</h2>
     <p id="scanRaw" style="font-size:13px;color:var(--text-label);background:var(--bg-input);padding:10px;border-radius:8px;word-break:break-all;margin-bottom:16px"></p>
-    <label>Чертёж (ID)</label>
-    <input type="text" id="scanSku">
-    <label>Материал (Наименование)</label>
+    
+    <label>Наименование (Материал)</label>
     <input type="text" id="scanName" placeholder="ЛДСП...">
     <div class="row-3">
       <div><label>Ширина</label><input type="number" id="scanWidth"></div>
@@ -273,22 +277,21 @@ function setTheme(theme) {
 (function initTheme() { if (localStorage.getItem('ldsp_theme') === 'dark') setTheme('dark'); })();
 
 /* ==================== ХРАНИЛИЩЕ ==================== */
-const STORAGE_KEY = 'ldsp_lists_v3'; // версия изменилась из-за смены логики
-const OLD_KEY = 'ldsp_lists_v2';
+const STORAGE_KEY = 'ldsp_lists_v4'; // версия обновлена
 const $ = id => document.getElementById(id);
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
 
 function migrateItems(arr) {
   if (!Array.isArray(arr)) return [];
   return arr.map(i => ({
-    id: i.id || uid(), sku: String(i.sku || '').trim(), name: String(i.name || '').trim(),
+    id: i.id || uid(), name: String(i.name || '').trim(),
     width: Number(i.width) || 0, length: Number(i.length) || 0, thick: Number(i.thick) || 0,
     qty: Number.isFinite(+i.qty) && +i.qty > 0 ? Math.floor(+i.qty) : 1
   }));
 }
 function loadState() {
   try {
-    let raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(OLD_KEY);
+    let raw = localStorage.getItem(STORAGE_KEY);
     if (raw) { const s = JSON.parse(raw); if (s && Array.isArray(s.lists) && s.lists.length) { s.lists.forEach(l => { l.items = migrateItems(l.items); }); return s; } }
   } catch (e) {}
   const list = { id: uid(), name: 'Список 1', items: [] };
@@ -303,7 +306,6 @@ function setItems(items) { currentList().items = items; saveState(); }
 
 /* ==================== СЛИЯНИЕ ==================== */
 function panelsEqual(a, b) {
-  if (a.sku && b.sku) return a.sku.trim().toLowerCase() === b.sku.trim().toLowerCase() && +a.width === +b.width && +a.length === +b.length && +a.thick === +b.thick;
   return String(a.name).trim().toLowerCase() === String(b.name).trim().toLowerCase() && +a.width === +b.width && +a.length === +b.length && +a.thick === +b.thick;
 }
 function addOrMergeItem(item) {
@@ -315,7 +317,7 @@ function showMergeToast(name) {
   const old = $('mergeToast'); if (old) old.remove();
   const t = document.createElement('div'); t.id = 'mergeToast';
   t.style.cssText = `position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #16a34a; color: #fff; padding: 12px 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,.25); z-index: 9999; font-size: 15px; font-weight: 500; max-width: 90vw; text-align: center;`;
-  t.textContent = `➕ Прибавлено к «${name || 'ID ' + item.sku}»`; document.body.appendChild(t); setTimeout(() => t.remove(), 1800);
+  t.textContent = `➕ Прибавлено к «${name}»`; document.body.appendChild(t); setTimeout(() => t.remove(), 1800);
 }
 
 /* ==================== СПИСКИ ==================== */
@@ -343,7 +345,7 @@ function openAc(query) {
   });
 }
 function closeAc() { acList.classList.remove('open'); acActive = -1; acMatches = []; }
-function pickAc(idx) { if (idx >= 0 && idx < acMatches.length) { nameInput.value = acMatches[idx]; const found = getItems().find(i => i.name === nameInput.value); if (found && found.sku) $('sku').value = found.sku; closeAc(); nameInput.focus(); } }
+function pickAc(idx) { if (idx >= 0 && idx < acMatches.length) { nameInput.value = acMatches[idx]; closeAc(); nameInput.focus(); } }
 nameInput.addEventListener('input', () => openAc(nameInput.value));
 nameInput.addEventListener('focus', () => openAc(nameInput.value));
 nameInput.addEventListener('blur', () => setTimeout(closeAc, 150));
@@ -351,12 +353,12 @@ nameInput.addEventListener('blur', () => setTimeout(closeAc, 150));
 /* ==================== ОПЕРАЦИИ ==================== */
 function areaOf(i) { return (i.width / 1000) * (i.length / 1000) * (i.qty || 1); }
 function addItem() {
-  const sku = $('sku').value.trim(), name = $('name').value.trim(), width = parseFloat($('width').value), len = parseFloat($('length').value), thick = parseFloat($('thick').value), qty = parseInt($('qty').value, 10) || 1;
-  if (!name) return alert('Введите материал');
+  const name = $('name').value.trim(), width = parseFloat($('width').value), len = parseFloat($('length').value), thick = parseFloat($('thick').value), qty = parseInt($('qty').value, 10) || 1;
+  if (!name) return alert('Введите наименование');
   if (!(width > 0) || !(len > 0) || !(thick > 0)) return alert('Размеры должны быть положительными');
-  const result = addOrMergeItem({ id: uid(), sku, name, width, length: len, thick, qty });
+  const result = addOrMergeItem({ id: uid(), name, width, length: len, thick, qty });
   render();
-  $('sku').value = ''; $('name').value = ''; $('width').value = ''; $('length').value = ''; $('thick').value = ''; $('qty').value = '';
+  $('name').value = ''; $('width').value = ''; $('length').value = ''; $('thick').value = ''; $('qty').value = '';
   closeAc(); $('name').focus(); if (result === 'merged') showMergeToast(name);
 }
 function removeItem(id) { if (!confirm('Удалить запись?')) return; setItems(getItems().filter(i => i.id !== id)); render(); }
@@ -365,16 +367,16 @@ function clearAll() { if (!getItems().length) return; if (!confirm(`Удалит
 /* ==================== РЕДАКТИРОВАНИЕ ==================== */
 function openEdit(id) {
   const item = getItems().find(i => i.id === id); if (!item) return; editingId = id;
-  $('editSku').value = item.sku || ''; $('editName').value = item.name; $('editWidth').value = item.width; $('editLength').value = item.length; $('editThick').value = item.thick; $('editQty').value = item.qty || 1;
+  $('editName').value = item.name; $('editWidth').value = item.width; $('editLength').value = item.length; $('editThick').value = item.thick; $('editQty').value = item.qty || 1;
   $('editModal').classList.add('open'); setTimeout(() => $('editName').focus(), 100);
 }
 function closeEdit() { $('editModal').classList.remove('open'); editingId = null; }
 function saveEdit() {
   if (!editingId) return;
-  const sku = $('editSku').value.trim(), name = $('editName').value.trim(), width = parseFloat($('editWidth').value), len = parseFloat($('editLength').value), thick = parseFloat($('editThick').value), qty = parseInt($('editQty').value, 10) || 1;
-  if (!name) return alert('Введите материал'); if (!(width > 0) || !(len > 0) || !(thick > 0)) return alert('Размеры должны быть положительными');
+  const name = $('editName').value.trim(), width = parseFloat($('editWidth').value), len = parseFloat($('editLength').value), thick = parseFloat($('editThick').value), qty = parseInt($('editQty').value, 10) || 1;
+  if (!name) return alert('Введите наименование'); if (!(width > 0) || !(len > 0) || !(thick > 0)) return alert('Размеры должны быть положительными');
   const items = getItems(); const idx = items.findIndex(i => i.id === editingId); if (idx === -1) return closeEdit();
-  const edited = { id: editingId, sku, name, width, length: len, thick, qty };
+  const edited = { id: editingId, name, width, length: len, thick, qty };
   const dupIdx = items.findIndex((x, i) => i !== idx && panelsEqual(x, edited));
   if (dupIdx !== -1) { if (confirm(`Такая панель уже есть. Прибавить количество?`)) { items[dupIdx].qty += qty; items.splice(idx, 1); } } else { items[idx] = edited; }
   setItems(items); closeEdit(); render();
@@ -384,7 +386,7 @@ $('editModal').addEventListener('click', e => { if (e.target === $('editModal'))
 /* ==================== ТАБЛИЦА ==================== */
 function getViewItems() {
   let view = getItems(); const q = searchQuery.trim().toLowerCase();
-  if (q) view = view.filter(i => i.name.toLowerCase().includes(q) || (i.sku && i.sku.toLowerCase().includes(q)));
+  if (q) view = view.filter(i => i.name.toLowerCase().includes(q));
   view = [...view];
   if (sortKey === 'name') view.sort((a, b) => a.name.localeCompare(b.name, 'ru'));
   else if (sortKey === 'name-desc') view.sort((a, b) => b.name.localeCompare(a.name, 'ru'));
@@ -405,7 +407,7 @@ function renderTable() {
   items.forEach(i => {
     const a = areaOf(i); totalArea += a; totalPanels += i.qty || 1;
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td><small style="color:var(--text-label)">${escapeHtml(i.sku || '—')}</small></td><td>${escapeHtml(i.name)}</td><td class="num">${i.width}</td><td class="num">${i.length}</td><td class="num">${i.thick}</td><td class="num">${i.qty || 1}</td><td class="num">${a.toFixed(3)}</td><td><button class="x" data-id="${i.id}">✕</button></td>`;
+    tr.innerHTML = `<td>${escapeHtml(i.name)}</td><td class="num">${i.width}</td><td class="num">${i.length}</td><td class="num">${i.thick}</td><td class="num">${i.qty || 1}</td><td class="num">${a.toFixed(3)}</td><td><button class="x" data-id="${i.id}">✕</button></td>`;
     tr.addEventListener('click', e => { if (!e.target.closest('.x')) openEdit(i.id); }); tbody.appendChild(tr);
   });
   tbody.querySelectorAll('.x').forEach(btn => { btn.addEventListener('click', e => { e.stopPropagation(); removeItem(btn.dataset.id); }); });
@@ -423,8 +425,8 @@ function escapeHtml(s) { return String(s).replace(/[&<>"]/g, c => ({'&':'&amp;',
 /* ==================== ЭКСПОРТ ==================== */
 function buildWorkbook() {
   const items = getItems();
-  const rows = items.map((i, n) => ({ '№': n + 1, 'Чертёж': i.sku || '', 'Материал': i.name, 'Ширина, мм': i.width, 'Длина, мм': i.length, 'Толщина, мм': i.thick, 'Кол-во': i.qty || 1, 'Площадь, м²': +areaOf(i).toFixed(3) }));
-  const ws = XLSX.utils.json_to_sheet(rows); ws['!cols'] = [{wch:5},{wch:18},{wch:25},{wch:12},{wch:12},{wch:12},{wch:8},{wch:12}];
+  const rows = items.map((i, n) => ({ '№': n + 1, 'Наименование': i.name, 'Ширина, мм': i.width, 'Длина, мм': i.length, 'Толщина, мм': i.thick, 'Кол-во': i.qty || 1, 'Площадь, м²': +areaOf(i).toFixed(3) }));
+  const ws = XLSX.utils.json_to_sheet(rows); ws['!cols'] = [{wch:5},{wch:25},{wch:12},{wch:12},{wch:12},{wch:8},{wch:12}];
   const wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, 'ЛДСП'); return wb;
 }
 function getFileName() { const safeName = currentList().name.replace(/[\\/:*?"<>|]/g, '_').trim() || 'ЛДСП'; return `${safeName}_${new Date().toISOString().slice(0,10)}.xlsx`; }
@@ -499,9 +501,13 @@ async function handleQrFile(event) {
     let materialLine = lines.find(l => l.includes('ЛДСП') || l.includes('МДФ') || l.includes('ДСП'));
     
     if (materialLine) {
+        // Убираем "Карта - 14 Бирка - 1"
         materialLine = materialLine.replace(/Карта\s*-\s*\d+\s*Бирка\s*-\s*\d+/i, '').trim();
+        // Убираем "W1200..." в конце
         materialLine = materialLine.replace(/\s+W\d+.*$/i, '').trim(); 
+        // Убираем "16мм, " 
         materialLine = materialLine.replace(/\s*\d+\s*мм,?\s*/i, ' ').trim(); 
+        // Чистим лишние запятые и пробелы
         materialLine = materialLine.replace(/^[,\s-]+|[,\s-]+$/g, '');
         material = materialLine;
     } else {
@@ -513,16 +519,9 @@ async function handleQrFile(event) {
         }
     }
 
-    let sku = '';
-    const skuMatch = text.match(/(izdeg\s*\d+(?:[.\s]\d+)*)/i);
-    if (skuMatch) {
-        sku = skuMatch[1].replace(/\s+/g, '').replace(/поз.*/i, '');
-    }
-
     if (dimMatch || material) {
         showScanConfirm([{ 
             id: uid(), 
-            sku: sku, 
             name: material || 'Панель', 
             width: width, 
             length: length, 
@@ -531,7 +530,7 @@ async function handleQrFile(event) {
         }]);
     } else {
         if (confirm('Текст распознан, но нужные данные не найдены.\n\nТекст:\n' + text + '\n\nОткрыть форму для ручного ввода?')) {
-            showScanConfirm([{ id: uid(), sku: '', name: '', width: 0, length: 0, thick: 16, qty: 1 }]);
+            showScanConfirm([{ id: uid(), name: '', width: 0, length: 0, thick: 16, qty: 1 }]);
         }
     }
   } catch (err) {
@@ -545,45 +544,36 @@ function handleQrContent(text) {
   text = String(text || '').trim(); if (!text) return;
   const parsed = parsePanelText(text);
   if (parsed && parsed.length) { showScanConfirm(parsed); return; }
-  if (confirm('Не удалось распознать данные.\n\nСодержимое QR:\n' + text + '\n\nИспользовать как ID чертежа?')) {
-    $('sku').value = text; $('sku').focus();
+  
+  if (confirm('QR-код содержит ID чертежа, но не содержит размеров.\n\nСодержимое QR:\n' + text + '\n\nПожалуйста, сфотографируйте саму бирку, чтобы распознать текст (размеры и материал).\n\nОткрыть форму для ручного ввода?')) {
+    showScanConfirm([{ id: uid(), name: '', width: 0, length: 0, thick: 16, qty: 1 }]);
   }
 }
 
 function parsePanelText(text) {
   const tryJson = (s) => {
-    try { const data = JSON.parse(s); const arr = Array.isArray(data) ? data : (data.items || [data]); return arr.map(x => ({ sku: String(x.n || x.name || x.sku || x.id || '').trim(), name: String(x.material || x.naimenovanie || 'Панель').trim(), width: +x.w || +x.width || 0, length: +x.l || +x.length || 0, thick: +x.t || +x.thick || 16, qty: +x.q || +x.qty || 1 })); } catch { return null; }
+    try { const data = JSON.parse(s); const arr = Array.isArray(data) ? data : (data.items || [data]); return arr.map(x => ({ name: String(x.material || x.naimenovanie || 'Панель').trim(), width: +x.w || +x.width || 0, length: +x.l || +x.length || 0, thick: +x.t || +x.thick || 16, qty: +x.q || +x.qty || 1 })); } catch { return null; }
   };
   if (text.startsWith('{') || text.startsWith('[')) { const r = tryJson(text); if (r && r.length) return r.filter(x => x.width > 0).map(toItem); }
-  if (/^(izdeg|ldsp|panel)[a-z0-9.\-_]+/i.test(text) || /\.ldw$/i.test(text)) { return [toItem({ sku: text, name: '', width: 0, length: 0, thick: 16, qty: 1 })]; }
   return null;
   
-  function toItem(x) { return { id: uid(), sku: x.sku, name: x.name, width: x.width, length: x.length, thick: x.thick, qty: Math.max(1, Math.floor(+x.qty || 1)) }; }
+  function toItem(x) { return { id: uid(), name: x.name, width: x.width, length: x.length, thick: x.thick, qty: Math.max(1, Math.floor(+x.qty || 1)) }; }
 }
 
 function showScanConfirm(items) {
   const it = items[0];
-  $('scanRaw').textContent = 'ID: ' + (it.sku || '—');
-  
-  if (it.sku) {
-    const existing = getItems().find(x => x.sku === it.sku);
-    if (existing) {
-      it.name = existing.name; it.width = existing.width; it.length = existing.length; it.thick = existing.thick;
-      $('scanRaw').textContent += ' (загружено из памяти)';
-    }
-  }
-
-  $('scanSku').value = it.sku; $('scanName').value = it.name;
+  $('scanRaw').textContent = 'Распознано';
+  $('scanName').value = it.name;
   $('scanWidth').value = it.width || ''; $('scanLength').value = it.length || ''; $('scanThick').value = it.thick || 16;
   $('scanQty').value = it.qty || 1;
   $('scanConfirmModal').classList.add('open');
 }
 function cancelScanConfirm() { $('scanConfirmModal').classList.remove('open'); }
 function confirmScanAdd() {
-  const sku = $('scanSku').value.trim(), name = $('scanName').value.trim(), width = parseFloat($('scanWidth').value), length = parseFloat($('scanLength').value), thick = parseFloat($('scanThick').value), qty = parseInt($('scanQty').value, 10) || 1;
+  const name = $('scanName').value.trim(), width = parseFloat($('scanWidth').value), length = parseFloat($('scanLength').value), thick = parseFloat($('scanThick').value), qty = parseInt($('scanQty').value, 10) || 1;
   if (!name) return alert('Введите материал');
   if (!(width > 0) || !(length > 0) || !(thick > 0)) return alert('Размеры должны быть положительными');
-  const result = addOrMergeItem({ id: uid(), sku, name, width, length, thick, qty });
+  const result = addOrMergeItem({ id: uid(), name, width, length, thick, qty });
   render(); cancelScanConfirm(); if (result === 'merged') showMergeToast(name);
   setTimeout(openScanner, 300);
 }
@@ -609,7 +599,6 @@ function handleFile(e) {
       const kL = findCol(keys, ['длин', 'length'], ['д']);
       const kT = findCol(keys, ['толщин', 'thick', 'толщ'], ['т']);
       const kQ = findCol(keys, ['количеств', 'кол-во', 'кол', 'qty']);
-      const kSku = findCol(keys, ['чертеж', 'артикул', 'id', 'путь', 'sku']);
       
       if (!kName || !kW || !kL || !kT) throw new Error('Не найдены нужные колонки.');
       const toNum = v => parseFloat(String(v).replace(',', '.'));
@@ -617,8 +606,7 @@ function handleFile(e) {
       for (const r of rows) {
         const name = String(r[kName] ?? '').trim(); const w = toNum(r[kW]); const l = toNum(r[kL]); const t = toNum(r[kT]);
         const q = kQ ? Math.max(1, Math.floor(toNum(r[kQ]) || 1)) : 1;
-        const sku = kSku ? String(r[kSku] ?? '').trim() : '';
-        if (name && w > 0 && l > 0 && t > 0) items.push({ id: uid(), sku, name, width: w, length: l, thick: t, qty: q });
+        if (name && w > 0 && l > 0 && t > 0) items.push({ id: uid(), name, width: w, length: l, thick: t, qty: q });
       }
       if (!items.length) throw new Error('Нет корректных строк');
       askImport(items);

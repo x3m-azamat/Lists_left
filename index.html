@@ -66,10 +66,11 @@
   button.sec { background: #16a34a; }
   button.imp { background: #0ea5e9; }
   button.shr { background: #9333ea; }
-  button.qr  { background: #0891b2; }
   button.qrs { background: #ea580c; }
   button.del { background: #dc2626; }
+  
   .add-btn { margin-top: 18px; width: 100%; font-size: 18px; padding: 18px; }
+  .scan-btn { margin-top: 10px; width: 100%; font-size: 18px; padding: 18px; }
 
   .table-toolbar { display: flex; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
   .table-toolbar input[type="text"] {
@@ -192,6 +193,7 @@
     </div>
   </div>
   <button class="add-btn" onclick="addItem()">➕ Добавить панель</button>
+  <button class="scan-btn qrs" onclick="openScanner()">📷 Сканировать QR</button>
 </div>
 
 <div class="card">
@@ -254,8 +256,6 @@
     <button class="sec" onclick="exportExcel()">📥 Скачать Excel</button>
     <button class="shr" onclick="shareExcel()">📤 Поделиться</button>
     <button class="imp" onclick="document.getElementById('fileInput').click()">📂 Импорт Excel</button>
-    <button class="qr" onclick="showShareQr()">📱 QR списка</button>
-    <button class="qrs" onclick="openScanner()">📷 Сканировать QR</button>
     <button class="del" onclick="clearAll()">🗑 Очистить</button>
   </div>
   <input type="file" id="fileInput" accept=".xlsx,.xls" style="display:none" onchange="handleFile(event)">
@@ -287,19 +287,6 @@
       <button class="btn-cancel" onclick="closeEdit()">Отмена</button>
       <button onclick="saveEdit()">Сохранить</button>
     </div>
-  </div>
-</div>
-
-<!-- Модалка QR списка -->
-<div class="modal-overlay" id="shareQrModal">
-  <div class="modal" style="text-align:center">
-    <h2>📱 QR для передачи списка</h2>
-    <p style="color:#666;margin-bottom:14px;font-size:15px">
-      Отсканируйте QR на другом устройстве кнопкой «Сканировать QR»
-    </p>
-    <div id="qrContent" style="display:flex;justify-content:center;margin:14px 0"></div>
-    <p id="qrInfo" style="font-size:13px;color:#888;margin:12px 0"></p>
-    <button class="btn-cancel" style="width:100%;padding:14px" onclick="document.getElementById('shareQrModal').classList.remove('open')">Закрыть</button>
   </div>
 </div>
 
@@ -350,7 +337,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
 /* ==================== ХРАНИЛИЩЕ ==================== */
@@ -830,37 +816,6 @@ async function shareExcel() {
   document.body.appendChild(a); a.click(); document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 30000);
   alert('Меню "Поделиться" недоступно на этом устройстве. Файл сохранён в папку "Загрузки".');
-}
-
-/* ==================== QR: СОЗДАНИЕ ==================== */
-function showShareQr() {
-  const items = getItems();
-  if (!items.length) return alert('Список пуст');
-
-  const compact = items.map(i => ({
-    n: i.name, w: i.width, l: i.length, t: i.thick, q: i.qty || 1
-  }));
-  const json = JSON.stringify(compact);
-  const bytes = new Blob([json]).size;
-
-  if (bytes > 2400) {
-    alert(`Список слишком большой для QR-кода (${bytes} байт, лимит ~2400).\n\nИспользуйте «Скачать Excel» или «Поделиться».`);
-    return;
-  }
-
-  const box = $('qrContent');
-  box.innerHTML = '';
-  const level = bytes > 1500 ? QRCode.CorrectLevel.L
-              : bytes > 1000 ? QRCode.CorrectLevel.M
-              : QRCode.CorrectLevel.Q;
-  new QRCode(box, {
-    text: json,
-    width: 300, height: 300,
-    colorDark: '#000000', colorLight: '#ffffff',
-    correctLevel: level
-  });
-  $('qrInfo').textContent = `${items.length} позиций · ${bytes} байт`;
-  $('shareQrModal').classList.add('open');
 }
 
 /* ==================== QR: СКАНИРОВАНИЕ ==================== */

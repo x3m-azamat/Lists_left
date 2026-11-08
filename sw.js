@@ -1,14 +1,9 @@
-const CACHE = 'ldsp-v14';
+const CACHE = 'ldsp-v16';
 const ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './icon-192.png',
-  './icon-512.png',
-  './parma.svg',
-  './parma_dark.svg',
+  './', './index.html', './manifest.json',
+  './icon-192.png', './icon-512.png',
+  './parma.svg', './parma_dark.svg',
   'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js',
-  'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js',
   'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js'
 ];
 

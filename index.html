@@ -494,7 +494,6 @@ async function initTesseract() {
 async function startCamera() {
   $('cameraModal').classList.add('open');
   try {
-    // Запрашиваем максимальное разрешение
     videoStream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: 'environment', width: { ideal: 1920 }, height: { ideal: 1080 } }
     });
@@ -541,12 +540,11 @@ async function capturePhoto() {
   document.body.appendChild(loader);
 
   try {
-    // Улучшенная предобработка: черно-белый фильтр (бинаризация) для текста
     const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imgData.data;
+    // Ч/Б фильтр для контраста
     for (let i = 0; i < data.length; i += 4) {
       const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
-      // Делаем текст контрастным (черное на белом)
       const val = gray > 140 ? 255 : 0;
       data[i] = data[i+1] = data[i+2] = val;
     }
@@ -556,10 +554,9 @@ async function capturePhoto() {
     let text = ret.data.text;
     document.body.removeChild(loader);
 
-    // ИСПРАВЛЕНИЕ ОШИБОК OCR
     text = text.replace(/Еввег|Евгер|Еггер/gi, 'Egger');
 
-    // 1. Ищем размеры (например: 616 x 495 x 16)
+    // 1. Размеры
     let width = 0, length = 0, thick = 0;
     const dimRegex = /(\d{2,4}(?:[.,]\d)?)\s*[xXхХ×*]\s*(\d{2,4}(?:[.,]\d)?)\s*[xXхХ×*]\s*(\d{1,2})/;
     const dimMatch = text.match(dimRegex);
@@ -569,21 +566,39 @@ async function capturePhoto() {
         thick = parseFloat(dimMatch[3]);
     }
 
-    // 2. Ищем материал
+    // 2. Материал
     let material = '';
     const lines = text.split('\n').map(l => l.trim());
     let materialLine = lines.find(l => /ЛДСП|МДФ|ДСП|Egger/i.test(l));
     
     if (materialLine) {
-        // 1. Оставляем только ту часть, которая начинается с "ЛДСП" или "МДФ"
-        materialLine = materialLine.replace(/.*?(ЛДСП|МДФ)/i, '$1').trim(); 
-        // 2. Убираем "16мм"
-        materialLine = materialLine.replace(/\s*\d+\s*мм,?\s*/i, ' ').trim(); 
-        // 3. Убираем артикул в конце (пробел + буква + цифры)
-        materialLine = materialLine.replace(/\s+[a-zA-Zа-яА-Я]\d+.*$/i, '').trim(); 
-        // 4. Оставляем только буквы, цифры, запятые и пробелы
-        materialLine = materialLine.replace(/[^a-zA-Zа-яА-Я0-9, ]+/g, ' '); 
-        material = materialLine.replace(/\s+/g, ' ').trim();
+        // 1. Убираем всё до ЛДСП
+        materialLine = materialLine.replace(/.*?(ЛДСП|МДФ|ДСП)/i, '$1').trim();
+        
+        // 2. Делим на бренд и цвет
+        const parts = materialLine.split(',');
+        let brandPart = parts[0] || '';
+        let colorPart = parts[1] || '';
+
+        // 3. Убираем толщину из бренда
+        brandPart = brandPart.replace(/\s*\d+\s*мм,?/gi, '').trim();
+
+        // 4. Убираем артикул из цвета (ищем слово с цифрой)
+        if (colorPart) {
+            const words = colorPart.trim().split(/\s+/);
+            let cutIdx = words.length;
+            for (let i = 0; i < words.length; i++) {
+                if (/\d/.test(words[i])) {
+                    cutIdx = i;
+                    break;
+                }
+            }
+            colorPart = words.slice(0, cutIdx).join(' ').trim();
+        }
+
+        // 5. Собираем обратно
+        material = (brandPart + (colorPart ? ', ' + colorPart : '')).trim();
+        material = material.replace(/[^a-zA-Zа-яА-Я0-9, ]+/g, ' ').replace(/\s+/g, ' ').trim();
     }
 
     if (dimMatch || material) {
